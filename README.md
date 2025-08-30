@@ -10,29 +10,37 @@
 ## ✨ 功能特性
 
 ### 🤖 AI智能翻译
-- 支持多种AI翻译服务（OpenAI、Claude等）
-- 自动检测源语言类型
-- 支持16种主流语言互译
-- 智能语言切换（中英文自动切换）
+- 支持多种AI翻译服务（OpenAI、Claude等兼容OpenAI API格式的服务）
+- 自动检测源语言类型，支持16种主流语言互译
+- 智能语言切换：中文内容自动切换到英文翻译，英文内容自动切换到中文翻译
+- 实时翻译结果显示，支持复制和语音朗读
 
 ### 📸 OCR图片识别
-- 基于Tesseract.js的客户端文字识别
-- 支持中英文混合识别
-- 拖拽上传图片功能
-- 多种图片格式支持（JPG、PNG、WEBP）
-- CDN降级机制确保稳定访问
+- 基于Tesseract.js的客户端文字识别引擎
+- 支持中英文混合识别，多种图片格式（JPG、PNG、WEBP）
+- 拖拽上传图片功能，无需服务器处理
+- 应用启动时OCR预热机制，提升首次使用体验
+- CDN降级机制：UNPKG、七牛云等多源确保稳定访问
+
+### 🔊 TTS语音合成
+- 基于浏览器原生Web Speech API的语音合成功能
+- 支持输入文本和翻译结果的智能语音朗读
+- 自动语言检测，选择合适的语音引擎
+- 可调节语速、音调、音量等语音参数
+- 支持多种语音选择（取决于系统和浏览器）
 
 ### 🎨 现代化界面
-- 基于React 19 + Tailwind CSS 4
-- 响应式设计，适配各种设备
+- 基于React 19 + Tailwind CSS 4构建
+- 响应式设计，完美适配桌面和移动设备
+- Google翻译风格的直观界面设计
 - 优雅的动画和交互效果
-- 支持中英文界面切换
+- 支持中英文界面切换（基于i18next）
 
 ### 🔧 智能配置
-- 本地存储配置信息
-- 自定义API服务配置
-- 智能语言切换开关
-- 配置导入导出功能
+- 本地存储配置信息，数据安全可控
+- 自定义API服务配置，支持各种兼容服务
+- 智能语言切换开关，个性化翻译体验
+- 配置导入导出功能，方便备份和迁移
 
 ## 🚀 快速开始
 
@@ -65,21 +73,36 @@ npm run dev
 
 ## 📋 使用指南
 
-### 基本翻译
+### 文本翻译
 1. 在左侧文本框输入要翻译的文本
-2. 选择源语言和目标语言
+2. 选择源语言和目标语言（支持自动检测）
 3. 点击"翻译"按钮获取结果
+4. 使用右侧的复制和语音按钮处理翻译结果
 
 ### 图片文字识别
-1. 点击文本框中的"上传图片"按钮
-2. 或直接拖拽图片到文本框
-3. 等待OCR识别完成
-4. 识别的文字会自动填入文本框
+1. 切换到"图片翻译"标签页
+2. 点击"上传图片"按钮或直接拖拽图片到界面
+3. 等待OCR识别完成（首次使用可能需要下载模型）
+4. 识别的文字会自动显示，可进一步翻译
+
+### 语音朗读功能
+1. 翻译完成后，点击文本框右下角的语音按钮 🔊
+2. 支持朗读输入文本和翻译结果
+3. 可在设置中调节语速、音调、音量等参数
+4. 点击相同按钮可停止当前朗读
 
 ### 智能语言切换
-- 启用后，系统会自动判断输入文本的语言
-- 中文内容自动切换到英文翻译
-- 英文内容自动切换到中文翻译
+- 在设置中启用智能语言切换功能
+- 系统会自动判断输入文本的语言类型
+- 中文内容自动切换到英文翻译模式
+- 英文内容自动切换到中文翻译模式
+- 其他语言保持用户选择的设置
+
+### 配置管理
+1. 点击右上角的设置按钮 ⚙️ 打开配置面板
+2. 配置AI翻译服务的API密钥和端点
+3. 调整TTS语音参数和智能切换设置
+4. 可导出配置备份或导入已有配置
 
 ## 🌐 支持的语言
 
@@ -110,22 +133,43 @@ npm run dev
 
 ```
 translate/
-├── public/                 # 静态资源
+├── public/                     # 静态资源
 ├── src/
-│   ├── components/         # React组件
-│   │   ├── ui/            # UI基础组件
-│   │   ├── ImageUpload.jsx # 图片上传组件
-│   │   ├── EnhancedTextInput.jsx # 增强文本输入
-│   │   ├── LanguageSwitcher.jsx  # 语言切换器
-│   │   └── ServiceConfig.jsx     # 服务配置
-│   ├── services/          # 服务层
-│   │   ├── translateService.js # 翻译服务
-│   │   └── ocrService.js      # OCR服务
-│   ├── i18n/             # 国际化配置
-│   ├── App.jsx           # 主应用组件
-│   └── main.jsx          # 应用入口
-├── package.json
-└── README.md
+│   ├── components/             # React组件
+│   │   ├── ui/                # UI基础组件库
+│   │   │   ├── button.jsx     # 按钮组件
+│   │   │   ├── input.jsx      # 输入框组件
+│   │   │   ├── modal.jsx      # 模态框组件
+│   │   │   ├── toast.jsx      # 消息提示组件
+│   │   │   └── ...            # 其他UI组件
+│   │   ├── ImageTranslation.jsx   # 图片翻译组件
+│   │   ├── EnhancedTextInput.jsx  # 增强文本输入组件
+│   │   ├── LanguageSwitcher.jsx   # 语言切换器
+│   │   ├── ServiceConfig.jsx      # 服务配置组件
+│   │   ├── TTSSettings.jsx        # TTS语音设置组件
+│   │   └── ...                    # 其他业务组件
+│   ├── services/              # 核心服务层
+│   │   ├── translateService.js   # AI翻译服务
+│   │   ├── ocrService.js         # OCR识别服务
+│   │   └── ttsService.js         # TTS语音合成服务
+│   ├── contexts/              # React Context
+│   │   └── ToastContext.jsx      # 全局消息提示上下文
+│   ├── hooks/                 # 自定义Hooks
+│   │   ├── useToast.js           # 消息提示Hook
+│   │   └── useTTS.js             # TTS语音Hook
+│   ├── i18n/                  # 国际化配置
+│   │   ├── index.js              # i18n主配置
+│   │   └── locales/              # 语言包
+│   │       ├── zh.json           # 中文语言包
+│   │       └── en.json           # 英文语言包
+│   ├── App.jsx                # 主应用组件
+│   ├── main.jsx              # 应用入口
+│   └── index.css             # 全局样式
+├── vite.config.js            # Vite配置文件
+├── eslint.config.js          # ESLint配置文件
+├── package.json              # 项目依赖和脚本
+├── CLAUDE.md                 # Claude Code开发指南
+└── README.md                 # 项目说明文档
 ```
 
 ## 🛠️ 开发脚本
@@ -155,14 +199,20 @@ npm run lint
 - **FontAwesome** - 图标库
 
 ### 核心依赖
-- **Tesseract.js** - 客户端OCR文字识别
-- **i18next** - 国际化框架
-- **Axios** - HTTP客户端
-- **react-i18next** - React国际化集成
+- **Tesseract.js** - 客户端OCR文字识别引擎
+- **Axios** - HTTP客户端，用于AI API调用
+- **i18next** + **react-i18next** - 完整的国际化解决方案
+- **@fortawesome/fontawesome-free** - 图标库
+
+### 状态管理与工具
+- **React Context** - ToastContext全局消息提示
+- **Custom Hooks** - useToast、useTTS等业务逻辑封装
+- **Web Speech API** - 浏览器原生TTS语音合成
 
 ### 开发工具
-- **ESLint** - 代码质量检查
-- **Vite插件** - React Fast Refresh支持
+- **ESLint** - 代码质量检查和规范
+- **@vitejs/plugin-react** - Vite的React插件，支持Fast Refresh
+- **@tailwindcss/vite** - Tailwind CSS的Vite集成插件
 
 ## ❓ 常见问题
 
@@ -180,9 +230,23 @@ A: 首次使用需要下载识别模型，后续使用会更快。应用启动�
 **Q: 识别准确度不高？**  
 A: 建议上传清晰、对比度高的图片，避免模糊或倾斜的文字。
 
+### TTS语音问题
+**Q: 语音朗读功能无法使用？**  
+A: 确保浏览器支持Web Speech API。推荐使用Chrome、Edge、Safari等现代浏览器。
+
+**Q: 找不到合适的语音？**  
+A: 语音选择取决于操作系统和浏览器。Windows用户可安装语音包，macOS和移动设备通常内置多种语音。
+
+**Q: 语音朗读被中断？**  
+A: 某些浏览器要求用户交互才能播放语音。确保在用户操作后触发语音功能。
+
 ### 网络连接问题
 **Q: OCR模型下载失败？**  
-A: 应用内置CDN降级机制，会自动尝试多个CDN源，确保模型能够成功下载。
+A: 应用内置CDN降级机制（UNPKG、七牛云等），会自动尝试多个CDN源，确保模型能够成功下载。
+
+### 浏览器兼容性
+**Q: 哪些浏览器支持完整功能？**  
+A: 推荐使用Chrome 88+、Firefox 85+、Safari 14+、Edge 88+。OCR功能需要WebAssembly支持，TTS需要Web Speech API支持。
 
 ## 📄 许可证
 
