@@ -1,0 +1,104 @@
+{
+  "app": {
+    "title": "Lingua",
+    "subtitle": "Smart Translation, Connecting the World"
+  },
+  "language": {
+    "source": "Source Language",
+    "target": "Target Language",
+    "swap": "Swap Languages",
+    "detected": "Detected as",
+    "switch": "Switch Language"
+  },
+  "translation": {
+    "inputPlaceholder": "Enter text to translate...",
+    "outputPlaceholder": "Translation results will be displayed here...",
+    "inputLabel": "Input Text",
+    "outputLabel": "Translation Result",
+    "translateButton": "Translate",
+    "translating": "Translating..."
+  },
+  "ocr": {
+    "ready": "OCR Ready",
+    "prewarming": "Prewarming",
+    "initializing": "Initializing OCR...",
+    "loadingModel": "Loading OCR model...",
+    "initializingEngine": "Initializing recognition engine...",
+    "preparingAPI": "Preparing API...",
+    "recognizing": "Recognizing text... {{percent}}%",
+    "completed": "Text recognition completed! Please click the translate button to proceed.",
+    "noTextFound": "No text could be recognized. Please try using a clearer image.",
+    "uploadImage": "Upload image for OCR recognition",
+    "dropToRecognize": "Drop to recognize text from image",
+    "processing": "Recognizing text from image...",
+    "supportDirectInput": "Support direct text input",
+    "pasteImage": "Paste image (Ctrl+V)",
+    "dragImage": "Drag image to input box",
+    "clickToSelect": "Click icon to select image"
+  },
+  "settings": {
+    "title": "Settings",
+    "configTitle": "AI Translation Configuration",
+    "preset": "Preset Configuration",
+    "serviceName": "Service Name",
+    "serviceNamePlaceholder": "Display name",
+    "apiUrl": "API URL",
+    "apiUrlPlaceholder": "https://api.openai.com/v1/chat/completions",
+    "model": "Model",
+    "customModel": "Custom Model...",
+    "customModelPlaceholder": "Enter custom model ID, e.g.: gpt-4o-2024-08-06",
+    "modelPlaceholder": "Model name, e.g.: gpt-3.5-turbo",
+    "apiKey": "API Key",
+    "apiKeyPlaceholder": "Enter API key",
+    "testConnection": "Test Connection",
+    "testing": "Testing...",
+    "smartSwitch": "Smart Language Switch",
+    "smartSwitchDesc": "Automatically switch to English translation when inputting Chinese, and to Chinese translation when inputting English",
+    "configurationTitle": "AI Translation Configuration",
+    "azureFormat": "Azure format: https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2024-02-15-preview",
+    "openaiLink": "OpenAI API Keys",
+    "claudeLink": "Anthropic Console",
+    "azureNote": "Find the key in the Cognitive Services resource in Azure Portal",
+    "ollamaNote": "Local Ollama usually doesn't require an API key, you can leave it empty or enter any value",
+    "securityNote": "Note: Your API key will be securely stored in your local browser and will not be uploaded to any server.",
+    "supportedServices": "Supported services: OpenAI, Claude, Azure OpenAI, Ollama local deployment and other services compatible with OpenAI API format.",
+    "openaiDescription": "Get from",
+    "claudeDescription": "Get from",
+    "smartSwitchTitle": "Smart Language Switch",
+    "smartSwitchDescription": "Automatically switch to English translation when inputting Chinese, and to Chinese translation when inputting English"
+  },
+  "presets": {
+    "openai": "OpenAI",
+    "claude": "Claude (Anthropic)",
+    "azure": "Azure OpenAI",
+    "ollama": "Ollama (Local)",
+    "custom": "Custom Service"
+  },
+  "messages": {
+    "apiKeyRequired": "API key is not configured. Please click the settings button in the upper right corner to configure your API key before translation.",
+    "testRequired": "Please configure API key and URL first",
+    "testSuccess": "Connection test successful! API configuration is valid.",
+    "testFailed": "Connection test failed",
+    "invalidApiKey": "Invalid API key, please check your key configuration",
+    "rateLimited": "Too many requests, please try again later",
+    "accessDenied": "API access denied, please check your permission configuration",
+    "timeout": "Connection timeout, please check network or API address",
+    "networkError": "Network connection failed, please check API address and network connection",
+    "apiError": "API error: {{message}}",
+    "responseFormatError": "Abnormal API response format",
+    "selectImageFile": "Please select an image file",
+    "unsupportedFormat": "Unsupported image format. Please use JPG, PNG or WEBP format.",
+    "fileTooLarge": "Image file is too large. Please select an image smaller than 10MB.",
+    "fileProcessError": "File processing error: {{message}}"
+  },
+  "tabs": {
+    "text": "Text",
+    "image": "Image"
+  },
+  "history": {
+    "title": "History"
+  },
+  "favorites": {
+    "title": "Saved"
+  }
+}

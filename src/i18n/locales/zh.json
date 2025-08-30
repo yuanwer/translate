@@ -1,0 +1,104 @@
+{
+  "app": {
+    "title": "Lingua",
+    "subtitle": "智能翻译，连接世界"
+  },
+  "language": {
+    "source": "源语言",
+    "target": "目标语言",
+    "swap": "交换语言",
+    "detected": "检测为",
+    "switch": "切换语言"
+  },
+  "translation": {
+    "inputPlaceholder": "输入要翻译的文本...",
+    "outputPlaceholder": "翻译结果将显示在这里...",
+    "inputLabel": "输入文本",
+    "outputLabel": "翻译结果",
+    "translateButton": "翻译",
+    "translating": "翻译中..."
+  },
+  "ocr": {
+    "ready": "OCR就绪",
+    "prewarming": "预热中",
+    "initializing": "正在初始化 OCR...",
+    "loadingModel": "正在加载 OCR 模型...",
+    "initializingEngine": "正在初始化识别引擎...",
+    "preparingAPI": "正在准备 API...",
+    "recognizing": "正在识别文字... {{percent}}%",
+    "completed": "文字识别完成！请点击翻译按钮进行翻译",
+    "noTextFound": "未能识别出文字，请尝试使用更清晰的图片",
+    "uploadImage": "上传图片进行OCR识别",
+    "dropToRecognize": "释放以识别图片文字",
+    "processing": "正在识别图片文字...",
+    "supportDirectInput": "支持直接输入文字",
+    "pasteImage": "粘贴图片 (Ctrl+V)",
+    "dragImage": "拖拽图片到输入框",
+    "clickToSelect": "点击图标选择图片"
+  },
+  "settings": {
+    "title": "设置",
+    "configTitle": "AI翻译配置",
+    "preset": "预设配置",
+    "serviceName": "服务名称",
+    "serviceNamePlaceholder": "显示名称",
+    "apiUrl": "API地址",
+    "apiUrlPlaceholder": "https://api.openai.com/v1/chat/completions",
+    "model": "模型",
+    "customModel": "自定义模型...",
+    "customModelPlaceholder": "输入自定义模型ID，如: gpt-4o-2024-08-06",
+    "modelPlaceholder": "模型名称，如: gpt-3.5-turbo",
+    "apiKey": "API密钥",
+    "apiKeyPlaceholder": "输入API密钥",
+    "testConnection": "测试连接",
+    "testing": "测试中...",
+    "smartSwitch": "智能语言切换",
+    "smartSwitchDesc": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译",
+    "configurationTitle": "AI翻译配置",
+    "azureFormat": "Azure格式：https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2024-02-15-preview",
+    "openaiLink": "OpenAI API Keys",
+    "claudeLink": "Anthropic Console",
+    "azureNote": "在Azure Portal的认知服务资源中找到密钥",
+    "ollamaNote": "本地Ollama通常不需要API密钥，可以留空或填入任意值",
+    "securityNote": "注意：您的API密钥将安全保存在本地浏览器中，不会上传到任何服务器。",
+    "supportedServices": "支持的服务：OpenAI、Claude、Azure OpenAI、Ollama本地部署等兼容OpenAI API格式的服务。",
+    "openaiDescription": "获取地址",
+    "claudeDescription": "获取地址",
+    "smartSwitchTitle": "智能语言切换",
+    "smartSwitchDescription": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译"
+  },
+  "presets": {
+    "openai": "OpenAI",
+    "claude": "Claude (Anthropic)",
+    "azure": "Azure OpenAI",
+    "ollama": "Ollama (本地)",
+    "custom": "自定义服务"
+  },
+  "messages": {
+    "apiKeyRequired": "API密钥未配置，请点击右上角设置按钮配置您的API密钥后再进行翻译。",
+    "testRequired": "请先配置API密钥和地址",
+    "testSuccess": "连接测试成功！API配置有效。",
+    "testFailed": "连接测试失败",
+    "invalidApiKey": "API密钥无效，请检查您的密钥配置",
+    "rateLimited": "请求过于频繁，请稍后重试",
+    "accessDenied": "API访问被拒绝，请检查您的权限配置",
+    "timeout": "连接超时，请检查网络或API地址",
+    "networkError": "网络连接失败，请检查API地址和网络连接",
+    "apiError": "API错误: {{message}}",
+    "responseFormatError": "API返回格式异常",
+    "selectImageFile": "请选择图片文件",
+    "unsupportedFormat": "不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。",
+    "fileTooLarge": "图片文件过大。请选择小于 10MB 的图片。",
+    "fileProcessError": "文件处理错误: {{message}}"
+  },
+  "tabs": {
+    "text": "文字",
+    "image": "图片"
+  },
+  "history": {
+    "title": "历史记录"
+  },
+  "favorites": {
+    "title": "已保存"
+  }
+}
