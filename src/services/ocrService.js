@@ -1,4 +1,5 @@
 import { createWorker } from 'tesseract.js'
+import i18n from '../i18n'
 
 export class OCRService {
   constructor() {
@@ -40,7 +41,7 @@ export class OCRService {
 
     for (const config of cdnConfigs) {
       try {
-        console.log(`尝试使用${config.name}初始化OCR...`)
+        console.log(`${i18n.t('console.ocr.tryingCdn')}\${config.name}...`)
         
         const workerOptions = {
           logger: m => {
@@ -57,17 +58,17 @@ export class OCRService {
 
         this.worker = await createWorker(language, 1, workerOptions)
         this.isInitialized = true
-        console.log(`OCR初始化成功，使用${config.name}`)
+        console.log(`${i18n.t('console.ocr.initSuccess')}\${config.name}`)
         return this.worker
 
       } catch (error) {
-        console.warn(`${config.name}初始化失败:`, error.message)
+        console.warn(`${config.name}${i18n.t('errors.ocr.initFailed').split('，')[0]}:`, error.message)
         lastError = error
         continue
       }
     }
 
-    throw new Error(`OCR初始化失败，所有CDN都无法访问: ${lastError?.message}`)
+    throw new Error(`${i18n.t('errors.ocr.initFailed')}: ${lastError?.message}`)
   }
 
   async recognizeText(imageFile, options = {}) {
@@ -90,7 +91,7 @@ export class OCRService {
         paragraphs: data.paragraphs
       }
     } catch (error) {
-      throw new Error(`文字识别失败: ${error.message}`)
+      throw new Error(`${i18n.t('errors.ocr.recognitionFailed')}: ${error.message}`)
     }
   }
 
@@ -104,11 +105,11 @@ export class OCRService {
     this.preWarmError = null
     
     try {
-      console.log('开始OCR预热...')
+      console.log(i18n.t('console.ocr.prewarming'))
       await this.initializeWorker(language)
-      console.log('OCR预热完成')
+      console.log(i18n.t('console.ocr.prewarmComplete'))
     } catch (error) {
-      console.warn('OCR预热失败，将在实际使用时初始化:', error.message)
+      console.warn(`${i18n.t('errors.ocr.initFailed').replace('，所有CDN都无法访问', '')}，将在实际使用时初始化:`, error.message)
       this.preWarmError = error
     } finally {
       this.isPreWarming = false
@@ -160,7 +161,7 @@ export class OCRService {
     const maxSize = 10 * 1024 * 1024 // 10MB
 
     if (!allowedTypes.includes(file.type)) {
-      throw new Error('不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。')
+      throw new Error(i18n.t('errors.ocr.unsupportedFormat'))
     }
 
     if (file.size > maxSize) {

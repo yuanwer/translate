@@ -1,4 +1,5 @@
 // 文本转语音服务
+import i18n from '../i18n'
 export class TTSService {
   constructor() {
     this.synthesis = window.speechSynthesis
@@ -24,7 +25,7 @@ export class TTSService {
   // 初始化语音列表
   async initVoices() {
     if (!this.isSupported) {
-      console.warn('TTS: 浏览器不支持 Web Speech API')
+      console.warn(`TTS: ${i18n.t('console.tts.notSupported')}`)
       return
     }
     
@@ -144,12 +145,12 @@ export class TTSService {
   speak(text, options = {}) {
     return new Promise((resolve, reject) => {
       if (!this.isSupported) {
-        reject(new Error('浏览器不支持语音合成功能'))
+        reject(new Error(i18n.t('errors.tts.notSupported')))
         return
       }
       
       if (!text || text.trim().length === 0) {
-        reject(new Error('朗读文本不能为空'))
+        reject(new Error(i18n.t('errors.tts.emptyText')))
         return
       }
       
@@ -184,11 +185,11 @@ export class TTSService {
       
       // 设置事件监听器
       utterance.onstart = () => {
-        console.log('TTS: 开始朗读')
+        console.log(`TTS: ${i18n.t('console.tts.starting')}`)
       }
       
       utterance.onend = () => {
-        console.log('TTS: 朗读结束')
+        console.log(`TTS: ${i18n.t('console.tts.ended')}`)
         this.currentUtterance = null
         resolve()
       }
@@ -196,15 +197,15 @@ export class TTSService {
       utterance.onerror = (event) => {
         console.error('TTS错误:', event)
         this.currentUtterance = null
-        reject(new Error(`语音合成错误: ${event.error}`))
+        reject(new Error(`${i18n.t('errors.tts.synthesisError')}: ${event.error}`))
       }
       
       utterance.onpause = () => {
-        console.log('TTS: 朗读暂停')
+        console.log(`TTS: ${i18n.t('console.tts.paused')}`)
       }
       
       utterance.onresume = () => {
-        console.log('TTS: 朗读恢复')
+        console.log(`TTS: ${i18n.t('console.tts.resumed')}`)
       }
       
       // 保存当前实例

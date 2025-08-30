@@ -1,8 +1,10 @@
 import { useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 
 export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onError, isProcessing = false, onReset }, ref) {
+  const { t } = useTranslation()
   const [dragActive, setDragActive] = useState(false)
   const [hasSelectedImage, setHasSelectedImage] = useState(false)
   const fileInputRef = useRef(null)
@@ -13,28 +15,28 @@ export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onEr
 
     try {
       if (!file.type.startsWith('image/')) {
-        onError('请选择图片文件')
+        onError(t('errors.file.notImageFile'))
         return
       }
 
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
       if (!allowedTypes.includes(file.type)) {
-        onError('不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。')
+        onError(t('errors.file.unsupportedFormat'))
         return
       }
 
       const maxSize = 10 * 1024 * 1024 // 10MB
       if (file.size > maxSize) {
-        onError('图片文件过大。请选择小于 10MB 的图片。')
+        onError(t('errors.file.fileTooLarge'))
         return
       }
 
       setHasSelectedImage(true)
       onImageUpload(file)
     } catch (error) {
-      onError(`文件处理错误: ${error.message}`)
+      onError(`${t('errors.file.processError')}: ${error.message}`)
     }
-  }, [onImageUpload, onError])
+  }, [onImageUpload, onError, t])
 
   const handleDrag = useCallback((e) => {
     e.preventDefault()

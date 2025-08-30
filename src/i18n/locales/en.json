@@ -8,7 +8,8 @@
     "target": "Target Language",
     "swap": "Swap Languages",
     "detected": "Detected as",
-    "switch": "Switch Language"
+    "switch": "Switch Language",
+    "detectLanguage": "Detect Language"
   },
   "translation": {
     "inputPlaceholder": "Enter text to translate...",
@@ -121,5 +122,49 @@
     "voice": "Voice",
     "autoDetect": "Auto detect language",
     "testVoice": "Test Voice"
+  },
+  "errors": {
+    "tts": {
+      "notSupported": "Browser doesn't support speech synthesis",
+      "emptyText": "Speech text cannot be empty",
+      "synthesisError": "Speech synthesis error",
+      "notReady": "Speech functionality is not ready yet"
+    },
+    "file": {
+      "notImageFile": "Please select an image file",
+      "unsupportedFormat": "Unsupported image format. Please use JPG, PNG or WEBP format.",
+      "fileTooLarge": "Image file is too large. Please select an image smaller than 10MB.",
+      "processError": "File processing error"
+    },
+    "translate": {
+      "apiKeyRequired": "AI translation requires API key configuration",
+      "apiUrlRequired": "AI translation requires API URL configuration",
+      "responseFormatError": "API response format error",
+      "invalidApiKey": "Invalid API key, please check your key configuration",
+      "rateLimited": "Too many requests, please try again later",
+      "accessDenied": "API access denied, please check your permission configuration",
+      "networkError": "Network connection failed, please check API address and network connection",
+      "apiError": "Translation error"
+    },
+    "ocr": {
+      "initFailed": "OCR initialization failed, all CDNs are inaccessible",
+      "recognitionFailed": "Text recognition failed",
+      "unsupportedFormat": "Unsupported image format. Please use JPG, PNG or WEBP format."
+    }
+  },
+  "console": {
+    "tts": {
+      "starting": "Starting speech",
+      "ended": "Speech ended",
+      "paused": "Speech paused",
+      "resumed": "Speech resumed",
+      "notSupported": "Browser doesn't support Web Speech API"
+    },
+    "ocr": {
+      "prewarming": "Starting OCR prewarming...",
+      "prewarmComplete": "OCR prewarming completed",
+      "tryingCdn": "Trying to initialize OCR using CDN...",
+      "initSuccess": "OCR initialization successful, using CDN"
+    }
   }
 }

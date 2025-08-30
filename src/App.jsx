@@ -134,7 +134,7 @@ function App() {
       console.error('Translation error:', error)
       let errorMessage = error.message
       
-      if (error.message.includes('AI翻译需要配置API密钥')) {
+      if (error.message.includes(t('errors.translate.apiKeyRequired'))) {
         errorMessage = t('messages.apiKeyRequired')
       }
       

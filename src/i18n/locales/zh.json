@@ -8,7 +8,8 @@
     "target": "目标语言",
     "swap": "交换语言",
     "detected": "检测为",
-    "switch": "切换语言"
+    "switch": "切换语言",
+    "detectLanguage": "检测语言"
   },
   "translation": {
     "inputPlaceholder": "输入要翻译的文本...",
@@ -121,5 +122,49 @@
     "voice": "语音",
     "autoDetect": "自动检测语言",
     "testVoice": "测试语音"
+  },
+  "errors": {
+    "tts": {
+      "notSupported": "浏览器不支持语音合成功能",
+      "emptyText": "朗读文本不能为空",
+      "synthesisError": "语音合成错误",
+      "notReady": "语音功能尚未准备就绪"
+    },
+    "file": {
+      "notImageFile": "请选择图片文件",
+      "unsupportedFormat": "不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。",
+      "fileTooLarge": "图片文件过大。请选择小于 10MB 的图片。",
+      "processError": "文件处理错误"
+    },
+    "translate": {
+      "apiKeyRequired": "AI翻译需要配置API密钥",
+      "apiUrlRequired": "AI翻译需要配置API地址",
+      "responseFormatError": "API返回格式错误",
+      "invalidApiKey": "API密钥无效，请检查您的密钥配置",
+      "rateLimited": "请求过于频繁，请稍后重试",
+      "accessDenied": "API访问被拒绝，请检查您的权限配置",
+      "networkError": "网络连接失败，请检查API地址和网络连接",
+      "apiError": "翻译错误"
+    },
+    "ocr": {
+      "initFailed": "OCR初始化失败，所有CDN都无法访问",
+      "recognitionFailed": "文字识别失败",
+      "unsupportedFormat": "不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。"
+    }
+  },
+  "console": {
+    "tts": {
+      "starting": "开始朗读",
+      "ended": "朗读结束",
+      "paused": "朗读暂停",
+      "resumed": "朗读恢复",
+      "notSupported": "浏览器不支持 Web Speech API"
+    },
+    "ocr": {
+      "prewarming": "开始OCR预热...",
+      "prewarmComplete": "OCR预热完成",
+      "tryingCdn": "尝试使用CDN初始化OCR...",
+      "initSuccess": "OCR初始化成功，使用CDN"
+    }
   }
 }

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import i18n from '../i18n'
 
 export class TranslateService {
   constructor() {
@@ -34,11 +35,11 @@ class AITranslateService {
     } = config
     
     if (!apiKey) {
-      throw new Error('AI翻译需要配置API密钥')
+      throw new Error(i18n.t('errors.translate.apiKeyRequired'))
     }
 
     if (!url) {
-      throw new Error('AI翻译需要配置API地址')
+      throw new Error(i18n.t('errors.translate.apiUrlRequired'))
     }
 
     try {
@@ -86,7 +87,7 @@ ${text}`
       )
 
       if (!response.data?.choices?.[0]?.message?.content) {
-        throw new Error('API返回格式错误')
+        throw new Error(i18n.t('errors.translate.responseFormatError'))
       }
 
       const content = response.data.choices[0].message.content.trim()
@@ -114,15 +115,15 @@ ${text}`
       }
     } catch (error) {
       if (error.response?.status === 401) {
-        throw new Error('API密钥无效，请检查您的密钥配置')
+        throw new Error(i18n.t('errors.translate.invalidApiKey'))
       } else if (error.response?.status === 429) {
-        throw new Error('请求过于频繁，请稍后重试')
+        throw new Error(i18n.t('errors.translate.rateLimited'))
       } else if (error.response?.status === 403) {
-        throw new Error('API访问被拒绝，请检查您的权限配置')
+        throw new Error(i18n.t('errors.translate.accessDenied'))
       } else if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
-        throw new Error('网络连接失败，请检查API地址和网络连接')
+        throw new Error(i18n.t('errors.translate.networkError'))
       } else {
-        throw new Error(`${serviceName}翻译错误: ${error.response?.data?.error?.message || error.message}`)
+        throw new Error(`${serviceName}${i18n.t('errors.translate.apiError')}: ${error.response?.data?.error?.message || error.message}`)
       }
     }
   }

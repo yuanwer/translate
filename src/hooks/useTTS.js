@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { ttsService } from '../services/ttsService'
+import { useTranslation } from 'react-i18next'
 
 export function useTTS() {
+  const { t } = useTranslation()
   const [isSupported, setIsSupported] = useState(false)
   const [isReady, setIsReady] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
@@ -49,11 +51,11 @@ export function useTTS() {
   // 朗读文本
   const speak = useCallback(async (text, options = {}) => {
     if (!isSupported) {
-      throw new Error('浏览器不支持语音合成功能')
+      throw new Error(t('errors.tts.notSupported'))
     }
     
     if (!isReady) {
-      throw new Error('语音功能尚未准备就绪')
+      throw new Error(t('errors.tts.notReady'))
     }
     
     setError('')
@@ -64,7 +66,7 @@ export function useTTS() {
       setError(error.message)
       throw error
     }
-  }, [isSupported, isReady])
+  }, [isSupported, isReady, t])
   
   // 停止朗读
   const stop = useCallback(() => {

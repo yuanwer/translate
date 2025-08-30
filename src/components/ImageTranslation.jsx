@@ -154,7 +154,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
       console.error('Translation error:', error)
       let errorMessage = error.message
       
-      if (error.message.includes('AI翻译需要配置API密钥')) {
+      if (error.message.includes(t('errors.translate.apiKeyRequired'))) {
         errorMessage = t('messages.apiKeyRequired')
       }
       
@@ -276,7 +276,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
             <div className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-gray-600 uppercase">
-                  {sourceLang === 'auto' ? t('language.detectLanguage', '检测语言') : (languages.find(lang => lang.code === sourceLang)?.name || sourceLang)}
+                  {sourceLang === 'auto' ? t('language.detectLanguage') : (languages.find(lang => lang.code === sourceLang)?.name || sourceLang)}
                 </span>
                 {detectedLanguage && sourceLang === 'auto' && (
                   <span className="text-xs text-blue-600">
