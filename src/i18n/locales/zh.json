@@ -100,5 +100,26 @@
   },
   "favorites": {
     "title": "已保存"
+  },
+  "common": {
+    "copySuccess": "复制成功",
+    "copyFailed": "复制失败"
+  },
+  "tts": {
+    "speak": "朗读",
+    "speakInput": "朗读输入文本",
+    "speakOutput": "朗读翻译结果",
+    "stop": "停止朗读",
+    "pause": "暂停朗读",
+    "resume": "继续朗读",
+    "notSupported": "浏览器不支持语音合成",
+    "speakError": "朗读失败",
+    "settings": "语音设置",
+    "rate": "语速",
+    "pitch": "音调",
+    "volume": "音量",
+    "voice": "语音",
+    "autoDetect": "自动检测语言",
+    "testVoice": "测试语音"
   }
 }

@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useToast } from './hooks/useToast'
+import { useTTS } from './hooks/useTTS'
 import { translateService } from './services/translateService'
 import { ocrService } from './services/ocrService'
 import ServiceConfig from './components/ServiceConfig'
@@ -17,6 +19,16 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 
 function App() {
   const { t } = useTranslation()
+  const { success } = useToast()
+  const { 
+    speak, 
+    stop, 
+    isSpeaking, 
+    isPaused, 
+    canSpeak, 
+    isSupported: ttsSupported,
+    detectTextLanguage 
+  } = useTTS()
   // 文本翻译相关状态
   const [inputText, setInputText] = useState('')
   const [outputText, setOutputText] = useState('')
@@ -139,6 +151,31 @@ function App() {
       setTargetLang(sourceLang)
       setInputText(outputText)
       setOutputText(inputText)
+    }
+  }
+
+  // 处理文本朗读
+  const handleSpeak = async (text, language = null) => {
+    if (!text || !text.trim()) return
+    
+    try {
+      // 停止当前朗读
+      if (isSpeaking || isPaused) {
+        stop()
+        return
+      }
+      
+      // 确定语言
+      let speakLang = language
+      if (!speakLang) {
+        speakLang = detectTextLanguage(text)
+      }
+      
+      // 开始朗读
+      await speak(text, { language: speakLang })
+    } catch (error) {
+      console.error('TTS错误:', error)
+      setError(`朗读失败: ${error.message}`)
     }
   }
 
@@ -337,6 +374,36 @@ function App() {
                 <div className="absolute bottom-4 left-4 flex items-center gap-2 text-gray-400 text-xs">
                   <span>{inputText.length} / 5000</span>
                 </div>
+                {inputText && (
+                  <div className="absolute bottom-4 right-4">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleSpeak(inputText, sourceLang === 'auto' ? detectedLanguage || sourceLang : sourceLang)}
+                      disabled={!ttsSupported || !canSpeak}
+                      className={`text-xs ${
+                        isSpeaking || isPaused
+                          ? 'text-blue-600 hover:text-blue-700' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                      title={
+                        !ttsSupported 
+                          ? t('tts.notSupported', '浏览器不支持语音合成')
+                          : isSpeaking 
+                            ? t('tts.stop', '停止朗读')
+                            : t('tts.speak', '朗读输入文本')
+                      }
+                    >
+                      <i className={`fas ${
+                        isSpeaking 
+                          ? 'fa-stop' 
+                          : isPaused 
+                            ? 'fa-play' 
+                            : 'fa-volume-up'
+                      } text-xs`}></i>
+                    </Button>
+                  </div>
+                )}
               </div>
 
               {/* 右侧输出区域 */}
@@ -351,7 +418,14 @@ function App() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => navigator.clipboard?.writeText(outputText)}
+                          onClick={async () => {
+                            try {
+                              await navigator.clipboard?.writeText(outputText)
+                              success(t('common.copySuccess', '复制成功'))
+                            } catch (error) {
+                              console.error('复制失败:', error)
+                            }
+                          }}
                           className="text-gray-500 hover:text-gray-700"
                           title="复制"
                         >
@@ -360,11 +434,28 @@ function App() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          disabled
-                          className="text-gray-400 cursor-not-allowed"
-                          title="朗读（待实现）"
+                          onClick={() => handleSpeak(outputText, targetLang)}
+                          disabled={!ttsSupported || !canSpeak}
+                          className={`text-xs ${
+                            isSpeaking || isPaused
+                              ? 'text-blue-600 hover:text-blue-700' 
+                              : 'text-gray-500 hover:text-gray-700'
+                          }`}
+                          title={
+                            !ttsSupported 
+                              ? t('tts.notSupported', '浏览器不支持语音合成')
+                              : isSpeaking 
+                                ? t('tts.stop', '停止朗读')
+                                : t('tts.speak', '朗读')
+                          }
                         >
-                          <i className="fas fa-volume-up text-xs"></i>
+                          <i className={`fas ${
+                            isSpeaking 
+                              ? 'fa-stop' 
+                              : isPaused 
+                                ? 'fa-play' 
+                                : 'fa-volume-up'
+                          } text-xs`}></i>
                         </Button>
                       </div>
                     )}

@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useToast } from '../hooks/useToast'
 import { translateService } from '../services/translateService'
 import { ocrService } from '../services/ocrService'
 import { ImageUpload } from './ImageUpload'
@@ -10,6 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 
 export function ImageTranslation({ serviceConfig, languages }) {
   const { t } = useTranslation()
+  const { success } = useToast()
   const imageUploadRef = useRef(null)
   
   // 图片翻译专用状态
@@ -294,7 +296,14 @@ export function ImageTranslation({ serviceConfig, languages }) {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => navigator.clipboard?.writeText(recognizedText)}
+                    onClick={async () => {
+                      try {
+                        await navigator.clipboard?.writeText(recognizedText)
+                        success(t('common.copySuccess', '复制成功'))
+                      } catch (error) {
+                        console.error('复制失败:', error)
+                      }
+                    }}
                     className="text-gray-500 hover:text-gray-700"
                     title="复制识别结果"
                   >
@@ -317,7 +326,14 @@ export function ImageTranslation({ serviceConfig, languages }) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => navigator.clipboard?.writeText(translatedText)}
+                      onClick={async () => {
+                        try {
+                          await navigator.clipboard?.writeText(translatedText)
+                          success(t('common.copySuccess', '复制成功'))
+                        } catch (error) {
+                          console.error('复制失败:', error)
+                        }
+                      }}
                       className="text-gray-500 hover:text-gray-700"
                       title="复制翻译结果"
                     >

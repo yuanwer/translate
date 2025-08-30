@@ -100,5 +100,26 @@
   },
   "favorites": {
     "title": "Saved"
+  },
+  "common": {
+    "copySuccess": "Copied successfully",
+    "copyFailed": "Copy failed"
+  },
+  "tts": {
+    "speak": "Speak",
+    "speakInput": "Read input text",
+    "speakOutput": "Read translation result",
+    "stop": "Stop reading",
+    "pause": "Pause reading",
+    "resume": "Resume reading",
+    "notSupported": "Browser doesn't support speech synthesis",
+    "speakError": "Failed to read",
+    "settings": "Speech Settings",
+    "rate": "Speech Rate",
+    "pitch": "Pitch",
+    "volume": "Volume",
+    "voice": "Voice",
+    "autoDetect": "Auto detect language",
+    "testVoice": "Test Voice"
   }
 }
