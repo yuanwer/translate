@@ -28,7 +28,7 @@ export function Modal({ isOpen, onClose, title, children }) {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 p-4"
+      className="fixed inset-0 z-50 flex justify-center pt-[8vh] bg-gray-900/50 p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose()
