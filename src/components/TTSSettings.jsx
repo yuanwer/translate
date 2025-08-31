@@ -62,7 +62,7 @@ const TTSSettings = () => {
           className="text-xs text-gray-500 hover:text-gray-700"
         >
           <i className="fas fa-undo mr-1"></i>
-          重置
+          {t('common.reset')}
         </Button>
       </div>
 
@@ -131,7 +131,7 @@ const TTSSettings = () => {
             value={config.voiceIndex.toString()} 
             onValueChange={(value) => handleConfigChange('voiceIndex', parseInt(value))}
           >
-            <SelectItem value="-1">自动选择</SelectItem>
+            <SelectItem value="-1">{t('tts.autoSelect')}</SelectItem>
             {voices.map((voice, index) => (
               <SelectItem key={index} value={index.toString()}>
                 {voice.name} ({voice.lang})
@@ -162,7 +162,7 @@ const TTSSettings = () => {
           </label>
         </div>
         <p className="text-xs text-gray-500">
-          根据文本内容自动选择合适的语音
+          {t('tts.autoDetectDescription')}
         </p>
       </div>
 
@@ -180,7 +180,7 @@ const TTSSettings = () => {
         </Button>
         {!isReady && (
           <p className="text-xs text-gray-500 mt-2 text-center">
-            语音功能准备中...
+            {t('tts.initializing')}
           </p>
         )}
       </div>

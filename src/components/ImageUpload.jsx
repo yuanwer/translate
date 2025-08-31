@@ -146,12 +146,12 @@ export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onEr
                 <i className="fas fa-cloud-upload-alt text-4xl"></i>
               </div>
               <div>
-                <p className="text-lg font-medium text-gray-700">上传图片进行文字识别</p>
+                <p className="text-lg font-medium text-gray-700">{t('ocr.uploadImage')}</p>
                 <p className="text-sm text-gray-500 mt-2">
-                  支持拖拽上传、点击选择或粘贴图片 (Ctrl/Cmd + V)
+                  {t('ocr.uploadInstructions')}
                 </p>
                 <p className="text-xs text-gray-400 mt-2">
-                  支持格式: JPG, PNG, WEBP | 最大大小: 10MB
+                  {t('ocr.supportedFormats')}
                 </p>
               </div>
               <Button
@@ -160,7 +160,7 @@ export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onEr
                 className="mt-4"
               >
                 <i className="fas fa-folder-open mr-2"></i>
-                选择图片
+                {t('ocr.selectImage')}
               </Button>
             </div>
 
@@ -168,7 +168,7 @@ export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onEr
               <div className="absolute inset-0 flex items-center justify-center bg-white/90 rounded-lg">
                 <div className="text-center">
                   <i className="fas fa-spinner fa-spin text-2xl text-blue-500 mb-2"></i>
-                  <p className="text-sm text-gray-600">正在处理图片...</p>
+                  <p className="text-sm text-gray-600">{t('ocr.processingImage')}</p>
                 </div>
               </div>
             )}
@@ -178,7 +178,7 @@ export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onEr
             <div className="flex items-center">
               <i className="fas fa-info-circle text-blue-600 mr-3"></i>
               <span className="text-sm text-blue-800">
-                提示：支持中英混合识别。识别准确度取决于图片清晰度和文字大小。
+                {t('ocr.recognitionTip')}
               </span>
             </div>
           </div>

@@ -288,10 +288,10 @@ export function ImageTranslation({ serviceConfig, languages }) {
                 value={recognizedText}
                 onChange={(e) => setRecognizedText(e.target.value)}
                 className="min-h-[300px] resize-none border-0"
-                placeholder={t('ocr.recognizedText', '识别出的文本')}
+                placeholder={t('ocr.recognizedText')}
               />
               <div className="flex items-center justify-between mt-2">
-                <span className="text-xs text-gray-400">{recognizedText.length} 字符</span>
+                <span className="text-xs text-gray-400">{recognizedText.length} {t('common.characters')}</span>
                 <div className="flex gap-1">
                   <Button
                     variant="ghost"
@@ -305,7 +305,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
                       }
                     }}
                     className="text-gray-500 hover:text-gray-700"
-                    title="复制识别结果"
+                    title={t('ocr.copyRecognized')}
                   >
                     <i className="fas fa-copy text-xs"></i>
                   </Button>
@@ -335,7 +335,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
                         }
                       }}
                       className="text-gray-500 hover:text-gray-700"
-                      title="复制翻译结果"
+                      title={t('translation.copyTranslation')}
                     >
                       <i className="fas fa-copy text-xs"></i>
                     </Button>
@@ -372,7 +372,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
             onClick={resetImageSelection}
             className="px-6 py-3 rounded-full"
           >
-            <i className="fas fa-image mr-2"></i>重新选择图片
+            <i className="fas fa-image mr-2"></i>{t('ocr.reselectImage')}
           </Button>
         </div>
       )}

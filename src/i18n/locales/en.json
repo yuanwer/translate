@@ -17,7 +17,8 @@
     "inputLabel": "Input Text",
     "outputLabel": "Translation Result",
     "translateButton": "Translate",
-    "translating": "Translating..."
+    "translating": "Translating...",
+    "copyTranslation": "Copy translation result"
   },
   "ocr": {
     "ready": "OCR Ready",
@@ -29,7 +30,15 @@
     "recognizing": "Recognizing text... {{percent}}%",
     "completed": "Text recognition completed! Please click the translate button to proceed.",
     "noTextFound": "No text could be recognized. Please try using a clearer image.",
-    "uploadImage": "Upload image for OCR recognition",
+    "uploadImage": "Upload image for text recognition",
+    "uploadInstructions": "Support drag & drop, click to select, or paste image (Ctrl/Cmd + V)",
+    "supportedFormats": "Supported formats: JPG, PNG, WEBP | Max size: 10MB",
+    "selectImage": "Select Image",
+    "processingImage": "Processing image...",
+    "recognitionTip": "Tip: Supports mixed Chinese and English recognition. Recognition accuracy depends on image clarity and text size.",
+    "recognizedText": "Recognized text",
+    "copyRecognized": "Copy recognized text",
+    "reselectImage": "Reselect Image",
     "dropToRecognize": "Drop to recognize text from image",
     "processing": "Recognizing text from image...",
     "supportDirectInput": "Support direct text input",
@@ -104,7 +113,9 @@
   },
   "common": {
     "copySuccess": "Copied successfully",
-    "copyFailed": "Copy failed"
+    "copyFailed": "Copy failed",
+    "reset": "Reset",
+    "characters": "characters"
   },
   "tts": {
     "speak": "Speak",
@@ -121,7 +132,10 @@
     "volume": "Volume",
     "voice": "Voice",
     "autoDetect": "Auto detect language",
-    "testVoice": "Test Voice"
+    "testVoice": "Test Voice",
+    "autoSelect": "Auto Select",
+    "autoDetectDescription": "Automatically select appropriate voice based on text content",
+    "initializing": "Voice functionality is initializing..."
   },
   "errors": {
     "tts": {
@@ -150,6 +164,34 @@
       "initFailed": "OCR initialization failed, all CDNs are inaccessible",
       "recognitionFailed": "Text recognition failed",
       "unsupportedFormat": "Unsupported image format. Please use JPG, PNG or WEBP format."
+    }
+  },
+  "config": {
+    "ai": {
+      "title": "AI Translation Settings",
+      "description": "Configure AI translation behavior and smart features",
+      "tips": "Usage Tips",
+      "tip1": "Smart language switch can automatically select the appropriate target language based on input content",
+      "tip2": "When Chinese input is detected, it will automatically switch to English translation",
+      "tip3": "When English input is detected, it will automatically switch to Chinese translation"
+    },
+    "tabs": {
+      "ai": "AI Translation",
+      "api": "API Configuration",
+      "voice": "Voice Settings"
+    },
+    "api": {
+      "title": "API Configuration",
+      "description": "Configure AI service providers and API keys"
+    },
+    "voice": {
+      "title": "Voice Settings",
+      "description": "Configure text-to-speech parameters and options",
+      "tips": "Usage Instructions",
+      "tip1": "Voice functionality is based on the browser's built-in Web Speech API",
+      "tip2": "Different browsers may support different numbers and qualities of voices",
+      "tip3": "Auto language detection can select appropriate voice based on text content",
+      "tip4": "You can preview current voice settings using the test button"
     }
   },
   "console": {

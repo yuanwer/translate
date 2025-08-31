@@ -17,7 +17,8 @@
     "inputLabel": "输入文本",
     "outputLabel": "翻译结果",
     "translateButton": "翻译",
-    "translating": "翻译中..."
+    "translating": "翻译中...",
+    "copyTranslation": "复制翻译结果"
   },
   "ocr": {
     "ready": "OCR就绪",
@@ -29,7 +30,15 @@
     "recognizing": "正在识别文字... {{percent}}%",
     "completed": "文字识别完成！请点击翻译按钮进行翻译",
     "noTextFound": "未能识别出文字，请尝试使用更清晰的图片",
-    "uploadImage": "上传图片进行OCR识别",
+    "uploadImage": "上传图片进行文字识别",
+    "uploadInstructions": "支持拖拽上传、点击选择或粘贴图片 (Ctrl/Cmd + V)",
+    "supportedFormats": "支持格式: JPG, PNG, WEBP | 最大大小: 10MB",
+    "selectImage": "选择图片",
+    "processingImage": "正在处理图片...",
+    "recognitionTip": "提示：支持中英混合识别。识别准确度取决于图片清晰度和文字大小。",
+    "recognizedText": "识别出的文本",
+    "copyRecognized": "复制识别结果",
+    "reselectImage": "重新选择图片",
     "dropToRecognize": "释放以识别图片文字",
     "processing": "正在识别图片文字...",
     "supportDirectInput": "支持直接输入文字",
@@ -104,7 +113,9 @@
   },
   "common": {
     "copySuccess": "复制成功",
-    "copyFailed": "复制失败"
+    "copyFailed": "复制失败",
+    "reset": "重置",
+    "characters": "字符"
   },
   "tts": {
     "speak": "朗读",
@@ -121,7 +132,10 @@
     "volume": "音量",
     "voice": "语音",
     "autoDetect": "自动检测语言",
-    "testVoice": "测试语音"
+    "testVoice": "测试语音",
+    "autoSelect": "自动选择",
+    "autoDetectDescription": "根据文本内容自动选择合适的语音",
+    "initializing": "语音功能准备中..."
   },
   "errors": {
     "tts": {
@@ -150,6 +164,34 @@
       "initFailed": "OCR初始化失败，所有CDN都无法访问",
       "recognitionFailed": "文字识别失败",
       "unsupportedFormat": "不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。"
+    }
+  },
+  "config": {
+    "ai": {
+      "title": "AI翻译设置",
+      "description": "配置AI翻译的行为和智能功能",
+      "tips": "使用提示",
+      "tip1": "智能语言切换可以根据输入内容自动选择合适的目标语言",
+      "tip2": "当检测到中文输入时，会自动切换到英文翻译",
+      "tip3": "当检测到英文输入时，会自动切换到中文翻译"
+    },
+    "tabs": {
+      "ai": "AI翻译",
+      "api": "API配置",
+      "voice": "语音设置"
+    },
+    "api": {
+      "title": "API配置",
+      "description": "配置AI服务提供商和API密钥"
+    },
+    "voice": {
+      "title": "语音设置",
+      "description": "配置文本转语音功能的参数和选项",
+      "tips": "使用说明",
+      "tip1": "语音功能基于浏览器内置的Web Speech API",
+      "tip2": "不同浏览器支持的语音数量和质量可能不同",
+      "tip3": "自动语言检测可以根据文本内容选择合适的语音",
+      "tip4": "可以通过测试按钮预览当前设置的语音效果"
     }
   },
   "console": {

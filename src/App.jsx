@@ -371,9 +371,6 @@ function App() {
                     className="border-0"
                   />
                 </div>
-                <div className="absolute bottom-4 left-4 flex items-center gap-2 text-gray-400 text-xs">
-                  <span>{inputText.length} / 5000</span>
-                </div>
                 {inputText && (
                   <div className="absolute bottom-4 right-4">
                     <Button
