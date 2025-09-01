@@ -1,19 +1,19 @@
 import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useToast } from '../hooks/useToast'
 import { translateService } from '../services/translateService'
 import { ocrService } from '../services/ocrService'
+import { useLanguageDetection } from '../hooks/useLanguageDetection'
 import { ImageUpload } from './ImageUpload'
-import LanguageTabs from './LanguageTabs'
+import LanguageSelector from './LanguageSelector'
+import TranslationPanel from './TranslationPanel'
 import OCRCorrectButton from './OCRCorrectButton'
+import { StatusAlert } from '@/components/ui/status-alert'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Alert, AlertDescription } from '@/components/ui/alert'
 
 export function ImageTranslation({ serviceConfig, languages }) {
   const { t } = useTranslation()
-  const { success } = useToast()
   const imageUploadRef = useRef(null)
+  const { getSmartTargetLanguage, updateLanguageFromDetection } = useLanguageDetection()
   
   // 图片翻译专用状态
   const [recognizedText, setRecognizedText] = useState('')
@@ -27,22 +27,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
   const [detectedLanguage, setDetectedLanguage] = useState('')
   const [hasSelectedImage, setHasSelectedImage] = useState(false)
 
-  // 检测文本中中文字符的比例
-  const detectChineseRatio = (text) => {
-    if (!text || text.trim().length === 0) return 0
-    
-    const chineseRegex = /[\u4e00-\u9fff]/g
-    const chineseMatches = text.match(chineseRegex) || []
-    const totalChars = text.replace(/\s/g, '').length
-    
-    return totalChars > 0 ? chineseMatches.length / totalChars : 0
-  }
-
-  // 智能语言切换预判
-  const predictSourceLanguage = (text) => {
-    const chineseRatio = detectChineseRatio(text)
-    return chineseRatio > 0.3 ? 'zh' : 'en'
-  }
+  const autoSwitchLang = serviceConfig.autoSwitchLang !== false
 
   // 处理图片上传和OCR识别
   const handleImageUpload = async (imageFile) => {
@@ -75,13 +60,10 @@ export function ImageTranslation({ serviceConfig, languages }) {
         setHasSelectedImage(true)
         
         // 智能语言切换
-        const autoSwitchLang = serviceConfig.autoSwitchLang !== false
         if (autoSwitchLang && sourceLang === 'auto') {
-          const predictedLang = predictSourceLanguage(result.text)
-          if (predictedLang === 'zh' && targetLang !== 'en') {
-            setTargetLang('en')
-          } else if (predictedLang === 'en' && targetLang !== 'zh-CN') {
-            setTargetLang('zh-CN')
+          const newTargetLang = getSmartTargetLanguage(result.text, targetLang, sourceLang, autoSwitchLang)
+          if (newTargetLang !== targetLang) {
+            setTargetLang(newTargetLang)
           }
         }
       } else {
@@ -105,17 +87,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
   const handleTranslate = async () => {
     if (!recognizedText.trim()) return
     
-    let actualTargetLang = targetLang
-    const autoSwitchLang = serviceConfig.autoSwitchLang !== false
-    
-    if (autoSwitchLang && sourceLang === 'auto') {
-      const predictedLang = predictSourceLanguage(recognizedText)
-      if (predictedLang === 'zh' && targetLang !== 'en') {
-        actualTargetLang = 'en'
-      } else if (predictedLang === 'en' && targetLang !== 'zh-CN') {
-        actualTargetLang = 'zh-CN'
-      }
-    }
+    const actualTargetLang = getSmartTargetLanguage(recognizedText, targetLang, sourceLang, autoSwitchLang)
     
     setIsTranslating(true)
     setError('')
@@ -134,16 +106,13 @@ export function ImageTranslation({ serviceConfig, languages }) {
         setDetectedLanguage(result.detectedSourceLanguage)
         
         if (autoSwitchLang && sourceLang === 'auto') {
-          const detected = result.detectedSourceLanguage.toLowerCase()
-          
-          if (detected === 'zh' || detected === 'zh-cn' || detected === 'zh-tw') {
-            if (targetLang !== 'en') {
-              setTargetLang('en')
-            }
-          } else if (detected === 'en') {
-            if (targetLang !== 'zh-CN') {
-              setTargetLang('zh-CN')
-            }
+          const newTargetLang = updateLanguageFromDetection(
+            result.detectedSourceLanguage, 
+            targetLang, 
+            autoSwitchLang
+          )
+          if (newTargetLang !== targetLang) {
+            setTargetLang(newTargetLang)
           }
         }
         
@@ -197,69 +166,37 @@ export function ImageTranslation({ serviceConfig, languages }) {
     console.log('Applied corrections:', corrections)
   }
 
+  // 获取语言名称
+  const getLanguageName = (langCode) => {
+    if (langCode === 'auto') {
+      return t('language.detectLanguage', '检测语言')
+    }
+    return languages.find(lang => lang.code === langCode)?.name || langCode
+  }
+
   return (
     <div className="space-y-6">
       {/* 语言选择区域 */}
-      <div className="border-b border-gray-200">
-        <div className="flex items-center justify-between">
-          {/* 源语言标签区域 */}
-          <div className="flex-1 min-w-0">
-            <LanguageTabs
-              languages={languages}
-              selectedLanguage={sourceLang}
-              onLanguageChange={setSourceLang}
-              isSource={true}
-              className="h-12"
-            />
-          </div>
-          
-          {/* 语言交换按钮 */}
-          <div className="flex items-center justify-center px-4">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={swapLanguages}
-              disabled={sourceLang === 'auto'}
-              className="w-10 h-10 rounded-full disabled:opacity-50 text-gray-600 hover:bg-gray-100"
-              title={t('language.swap')}
-            >
-              <i className="fas fa-exchange-alt"></i>
-            </Button>
-          </div>
-          
-          {/* 目标语言标签区域 */}
-          <div className="flex-1 min-w-0">
-            <LanguageTabs
-              languages={languages.filter(lang => lang.code !== 'auto')}
-              selectedLanguage={targetLang}
-              onLanguageChange={setTargetLang}
-              isSource={false}
-              className="h-12"
-            />
-          </div>
-        </div>
-      </div>
+      <LanguageSelector
+        languages={languages}
+        sourceLang={sourceLang}
+        targetLang={targetLang}
+        onSourceLangChange={setSourceLang}
+        onTargetLangChange={setTargetLang}
+        onSwapLanguages={swapLanguages}
+        detectedLanguage={detectedLanguage}
+      />
 
       {/* 状态提示区域 */}
-      {(ocrProgress || error) && (
-        <div>
-          {ocrProgress && (
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-3 mb-2">
-              <div className="flex items-center">
-                <i className="fas fa-spinner fa-spin text-blue-600 mr-2"></i>
-                <span className="text-blue-800 text-sm">{ocrProgress}</span>
-              </div>
-            </div>
-          )}
-          {error && (
-            <div className="bg-red-50 border-l-4 border-red-400 p-3">
-              <div className="flex items-center">
-                <i className="fas fa-exclamation-triangle text-red-600 mr-2"></i>
-                <span className="text-red-800 text-sm">{error}</span>
-              </div>
-            </div>
-          )}
-        </div>
+      {ocrProgress && (
+        <StatusAlert variant="loading">
+          {ocrProgress}
+        </StatusAlert>
+      )}
+      {error && (
+        <StatusAlert variant="error">
+          {error}
+        </StatusAlert>
       )}
 
       {/* 图片上传区域 - 只在未选择图片时显示 */}
@@ -279,93 +216,27 @@ export function ImageTranslation({ serviceConfig, languages }) {
 
       {/* OCR识别结果和翻译区域 */}
       {recognizedText && (
-        <div className="grid lg:grid-cols-2 gap-0 border border-gray-300 rounded-lg overflow-hidden">
-          {/* 左侧识别结果 */}
-          <div className="bg-white relative">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-600 uppercase">
-                    {sourceLang === 'auto' ? t('language.detectLanguage') : (languages.find(lang => lang.code === sourceLang)?.name || sourceLang)}
-                  </span>
-                  {detectedLanguage && sourceLang === 'auto' && (
-                    <span className="text-xs text-blue-600">
-                      {t('language.detected')}: {languages.find(lang => lang.code === detectedLanguage)?.name || detectedLanguage}
-                    </span>
-                  )}
-                </div>
-                <div className="flex gap-0.5">
-                  {/* OCR修正按钮 */}
-                  <OCRCorrectButton
-                    recognizedText={recognizedText}
-                    onTextCorrected={handleTextCorrected}
-                    serviceConfig={serviceConfig}
-                    disabled={isTranslating}
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={async () => {
-                      try {
-                        await navigator.clipboard?.writeText(recognizedText)
-                        success(t('common.copySuccess', '复制成功'))
-                      } catch (error) {
-                        console.error('复制失败:', error)
-                      }
-                    }}
-                    className="text-gray-500 hover:text-gray-700"
-                    title={t('ocr.copyRecognized')}
-                  >
-                    <i className="fas fa-copy text-xs"></i>
-                  </Button>
-                </div>
-              </div>
-              <Textarea
-                value={recognizedText}
-                onChange={(e) => setRecognizedText(e.target.value)}
-                className="min-h-[300px] resize-none border-0"
-                placeholder={t('ocr.recognizedText')}
-              />
-            </div>
-          </div>
-
-          {/* 右侧翻译结果 */}
-          <div className="bg-white border-l border-gray-300 relative">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-gray-600 uppercase">
-                  {languages.find(lang => lang.code === targetLang)?.name || targetLang}
-                </span>
-                {translatedText && (
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={async () => {
-                        try {
-                          await navigator.clipboard?.writeText(translatedText)
-                          success(t('common.copySuccess', '复制成功'))
-                        } catch (error) {
-                          console.error('复制失败:', error)
-                        }
-                      }}
-                      className="text-gray-500 hover:text-gray-700"
-                      title={t('translation.copyTranslation')}
-                    >
-                      <i className="fas fa-copy text-xs"></i>
-                    </Button>
-                  </div>
-                )}
-              </div>
-              <Textarea
-                value={translatedText}
-                readOnly
-                placeholder={isTranslating ? t('translation.translating', '翻译中...') : t('translation.outputPlaceholder', '翻译结果')}
-                className="min-h-[300px] resize-none border-0 bg-transparent text-gray-800 placeholder:text-gray-400"
-              />
-            </div>
-          </div>
-        </div>
+        <TranslationPanel
+          inputValue={recognizedText}
+          onInputChange={(e) => setRecognizedText(e.target.value)}
+          inputPlaceholder={t('ocr.recognizedText')}
+          inputLanguageName={getLanguageName(sourceLang)}
+          inputReadOnly={false}
+          
+          outputValue={translatedText}
+          outputPlaceholder={isTranslating ? t('translation.translating', '翻译中...') : t('translation.outputPlaceholder', '翻译结果')}
+          outputLanguageName={getLanguageName(targetLang)}
+          
+          extraInputButtons={[
+            <OCRCorrectButton
+              key="ocr-correct"
+              recognizedText={recognizedText}
+              onTextCorrected={handleTextCorrected}
+              serviceConfig={serviceConfig}
+              disabled={isTranslating}
+            />
+          ]}
+        />
       )}
 
       {/* 翻译按钮和重新选择按钮 */}
