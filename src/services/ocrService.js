@@ -14,61 +14,25 @@ export class OCRService {
       return this.worker
     }
 
-    // CDN降级配置列表，优先使用国内可访问的CDN
-    const cdnConfigs = [
-      {
-        name: 'UNPKG镜像',
-        workerPath: 'https://unpkg.com/tesseract.js@5/dist/worker.min.js',
-        langPath: 'https://unpkg.com/tessdata@4',
-        corePath: 'https://unpkg.com/tesseract.js-core@5/tesseract-core.wasm.js'
-      },
-      {
-        name: '七牛云CDN',
-        workerPath: 'https://cdn.staticfile.org/tesseract.js/5.0.0/worker.min.js',
-        langPath: 'https://cdn.staticfile.org/tessdata/4.0.0',
-        corePath: 'https://cdn.staticfile.org/tesseract.js-core/5.0.0/tesseract-core.wasm.js'
-      },
-      {
-        name: '默认CDN',
-        // 不设置CDN路径，使用默认配置
-        workerPath: undefined,
-        langPath: undefined,
-        corePath: undefined
-      }
-    ]
-
-    let lastError = null
-
-    for (const config of cdnConfigs) {
-      try {
-        console.log(`${i18n.t('console.ocr.tryingCdn')}\${config.name}...`)
-        
-        const workerOptions = {
-          logger: m => {
-            if (this.onProgress) {
-              this.onProgress(m)
-            }
+    try {
+      console.log(i18n.t('console.ocr.init'))
+      
+      const workerOptions = {
+        logger: m => {
+          if (this.onProgress) {
+            this.onProgress(m)
           }
         }
-
-        // 只有在配置了CDN路径时才添加到选项中
-        if (config.workerPath) workerOptions.workerPath = config.workerPath
-        if (config.langPath) workerOptions.langPath = config.langPath
-        if (config.corePath) workerOptions.corePath = config.corePath
-
-        this.worker = await createWorker(language, 1, workerOptions)
-        this.isInitialized = true
-        console.log(`${i18n.t('console.ocr.initSuccess')}\${config.name}`)
-        return this.worker
-
-      } catch (error) {
-        console.warn(`${config.name}${i18n.t('errors.ocr.initFailed').split('，')[0]}:`, error.message)
-        lastError = error
-        continue
       }
-    }
 
-    throw new Error(`${i18n.t('errors.ocr.initFailed')}: ${lastError?.message}`)
+      this.worker = await createWorker(language, 1, workerOptions)
+      this.isInitialized = true
+      console.log(i18n.t('console.ocr.initSuccess'))
+      return this.worker
+
+    } catch (error) {
+      throw new Error(`${i18n.t('errors.ocr.initFailed')}: ${error.message}`)
+    }
   }
 
   async recognizeText(imageFile, options = {}) {

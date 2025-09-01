@@ -46,6 +46,29 @@
     "dragImage": "Drag image to input box",
     "clickToSelect": "Click icon to select image"
   },
+  "ocrCorrect": {
+    "correctButton": "AI Correct",
+    "correcting": "Correcting...",
+    "correctButtonTooltip": "Use AI to detect and correct OCR recognition errors",
+    "reviewCorrections": "Review Correction Suggestions",
+    "confidence": "Correction Confidence",
+    "confidenceHigh": "High Confidence",
+    "confidenceMedium": "Medium Confidence", 
+    "confidenceLow": "Low Confidence",
+    "noCorrectionsNeeded": "No Corrections Needed",
+    "textLooksGood": "Text recognition is accurate, no corrections needed",
+    "correctionSummary": "Correction Summary",
+    "foundCorrections": "Found {{count}} potential errors",
+    "originalText": "Original Recognition",
+    "correctedText": "Correction Suggestion",
+    "detailedCorrections": "Detailed Corrections",
+    "keepOriginal": "Keep Original",
+    "applyCorrections": "Apply Corrections",
+    "applying": "Applying...",
+    "correctionsApplied": "Corrections applied",
+    "noCorrectionsFound": "No corrections needed",
+    "emptyTextError": "No text to correct"
+  },
   "settings": {
     "title": "Settings",
     "configTitle": "AI Translation Configuration",
@@ -65,24 +88,25 @@
     "smartSwitch": "Smart Language Switch",
     "smartSwitchDesc": "Automatically switch to English translation when inputting Chinese, and to Chinese translation when inputting English",
     "configurationTitle": "AI Translation Configuration",
-    "azureFormat": "Azure format: https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2024-02-15-preview",
     "openaiLink": "OpenAI API Keys",
-    "claudeLink": "Anthropic Console",
-    "azureNote": "Find the key in the Cognitive Services resource in Azure Portal",
     "ollamaNote": "Local Ollama usually doesn't require an API key, you can leave it empty or enter any value",
     "securityNote": "Note: Your API key will be securely stored in your local browser and will not be uploaded to any server.",
-    "supportedServices": "Supported services: OpenAI, Claude, Azure OpenAI, Ollama local deployment and other services compatible with OpenAI API format.",
+    "supportedServices": "Supported services: OpenAI, OpenAI Compatible, Ollama local deployment, Chrome Built-in AI and other services.",
+    "chromeAiNote": "Use Chrome 129+ built-in AI translation feature, no API key required",
+    "chromeAiDescription": "Requires Chrome 129+, enable AI translate feature in chrome://flags",
+    "openaiCompatibleNote": "Supports any service compatible with OpenAI API format, such as DeepSeek, Moonshot, etc.",
     "openaiDescription": "Get from",
-    "claudeDescription": "Get from",
+    "exportConfig": "Export Config",
+    "importConfig": "Import Config",
+    "resetConfig": "Reset Config",
     "smartSwitchTitle": "Smart Language Switch",
     "smartSwitchDescription": "Automatically switch to English translation when inputting Chinese, and to Chinese translation when inputting English"
   },
   "presets": {
     "openai": "OpenAI",
-    "claude": "Claude (Anthropic)",
-    "azure": "Azure OpenAI",
+    "openai_compatible": "OpenAI Compatible",
     "ollama": "Ollama (Local)",
-    "custom": "Custom Service"
+    "chrome_ai": "Chrome Built-in AI"
   },
   "messages": {
     "apiKeyRequired": "API key is not configured. Please click the settings button in the upper right corner to configure your API key before translation.",
@@ -96,10 +120,34 @@
     "networkError": "Network connection failed, please check API address and network connection",
     "apiError": "API error: {{message}}",
     "responseFormatError": "Abnormal API response format",
+    "chromeAiNotAvailable": "Chrome built-in AI is not available. Please ensure you are using Chrome 129+ and enable AI translation feature in chrome://flags",
+    "languagePairNotSupported": "This language pair is not supported by Chrome AI",
     "selectImageFile": "Please select an image file",
     "unsupportedFormat": "Unsupported image format. Please use JPG, PNG or WEBP format.",
     "fileTooLarge": "Image file is too large. Please select an image smaller than 10MB.",
-    "fileProcessError": "File processing error: {{message}}"
+    "fileProcessError": "File processing error: {{message}}",
+    "exportSuccess": "Configuration exported successfully",
+    "exportError": "Failed to export configuration",
+    "importSuccess": "Configuration imported successfully",
+    "importError": "Failed to import configuration, please check file format",
+    "invalidFileType": "Invalid file type, please select a JSON file",
+    "fileReadError": "Failed to read file",
+    "resetConfigConfirm": "Are you sure you want to reset all configurations to default values? This action cannot be undone.",
+    "resetConfigSuccess": "Configuration has been reset to default values"
+  },
+  "errors": {
+    "ocrCorrect": {
+      "apiKeyRequired": "API key is not configured, please configure API key first",
+      "apiUrlRequired": "API URL is not configured, please configure API URL first",
+      "emptyText": "Text is empty, cannot perform correction",
+      "responseFormatError": "Abnormal API response format",
+      "invalidApiKey": "Invalid API key",
+      "rateLimited": "Too many requests, please try again later",
+      "accessDenied": "API access denied",
+      "networkError": "Network connection failed",
+      "apiError": "API error",
+      "chromeAiNotAvailable": "Chrome built-in AI is not available"
+    }
   },
   "tabs": {
     "text": "Text",
@@ -115,7 +163,8 @@
     "copySuccess": "Copied successfully",
     "copyFailed": "Copy failed",
     "reset": "Reset",
-    "characters": "characters"
+    "characters": "characters",
+    "close": "Close"
   },
   "tts": {
     "speak": "Speak",
@@ -161,7 +210,7 @@
       "apiError": "Translation error"
     },
     "ocr": {
-      "initFailed": "OCR initialization failed, all CDNs are inaccessible",
+      "initFailed": "OCR initialization failed",
       "recognitionFailed": "Text recognition failed",
       "unsupportedFormat": "Unsupported image format. Please use JPG, PNG or WEBP format."
     }
@@ -205,8 +254,8 @@
     "ocr": {
       "prewarming": "Starting OCR prewarming...",
       "prewarmComplete": "OCR prewarming completed",
-      "tryingCdn": "Trying to initialize OCR using CDN...",
-      "initSuccess": "OCR initialization successful, using CDN"
+      "init": "Initializing OCR engine...",
+      "initSuccess": "OCR initialization successful"
     }
   }
 }

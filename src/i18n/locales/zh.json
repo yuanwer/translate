@@ -46,6 +46,29 @@
     "dragImage": "拖拽图片到输入框",
     "clickToSelect": "点击图标选择图片"
   },
+  "ocrCorrect": {
+    "correctButton": "AI修正",
+    "correcting": "修正中...",
+    "correctButtonTooltip": "使用AI检测并修正OCR识别错误",
+    "reviewCorrections": "审查修正建议",
+    "confidence": "修正置信度",
+    "confidenceHigh": "高置信度",
+    "confidenceMedium": "中等置信度", 
+    "confidenceLow": "低置信度",
+    "noCorrectionsNeeded": "无需修正",
+    "textLooksGood": "文本识别准确，无需修正",
+    "correctionSummary": "修正摘要",
+    "foundCorrections": "发现 {{count}} 处可能的错误",
+    "originalText": "原始识别",
+    "correctedText": "修正建议",
+    "detailedCorrections": "详细修正",
+    "keepOriginal": "保持原文",
+    "applyCorrections": "应用修正",
+    "applying": "应用中...",
+    "correctionsApplied": "修正已应用",
+    "noCorrectionsFound": "未发现需要修正的内容",
+    "emptyTextError": "没有文本需要修正"
+  },
   "settings": {
     "title": "设置",
     "configTitle": "AI翻译配置",
@@ -65,24 +88,25 @@
     "smartSwitch": "智能语言切换",
     "smartSwitchDesc": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译",
     "configurationTitle": "AI翻译配置",
-    "azureFormat": "Azure格式：https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2024-02-15-preview",
     "openaiLink": "OpenAI API Keys",
-    "claudeLink": "Anthropic Console",
-    "azureNote": "在Azure Portal的认知服务资源中找到密钥",
     "ollamaNote": "本地Ollama通常不需要API密钥，可以留空或填入任意值",
     "securityNote": "注意：您的API密钥将安全保存在本地浏览器中，不会上传到任何服务器。",
-    "supportedServices": "支持的服务：OpenAI、Claude、Azure OpenAI、Ollama本地部署等兼容OpenAI API格式的服务。",
+    "supportedServices": "支持的服务：OpenAI、OpenAI兼容、Ollama本地部署、Chrome内置AI等服务。",
+    "chromeAiNote": "使用Chrome 129+版本的内置AI翻译功能，无需配置API密钥",
+    "chromeAiDescription": "需要Chrome 129+版本，在chrome://flags中启用AI翻译功能",
+    "openaiCompatibleNote": "支持任何兼容OpenAI API格式的服务，如DeepSeek、月之暗面等",
     "openaiDescription": "获取地址",
-    "claudeDescription": "获取地址",
+    "exportConfig": "导出配置",
+    "importConfig": "导入配置",
+    "resetConfig": "重置配置",
     "smartSwitchTitle": "智能语言切换",
     "smartSwitchDescription": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译"
   },
   "presets": {
     "openai": "OpenAI",
-    "claude": "Claude (Anthropic)",
-    "azure": "Azure OpenAI",
+    "openai_compatible": "OpenAI兼容",
     "ollama": "Ollama (本地)",
-    "custom": "自定义服务"
+    "chrome_ai": "Chrome内置AI"
   },
   "messages": {
     "apiKeyRequired": "API密钥未配置，请点击右上角设置按钮配置您的API密钥后再进行翻译。",
@@ -96,10 +120,34 @@
     "networkError": "网络连接失败，请检查API地址和网络连接",
     "apiError": "API错误: {{message}}",
     "responseFormatError": "API返回格式异常",
+    "chromeAiNotAvailable": "Chrome内置AI不可用。请确保使用Chrome 129+版本并在chrome://flags中启用AI翻译功能",
+    "languagePairNotSupported": "该语言对不受Chrome AI支持",
     "selectImageFile": "请选择图片文件",
     "unsupportedFormat": "不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。",
     "fileTooLarge": "图片文件过大。请选择小于 10MB 的图片。",
-    "fileProcessError": "文件处理错误: {{message}}"
+    "fileProcessError": "文件处理错误: {{message}}",
+    "exportSuccess": "配置导出成功",
+    "exportError": "配置导出失败",
+    "importSuccess": "配置导入成功",
+    "importError": "配置导入失败，请检查文件格式",
+    "invalidFileType": "无效的文件类型，请选择JSON文件",
+    "fileReadError": "文件读取失败",
+    "resetConfigConfirm": "确认重置所有配置为默认值吗？此操作不可撤销。",
+    "resetConfigSuccess": "配置已重置为默认值"
+  },
+  "errors": {
+    "ocrCorrect": {
+      "apiKeyRequired": "API密钥未配置，请先配置API密钥",
+      "apiUrlRequired": "API地址未配置，请先配置API地址",
+      "emptyText": "文本为空，无法进行修正",
+      "responseFormatError": "API返回格式异常",
+      "invalidApiKey": "API密钥无效",
+      "rateLimited": "请求过于频繁，请稍后重试",
+      "accessDenied": "API访问被拒绝",
+      "networkError": "网络连接失败",
+      "apiError": "API错误",
+      "chromeAiNotAvailable": "Chrome内置AI不可用"
+    }
   },
   "tabs": {
     "text": "文字",
@@ -115,7 +163,8 @@
     "copySuccess": "复制成功",
     "copyFailed": "复制失败",
     "reset": "重置",
-    "characters": "字符"
+    "characters": "字符",
+    "close": "关闭"
   },
   "tts": {
     "speak": "朗读",
@@ -161,7 +210,7 @@
       "apiError": "翻译错误"
     },
     "ocr": {
-      "initFailed": "OCR初始化失败，所有CDN都无法访问",
+      "initFailed": "OCR初始化失败",
       "recognitionFailed": "文字识别失败",
       "unsupportedFormat": "不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。"
     }
@@ -205,8 +254,8 @@
     "ocr": {
       "prewarming": "开始OCR预热...",
       "prewarmComplete": "OCR预热完成",
-      "tryingCdn": "尝试使用CDN初始化OCR...",
-      "initSuccess": "OCR初始化成功，使用CDN"
+      "init": "正在初始化OCR引擎...",
+      "initSuccess": "OCR初始化成功"
     }
   }
 }

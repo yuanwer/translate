@@ -5,6 +5,7 @@ import { translateService } from '../services/translateService'
 import { ocrService } from '../services/ocrService'
 import { ImageUpload } from './ImageUpload'
 import LanguageTabs from './LanguageTabs'
+import OCRCorrectButton from './OCRCorrectButton'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -188,6 +189,14 @@ export function ImageTranslation({ serviceConfig, languages }) {
     }, 100) // 添加小延迟确保状态更新完成
   }
 
+  // 处理OCR文字修正
+  const handleTextCorrected = (correctedText, corrections) => {
+    setRecognizedText(correctedText)
+    setTranslatedText('') // 清空已有的翻译结果，因为原文已改变
+    // 可以在这里添加修正历史记录
+    console.log('Applied corrections:', corrections)
+  }
+
   return (
     <div className="space-y-6">
       {/* 语言选择区域 */}
@@ -275,24 +284,24 @@ export function ImageTranslation({ serviceConfig, languages }) {
           <div className="bg-white relative">
             <div className="p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-gray-600 uppercase">
-                  {sourceLang === 'auto' ? t('language.detectLanguage') : (languages.find(lang => lang.code === sourceLang)?.name || sourceLang)}
-                </span>
-                {detectedLanguage && sourceLang === 'auto' && (
-                  <span className="text-xs text-blue-600">
-                    {t('language.detected')}: {languages.find(lang => lang.code === detectedLanguage)?.name || detectedLanguage}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-600 uppercase">
+                    {sourceLang === 'auto' ? t('language.detectLanguage') : (languages.find(lang => lang.code === sourceLang)?.name || sourceLang)}
                   </span>
-                )}
-              </div>
-              <Textarea
-                value={recognizedText}
-                onChange={(e) => setRecognizedText(e.target.value)}
-                className="min-h-[300px] resize-none border-0"
-                placeholder={t('ocr.recognizedText')}
-              />
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-xs text-gray-400">{recognizedText.length} {t('common.characters')}</span>
-                <div className="flex gap-1">
+                  {detectedLanguage && sourceLang === 'auto' && (
+                    <span className="text-xs text-blue-600">
+                      {t('language.detected')}: {languages.find(lang => lang.code === detectedLanguage)?.name || detectedLanguage}
+                    </span>
+                  )}
+                </div>
+                <div className="flex gap-0.5">
+                  {/* OCR修正按钮 */}
+                  <OCRCorrectButton
+                    recognizedText={recognizedText}
+                    onTextCorrected={handleTextCorrected}
+                    serviceConfig={serviceConfig}
+                    disabled={isTranslating}
+                  />
                   <Button
                     variant="ghost"
                     size="sm"
@@ -311,11 +320,17 @@ export function ImageTranslation({ serviceConfig, languages }) {
                   </Button>
                 </div>
               </div>
+              <Textarea
+                value={recognizedText}
+                onChange={(e) => setRecognizedText(e.target.value)}
+                className="min-h-[300px] resize-none border-0"
+                placeholder={t('ocr.recognizedText')}
+              />
             </div>
           </div>
 
           {/* 右侧翻译结果 */}
-          <div className="bg-gray-50 border-l border-gray-300 relative">
+          <div className="bg-white border-l border-gray-300 relative">
             <div className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-gray-600 uppercase">

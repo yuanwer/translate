@@ -24,26 +24,20 @@ const APIConfig = ({ config, onConfigChange }) => {
       model: 'gpt-3.5-turbo',
       models: ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini']
     },
-    claude: {
-      serviceName: t('presets.claude'),
-      url: 'https://api.anthropic.com/v1/messages',
-      model: 'claude-3-haiku-20240307',
-      models: ['claude-3-haiku-20240307', 'claude-3-sonnet-20240229', 'claude-3-opus-20240229', 'claude-3-5-sonnet-20241022']
-    },
-    azure: {
-      serviceName: t('presets.azure'),
-      url: 'https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2024-02-15-preview',
-      model: 'gpt-35-turbo',
-      models: ['gpt-35-turbo', 'gpt-4', 'gpt-4-32k']
-    },
     ollama: {
       serviceName: t('presets.ollama'),
       url: 'http://localhost:11434/v1/chat/completions',
       model: 'llama3',
       models: ['llama3', 'mistral', 'codellama', 'gemma']
     },
-    custom: {
-      serviceName: t('presets.custom'),
+    chrome_ai: {
+      serviceName: t('presets.chrome_ai'),
+      url: 'chrome://ai-translate',
+      model: 'built-in',
+      models: ['built-in']
+    },
+    openai_compatible: {
+      serviceName: t('presets.openai_compatible'),
       url: '',
       model: '',
       models: []
@@ -53,9 +47,9 @@ const APIConfig = ({ config, onConfigChange }) => {
   useEffect(() => {
     // 确定当前使用的预设
     const matchedPreset = Object.entries(presetConfigs).find(([key, preset]) => 
-      preset.url === config.url && key !== 'custom'
+      preset.url === config.url && key !== 'openai_compatible'
     )
-    setSelectedPreset(matchedPreset ? matchedPreset[0] : 'custom')
+    setSelectedPreset(matchedPreset ? matchedPreset[0] : 'openai_compatible')
     
     // 检查是否使用自定义模型
     if (matchedPreset && config.customModel) {
@@ -84,6 +78,11 @@ const APIConfig = ({ config, onConfigChange }) => {
   }
 
   const testConnection = async () => {
+    // Chrome AI特殊处理
+    if (selectedPreset === 'chrome_ai') {
+      return testChromeAI()
+    }
+    
     if (!config.apiKey || !config.url) {
       setTestStatus({
         testing: false,
@@ -159,6 +158,52 @@ const APIConfig = ({ config, onConfigChange }) => {
     }
   }
 
+  const testChromeAI = async () => {
+    setTestStatus({
+      testing: true,
+      result: null,
+      message: t('settings.testing')
+    })
+
+    try {
+      if (!window.ai || !window.ai.translator) {
+        setTestStatus({
+          testing: false,
+          result: 'error',
+          message: t('messages.chromeAiNotAvailable')
+        })
+        return
+      }
+
+      // 测试简单的语言对
+      const canTranslate = await window.ai.translator.canTranslate({
+        sourceLanguage: 'en',
+        targetLanguage: 'zh'
+      })
+
+      if (canTranslate === 'no') {
+        setTestStatus({
+          testing: false,
+          result: 'error',
+          message: t('messages.languagePairNotSupported')
+        })
+        return
+      }
+
+      setTestStatus({
+        testing: false,
+        result: 'success',
+        message: t('messages.testSuccess')
+      })
+    } catch {
+      setTestStatus({
+        testing: false,
+        result: 'error',
+        message: t('messages.chromeAiNotAvailable')
+      })
+    }
+  }
+
   const getCurrentPreset = () => presetConfigs[selectedPreset]
 
   return (
@@ -172,10 +217,9 @@ const APIConfig = ({ config, onConfigChange }) => {
         <Label>{t('settings.preset')}</Label>
         <Select value={selectedPreset} onValueChange={handlePresetChange}>
           <SelectItem value="openai">{t('presets.openai')}</SelectItem>
-          <SelectItem value="claude">{t('presets.claude')}</SelectItem>
-          <SelectItem value="azure">{t('presets.azure')}</SelectItem>
+          <SelectItem value="openai_compatible">{t('presets.openai_compatible')}</SelectItem>
           <SelectItem value="ollama">{t('presets.ollama')}</SelectItem>
-          <SelectItem value="custom">{t('presets.custom')}</SelectItem>
+          <SelectItem value="chrome_ai">{t('presets.chrome_ai')}</SelectItem>
         </Select>
       </div>
 
@@ -196,16 +240,16 @@ const APIConfig = ({ config, onConfigChange }) => {
           onChange={(e) => handleFieldChange('url', e.target.value)}
           placeholder={t('settings.apiUrlPlaceholder')}
         />
-        {selectedPreset === 'azure' && (
+        {selectedPreset === 'chrome_ai' && (
           <p className="text-sm text-muted-foreground">
-            {t('settings.azureFormat')}
+            {t('settings.chromeAiNote')}
           </p>
         )}
       </div>
 
       <div className="space-y-2">
         <Label>{t('settings.model')}</Label>
-        {getCurrentPreset().models?.length > 0 && selectedPreset !== 'custom' ? (
+        {getCurrentPreset().models?.length > 0 && selectedPreset !== 'openai_compatible' ? (
           <>
             <Select
               value={useCustomModel ? 'custom' : config.model}
@@ -258,16 +302,14 @@ const APIConfig = ({ config, onConfigChange }) => {
             {t('settings.openaiDescription')}: <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="underline">{t('settings.openaiLink')}</a>
           </p>
         )}
-        {selectedPreset === 'claude' && (
-          <p className="text-sm text-muted-foreground">
-            {t('settings.claudeDescription')}: <a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer" className="underline">{t('settings.claudeLink')}</a>
-          </p>
-        )}
-        {selectedPreset === 'azure' && (
-          <p className="text-sm text-muted-foreground">{t('settings.azureNote')}</p>
-        )}
         {selectedPreset === 'ollama' && (
           <p className="text-sm text-muted-foreground">{t('settings.ollamaNote')}</p>
+        )}
+        {selectedPreset === 'chrome_ai' && (
+          <p className="text-sm text-muted-foreground">{t('settings.chromeAiDescription')}</p>
+        )}
+        {selectedPreset === 'openai_compatible' && (
+          <p className="text-sm text-muted-foreground">{t('settings.openaiCompatibleNote')}</p>
         )}
       </div>
 
@@ -275,7 +317,7 @@ const APIConfig = ({ config, onConfigChange }) => {
         <Button 
           onClick={testConnection}
           variant={testStatus.result === 'success' ? 'default' : testStatus.result === 'error' ? 'destructive' : 'outline'}
-          disabled={!config.url || !config.apiKey || testStatus.testing}
+          disabled={selectedPreset === 'chrome_ai' ? false : (!config.url || !config.apiKey || testStatus.testing)}
           className="w-full"
         >
           {testStatus.testing ? (<><i className="fas fa-spinner fa-spin mr-2"></i>{t('settings.testing')}</>) : t('settings.testConnection')}

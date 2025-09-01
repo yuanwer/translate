@@ -6,8 +6,8 @@ const LanguageSwitcher = () => {
   const { i18n, t } = useTranslation()
 
   const languages = [
-    { code: 'zh', name: '中文', flag: '🇨🇳' },
-    { code: 'en', name: 'English', flag: '🇺🇸' }
+    { code: 'zh', name: '中文', flag: 'fas fa-globe-asia', color: 'text-red-500' },
+    { code: 'en', name: 'English', flag: 'fas fa-globe-americas', color: 'text-blue-500' }
   ]
 
   const handleLanguageChange = (languageCode) => {
@@ -25,7 +25,7 @@ const LanguageSwitcher = () => {
         className="flex items-center gap-2 px-3 py-1.5 h-8"
         title={t('language.switch')}
       >
-        <span className="text-sm">{currentLanguage.flag}</span>
+        <i className={`${currentLanguage.flag} ${currentLanguage.color} text-sm`}></i>
         <span className="text-xs font-medium">{currentLanguage.name}</span>
         <i className="fas fa-exchange-alt text-xs"></i>
       </Button>
