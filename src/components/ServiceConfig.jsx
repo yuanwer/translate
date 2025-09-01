@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardContent } from '@/components/ui/card'
 import { useToast } from '@/hooks/useToast'
 import ConfigTabNavigation from './ConfigTabNavigation'
-import AITranslationConfig from './AITranslationConfig'
 import APIConfig from './APIConfig'
 import VoiceConfig from './VoiceConfig'
 
@@ -147,8 +146,6 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
 
   const renderTabContent = () => {
     switch (activeConfigTab) {
-      case 'ai':
-        return <AITranslationConfig config={aiConfig} onConfigChange={saveConfig} />
       case 'api':
         return <APIConfig config={aiConfig} onConfigChange={saveConfig} />
       case 'voice':

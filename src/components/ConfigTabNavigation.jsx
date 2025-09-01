@@ -5,11 +5,6 @@ const ConfigTabNavigation = ({ activeTab, onTabChange }) => {
   
   const tabs = [
     {
-      id: 'ai',
-      label: t('config.tabs.ai', 'AI翻译'),
-      icon: 'fas fa-robot'
-    },
-    {
       id: 'api',
       label: t('config.tabs.api', 'API配置'),
       icon: 'fas fa-cog'

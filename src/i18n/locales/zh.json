@@ -89,12 +89,8 @@
     "smartSwitchDesc": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译",
     "configurationTitle": "AI翻译配置",
     "openaiLink": "OpenAI API Keys",
-    "ollamaNote": "本地Ollama通常不需要API密钥，可以留空或填入任意值",
     "securityNote": "注意：您的API密钥将安全保存在本地浏览器中，不会上传到任何服务器。",
-    "supportedServices": "支持的服务：OpenAI、OpenAI兼容、Ollama本地部署、Chrome内置AI等服务。",
-    "chromeAiNote": "使用Chrome 129+版本的内置AI翻译功能，无需配置API密钥",
-    "chromeAiDescription": "需要Chrome 129+版本，在chrome://flags中启用AI翻译功能",
-    "openaiCompatibleNote": "支持任何兼容OpenAI API格式的服务，如DeepSeek、月之暗面等",
+    "supportedServices": "支持OpenAI API服务。",
     "openaiDescription": "获取地址",
     "exportConfig": "导出配置",
     "importConfig": "导入配置",
@@ -103,10 +99,7 @@
     "smartSwitchDescription": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译"
   },
   "presets": {
-    "openai": "OpenAI",
-    "openai_compatible": "OpenAI兼容",
-    "ollama": "Ollama (本地)",
-    "chrome_ai": "Chrome内置AI"
+    "openai": "OpenAI"
   },
   "messages": {
     "apiKeyRequired": "API密钥未配置，请点击右上角设置按钮配置您的API密钥后再进行翻译。",
@@ -120,8 +113,6 @@
     "networkError": "网络连接失败，请检查API地址和网络连接",
     "apiError": "API错误: {{message}}",
     "responseFormatError": "API返回格式异常",
-    "chromeAiNotAvailable": "Chrome内置AI不可用。请确保使用Chrome 129+版本并在chrome://flags中启用AI翻译功能",
-    "languagePairNotSupported": "该语言对不受Chrome AI支持",
     "selectImageFile": "请选择图片文件",
     "unsupportedFormat": "不支持的图片格式。请使用 JPG、PNG 或 WEBP 格式。",
     "fileTooLarge": "图片文件过大。请选择小于 10MB 的图片。",
@@ -145,8 +136,7 @@
       "rateLimited": "请求过于频繁，请稍后重试",
       "accessDenied": "API访问被拒绝",
       "networkError": "网络连接失败",
-      "apiError": "API错误",
-      "chromeAiNotAvailable": "Chrome内置AI不可用"
+      "apiError": "API错误"
     }
   },
   "tabs": {
