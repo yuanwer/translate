@@ -23,7 +23,8 @@
     "tableFormatTooltip": "将译文内容整理为表格格式",
     "tableFormatting": "表格整理中...",
     "tableFormatted": "表格整理完成",
-    "tableFormatError": "表格整理失败"
+    "tableFormatError": "表格整理失败",
+    "autoTranslateHint": "停止输入2秒后自动翻译"
   },
   "ocr": {
     "ready": "OCR就绪",
@@ -229,12 +230,16 @@
       "smartSwitchDesc": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译",
       "webSearch": "联网对话",
       "webSearchDesc": "为AI翻译开启联网功能，结合最新信息对原文进行翻译",
+      "autoTranslate": "自动翻译",
+      "autoTranslateDesc": "停止输入2秒后自动触发翻译，无需手动点击翻译按钮",
       "tips": "使用提示",
       "tip1": "智能语言切换可以根据输入内容自动选择合适的目标语言",
       "tip2": "当检测到中文输入时，会自动切换到英文翻译",
       "tip3": "当检测到英文输入时，会自动切换到中文翻译",
       "tip4": "联网对话可以让AI获取最新信息进行更准确的翻译",
-      "tip5": "启用联网功能可能会增加API调用成本"
+      "tip5": "启用联网功能可能会增加API调用成本",
+      "tip6": "自动翻译让您无需手动点击翻译按钮，提高翻译效率",
+      "tip7": "自动翻译采用防抖机制，避免频繁调用API"
     },
     "tabs": {
       "ai": "AI设置",

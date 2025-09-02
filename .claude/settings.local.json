@@ -3,7 +3,8 @@
     "allow": [
       "WebSearch",
       "WebFetch(domain:cdn.jsdelivr.net)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(del \"D:\\my-project\\translate\\src\\components\\ui\\smart-language-switch-toggle.jsx\")"
     ],
     "deny": [],
     "ask": []

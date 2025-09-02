@@ -19,7 +19,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
     apiKey: '',
     customModel: '',
     autoSwitchLang: true,
-    enableWebSearch: false
+    enableWebSearch: false,
+    autoTranslate: true
   })
 
   const [showConfig, setShowConfig] = useState(false)
@@ -33,7 +34,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
         ...parsed,
         customModel: parsed.customModel || '',
         autoSwitchLang: parsed.autoSwitchLang !== undefined ? parsed.autoSwitchLang : true,
-        enableWebSearch: parsed.enableWebSearch !== undefined ? parsed.enableWebSearch : false
+        enableWebSearch: parsed.enableWebSearch !== undefined ? parsed.enableWebSearch : false,
+        autoTranslate: parsed.autoTranslate !== undefined ? parsed.autoTranslate : true
       }
       setAiConfig(newConfig)
       // 立即将配置传递给父组件
@@ -108,7 +110,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
           apiKey: configToImport.apiKey || '',
           customModel: configToImport.customModel || '',
           autoSwitchLang: configToImport.autoSwitchLang !== undefined ? configToImport.autoSwitchLang : aiConfig.autoSwitchLang,
-          enableWebSearch: configToImport.enableWebSearch !== undefined ? configToImport.enableWebSearch : aiConfig.enableWebSearch
+          enableWebSearch: configToImport.enableWebSearch !== undefined ? configToImport.enableWebSearch : aiConfig.enableWebSearch,
+          autoTranslate: configToImport.autoTranslate !== undefined ? configToImport.autoTranslate : aiConfig.autoTranslate
         }
 
         saveConfig(newConfig)
@@ -142,7 +145,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
         apiKey: '',
         customModel: '',
         autoSwitchLang: true,
-        enableWebSearch: false
+        enableWebSearch: false,
+        autoTranslate: true
       }
       saveConfig(defaultConfig)
       success(t('messages.resetConfigSuccess'))

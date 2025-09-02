@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 
 const ConfigTabNavigation = ({ activeTab, onTabChange }) => {
   const { t } = useTranslation()
@@ -22,21 +23,21 @@ const ConfigTabNavigation = ({ activeTab, onTabChange }) => {
   ]
 
   return (
-    <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-6">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => onTabChange(tab.id)}
-          className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-            activeTab === tab.id
-              ? 'bg-white text-blue-600 shadow-sm'
-              : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
-          }`}
-        >
-          <i className={tab.icon}></i>
-          {tab.label}
-        </button>
-      ))}
+    <div className="mb-6">
+      <Tabs value={activeTab} onValueChange={onTabChange}>
+        <TabsList variant="default">
+          {tabs.map((tab) => (
+            <TabsTrigger
+              key={tab.id}
+              value={tab.id}
+              icon={tab.icon}
+              size="sm"
+            >
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
     </div>
   )
 }

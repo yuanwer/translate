@@ -57,12 +57,11 @@ const LanguageTabs = ({
               key={lang.code}
               onClick={() => onLanguageChange(lang.code)}
               className={`
-                relative px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 cursor-pointer
+                relative px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 cursor-pointer rounded-t-md
                 ${isActive 
                   ? 'text-blue-600 language-tab-active' 
-                  : 'text-gray-600 hover:text-gray-800'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
                 }
-                hover:bg-gray-50 rounded-t-md
               `}
             >
               {lang.name}
@@ -74,12 +73,11 @@ const LanguageTabs = ({
         <button
           onClick={handleMoreClick}
           className={`
-            relative px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 cursor-pointer
+            relative px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 cursor-pointer rounded-t-md flex items-center gap-1
             ${(!isSelectedInCommon && selectedLanguage !== 'auto') 
               ? 'text-blue-600 language-tab-active' 
-              : 'text-gray-600 hover:text-gray-800'
+              : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
             }
-            hover:bg-gray-50 rounded-t-md flex items-center gap-1
           `}
         >
           {(!isSelectedInCommon && selectedLanguage !== 'auto') 

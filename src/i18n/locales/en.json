@@ -23,7 +23,8 @@
     "tableFormatTooltip": "Format the translated text as a structured table",
     "tableFormatting": "Formatting as table...",
     "tableFormatted": "Table formatting completed",
-    "tableFormatError": "Table formatting failed"
+    "tableFormatError": "Table formatting failed",
+    "autoTranslateHint": "Auto-translate in 2 seconds after stopping typing"
   },
   "ocr": {
     "ready": "OCR Ready",
@@ -229,12 +230,16 @@
       "smartSwitchDesc": "Automatically switch to English translation when inputting Chinese, and to Chinese translation when inputting English",
       "webSearch": "Web Search",
       "webSearchDesc": "Enable web search for AI translation to combine latest information for more accurate translations",
+      "autoTranslate": "Auto Translate",
+      "autoTranslateDesc": "Automatically trigger translation 2 seconds after stopping typing, no need to click the translate button manually",
       "tips": "Usage Tips",
       "tip1": "Smart language switch can automatically select the appropriate target language based on input content",
       "tip2": "When Chinese input is detected, it will automatically switch to English translation",
       "tip3": "When English input is detected, it will automatically switch to Chinese translation",
       "tip4": "Web search allows AI to access latest information for more accurate translations",
-      "tip5": "Enabling web search may increase API call costs"
+      "tip5": "Enabling web search may increase API call costs",
+      "tip6": "Auto translate eliminates the need to manually click the translate button, improving translation efficiency",
+      "tip7": "Auto translate uses debouncing mechanism to avoid frequent API calls"
     },
     "tabs": {
       "ai": "AI Settings",

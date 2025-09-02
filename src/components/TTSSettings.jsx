@@ -4,6 +4,7 @@ import { useTTS } from '../hooks/useTTS'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectItem } from '@/components/ui/select'
+import { Slider } from '@/components/ui/slider'
 
 const TTSSettings = () => {
   const { t } = useTranslation()
@@ -67,61 +68,40 @@ const TTSSettings = () => {
       </div>
 
       {/* 语速设置 */}
-      <div className="space-y-2">
-        <Label className="text-sm">{t('tts.rate')}</Label>
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-500 w-8">0.5x</span>
-          <input
-            type="range"
-            min="0.5"
-            max="2.0"
-            step="0.1"
-            value={config.rate}
-            onChange={(e) => handleConfigChange('rate', parseFloat(e.target.value))}
-            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-          />
-          <span className="text-xs text-gray-500 w-8">2.0x</span>
-          <span className="text-xs font-mono w-10 text-center">{config.rate}x</span>
-        </div>
-      </div>
+      <Slider
+        label={t('tts.rate')}
+        min={0.5}
+        max={2.0}
+        step={0.1}
+        value={config.rate}
+        onChange={(value) => handleConfigChange('rate', value)}
+        valueFormatter={(val) => `${val}x`}
+        showLabels={true}
+      />
 
       {/* 音调设置 */}
-      <div className="space-y-2">
-        <Label className="text-sm">{t('tts.pitch')}</Label>
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-500 w-8">0.5</span>
-          <input
-            type="range"
-            min="0.5"
-            max="2.0"
-            step="0.1"
-            value={config.pitch}
-            onChange={(e) => handleConfigChange('pitch', parseFloat(e.target.value))}
-            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-          />
-          <span className="text-xs text-gray-500 w-8">2.0</span>
-          <span className="text-xs font-mono w-10 text-center">{config.pitch}</span>
-        </div>
-      </div>
+      <Slider
+        label={t('tts.pitch')}
+        min={0.5}
+        max={2.0}
+        step={0.1}
+        value={config.pitch}
+        onChange={(value) => handleConfigChange('pitch', value)}
+        valueFormatter={(val) => val.toString()}
+        showLabels={true}
+      />
 
       {/* 音量设置 */}
-      <div className="space-y-2">
-        <Label className="text-sm">{t('tts.volume')}</Label>
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-500 w-8">0</span>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={config.volume}
-            onChange={(e) => handleConfigChange('volume', parseFloat(e.target.value))}
-            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-          />
-          <span className="text-xs text-gray-500 w-8">1</span>
-          <span className="text-xs font-mono w-10 text-center">{Math.round(config.volume * 100)}%</span>
-        </div>
-      </div>
+      <Slider
+        label={t('tts.volume')}
+        min={0}
+        max={1}
+        step={0.1}
+        value={config.volume}
+        onChange={(value) => handleConfigChange('volume', value)}
+        valueFormatter={(val) => `${Math.round(val * 100)}%`}
+        showLabels={true}
+      />
 
       {/* 语音选择 */}
       {voices.length > 0 && (

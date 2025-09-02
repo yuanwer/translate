@@ -29,6 +29,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 智能语言检测和语音播放
 - 支持输入文本和翻译结果的语音朗读
 
+### 🔧 OCR文字修正
+- 使用AI技术修正OCR识别错误
+- 支持多种AI服务进行文字校对
+- 提供修正前后的对比显示
+
 ### 🎨 现代化界面
 - 响应式设计，适配各种设备
 - 支持中英文界面切换（基于i18next）
@@ -44,6 +49,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### 核心服务层
 - **translateService** (`src/services/translateService.js`) - AI翻译服务，支持多种OpenAI兼容API
 - **ocrService** (`src/services/ocrService.js`) - OCR文字识别服务，包含预热和CDN降级机制
+- **ocrCorrectService** (`src/services/ocrCorrectService.js`) - OCR文字修正服务，使用AI修正识别错误
 - **ttsService** (`src/services/ttsService.js`) - TTS语音合成服务
 
 ### 状态管理
@@ -57,8 +63,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 自动语言检测和本地存储
 
 ### 组件架构
-- **UI组件库** (`src/components/ui/`) - 基础UI组件（Button、Input、Modal等）
-- **业务组件** - EnhancedTextInput、ImageTranslation、ServiceConfig等
+- **UI组件库** (`src/components/ui/`) - 基础UI组件（Button、Input、Modal、Toast等）
+- **业务组件** - EnhancedTextInput、ImageTranslation、ServiceConfig、OCRCorrectButton等
+- **配置组件** - APIConfig、AIConfig、VoiceConfig、TTSSettings等
 - **路径别名** - `@` 指向 `src` 目录（vite.config.js配置）
 
 ## 代码规范
@@ -75,10 +82,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **tesseract.js** - 客户端OCR文字识别引擎
 - **axios** - HTTP客户端，用于AI API调用
 - **@fortawesome/fontawesome-free** - 图标库
+- **react-markdown** + **remark-gfm** - Markdown渲染支持
 
 ### React生态
 - **react-i18next** - React国际化集成
 - **i18next-browser-languagedetector** - 浏览器语言检测
+
+### OCR数据包
+- **@tesseract.js-data/eng** - 英文OCR识别数据
+- **@tesseract.js-data/chi_sim** - 简体中文OCR识别数据
+- **@tesseract.js-data/chi_tra** - 繁体中文OCR识别数据
 
 ### 开发工具
 - **@vitejs/plugin-react** - Vite的React插件
@@ -126,6 +139,18 @@ src/
 ├── App.jsx               # 主应用组件
 └── main.jsx              # 应用入口
 ```
+
+## 构建配置
+
+### Vite配置 (vite.config.js)
+- **base路径**: `/translate/` - 用于GitHub Pages等部署场景
+- **路径别名**: `@` 指向 `src` 目录，便于相对路径导入
+- **插件集成**: React + Tailwind CSS完整支持
+
+### ESLint配置 (eslint.config.js)
+- 基于最新的Flat Config格式
+- 集成React Hooks推荐规则和React Fast Refresh
+- 自定义规则：允许大写常量不使用 (`varsIgnorePattern: '^[A-Z_]'`)
 
 ## 提示
 

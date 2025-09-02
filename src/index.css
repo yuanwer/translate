@@ -93,3 +93,66 @@ body.modal-open {
   cursor: default;
 }
 
+/* 滑动条样式 */
+.range-slider {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.range-slider:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3B82F6;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+  background: #2563EB;
+}
+
+.range-slider::-webkit-slider-thumb:active {
+  background: #1D4ED8;
+}
+
+.range-slider::-moz-range-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3B82F6;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.range-slider::-moz-range-thumb:hover {
+  background: #2563EB;
+}
+
+.range-slider::-moz-range-thumb:active {
+  background: #1D4ED8;
+}
+
+.range-slider:disabled::-webkit-slider-thumb {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.range-slider:disabled::-moz-range-thumb {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+

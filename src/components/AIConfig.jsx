@@ -17,6 +17,13 @@ const AIConfig = ({ config, onConfigChange }) => {
     })
   }
 
+  const handleAutoTranslateChange = (enabled) => {
+    onConfigChange({
+      ...config,
+      autoTranslate: enabled
+    })
+  }
+
   return (
     <div className="space-y-6">
       {/* 智能语言切换 */}
@@ -66,6 +73,32 @@ const AIConfig = ({ config, onConfigChange }) => {
             />
             <label htmlFor="enableWebSearch" className="ml-2 sr-only">
               联网对话
+            </label>
+          </div>
+        </div>
+      </div>
+
+      {/* 自动翻译 */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-sm font-medium text-gray-900">
+              {t('config.ai.autoTranslate', '自动翻译')}
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">
+              {t('config.ai.autoTranslateDesc', '停止输入2秒后自动触发翻译，无需手动点击翻译按钮')}
+            </p>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="autoTranslate"
+              checked={config.autoTranslate !== false}
+              onChange={(e) => handleAutoTranslateChange(e.target.checked)}
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <label htmlFor="autoTranslate" className="ml-2 sr-only">
+              自动翻译
             </label>
           </div>
         </div>
