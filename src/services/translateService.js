@@ -10,6 +10,10 @@ export class TranslateService {
     return await this.aiService.translate(text, sourceLang, targetLang, config)
   }
 
+  async formatToTable(text, config = {}) {
+    return await this.aiService.formatToTable(text, config)
+  }
+
   getSupportedLanguages() {
     return this.aiService.getSupportedLanguages()
   }
@@ -31,7 +35,8 @@ class AITranslateService {
       url = this.defaultConfig.url, 
       model = this.defaultConfig.model, 
       apiKey, 
-      serviceName = this.defaultConfig.serviceName 
+      serviceName = this.defaultConfig.serviceName,
+      enableWebSearch = false
     } = config
     
     // Chrome AI特殊处理
@@ -52,8 +57,10 @@ class AITranslateService {
       const targetLangName = this.getLanguageName(targetLang)
       
       let prompt
+      const webSearchTip = enableWebSearch ? '请结合最新信息和实时数据进行翻译，确保翻译内容的准确性和时效性。' : ''
+      
       if (sourceLang === 'auto') {
-        prompt = `请将以下文本翻译成${targetLangName}。请按以下格式返回结果：
+        prompt = `请将以下文本翻译成${targetLangName}。${webSearchTip}请按以下格式返回结果：
 
 检测语言: [检测到的源语言代码，如zh、en、ja等]
 翻译结果: [翻译后的文本]
@@ -61,7 +68,7 @@ class AITranslateService {
 原文：
 ${text}`
       } else {
-        prompt = `请将以下${sourceLangName}文本翻译成${targetLangName}。请按以下格式返回结果：
+        prompt = `请将以下${sourceLangName}文本翻译成${targetLangName}。${webSearchTip}请按以下格式返回结果：
 
 检测语言: ${sourceLang}
 翻译结果: [翻译后的文本]
@@ -70,19 +77,26 @@ ${text}`
 ${text}`
       }
 
+      const requestBody = {
+        model,
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.3,
+        max_tokens: 2000
+      }
+
+      // 如果启用联网搜索，添加 enable_search 参数
+      if (enableWebSearch) {
+        requestBody.enable_search = true
+      }
+
       const response = await axios.post(
         url,
-        {
-          model,
-          messages: [
-            {
-              role: 'user',
-              content: prompt
-            }
-          ],
-          temperature: 0.3,
-          max_tokens: 2000
-        },
+        requestBody,
         {
           headers: {
             'Authorization': `Bearer ${apiKey}`,
@@ -228,6 +242,86 @@ ${text}`
       'vi': '越南文'
     }
     return langMap[code] || code
+  }
+
+  async formatToTable(text, config) {
+    const { 
+      url = this.defaultConfig.url, 
+      model = this.defaultConfig.model, 
+      apiKey, 
+      serviceName = this.defaultConfig.serviceName 
+    } = config
+    
+    if (!apiKey) {
+      throw new Error(i18n.t('errors.tableFormat.apiKeyRequired'))
+    }
+
+    if (!url) {
+      throw new Error(i18n.t('errors.tableFormat.apiUrlRequired'))
+    }
+
+    if (!text || !text.trim()) {
+      throw new Error(i18n.t('errors.tableFormat.emptyText'))
+    }
+
+    try {
+      const prompt = `请将以下文本内容整理为表格格式。根据文本内容的特点，智能识别并提取关键信息，生成结构化的Markdown表格。
+
+要求：
+1. 分析文本内容，识别可以表格化的信息（如数据对比、属性列表、时间序列、分类信息等）
+2. 提取关键字段作为表格列标题
+3. 将相关信息按行组织
+4. 使用标准的Markdown表格格式输出
+5. 如果文本不适合表格化，请说明原因并提供其他结构化建议
+
+请直接输出整理后的Markdown表格，无需其他说明文字：
+
+${text}`
+
+      const response = await axios.post(
+        url,
+        {
+          model,
+          messages: [
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          temperature: 0.3,
+          max_tokens: 2000
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      if (!response.data?.choices?.[0]?.message?.content) {
+        throw new Error(i18n.t('errors.tableFormat.responseFormatError'))
+      }
+
+      const content = response.data.choices[0].message.content.trim()
+      
+      return {
+        formattedText: content,
+        service: serviceName.toLowerCase()
+      }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        throw new Error(i18n.t('errors.tableFormat.invalidApiKey'))
+      } else if (error.response?.status === 429) {
+        throw new Error(i18n.t('errors.tableFormat.rateLimited'))
+      } else if (error.response?.status === 403) {
+        throw new Error(i18n.t('errors.tableFormat.accessDenied'))
+      } else if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
+        throw new Error(i18n.t('errors.tableFormat.networkError'))
+      } else {
+        throw new Error(`${serviceName}${i18n.t('errors.tableFormat.apiError')}: ${error.response?.data?.error?.message || error.message}`)
+      }
+    }
   }
 
   getSupportedLanguages() {

@@ -166,10 +166,6 @@ const APIConfig = ({ config, onConfigChange }) => {
         )}
       </div>
 
-      <div className="pt-4 border-t space-y-2 text-sm text-gray-600">
-        <p><strong>{t('settings.securityNote').split(':')[0]}:</strong>{t('settings.securityNote').split(':').slice(1).join(':')}</p>
-        <p><strong>{t('settings.supportedServices').split(':')[0]}:</strong>{t('settings.supportedServices').split(':').slice(1).join(':')}</p>
-      </div>
     </div>
   )
 }

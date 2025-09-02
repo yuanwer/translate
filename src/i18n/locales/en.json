@@ -18,7 +18,12 @@
     "outputLabel": "Translation Result",
     "translateButton": "Translate",
     "translating": "Translating...",
-    "copyTranslation": "Copy translation result"
+    "copyTranslation": "Copy translation result",
+    "tableFormat": "Format as Table",
+    "tableFormatTooltip": "Format the translated text as a structured table",
+    "tableFormatting": "Formatting as table...",
+    "tableFormatted": "Table formatting completed",
+    "tableFormatError": "Table formatting failed"
   },
   "ocr": {
     "ready": "OCR Ready",
@@ -137,6 +142,17 @@
       "accessDenied": "API access denied",
       "networkError": "Network connection failed",
       "apiError": "API error"
+    },
+    "tableFormat": {
+      "apiKeyRequired": "API key is not configured, please configure API key first",
+      "apiUrlRequired": "API URL is not configured, please configure API URL first",
+      "emptyText": "Text is empty, cannot format as table",
+      "responseFormatError": "Abnormal API response format",
+      "invalidApiKey": "Invalid API key",
+      "rateLimited": "Too many requests, please try again later",
+      "accessDenied": "API access denied",
+      "networkError": "Network connection failed",
+      "apiError": "Table formatting error"
     }
   },
   "tabs": {
@@ -209,13 +225,19 @@
     "ai": {
       "title": "AI Translation Settings",
       "description": "Configure AI translation behavior and smart features",
+      "smartSwitch": "Smart Language Switch",
+      "smartSwitchDesc": "Automatically switch to English translation when inputting Chinese, and to Chinese translation when inputting English",
+      "webSearch": "Web Search",
+      "webSearchDesc": "Enable web search for AI translation to combine latest information for more accurate translations",
       "tips": "Usage Tips",
       "tip1": "Smart language switch can automatically select the appropriate target language based on input content",
       "tip2": "When Chinese input is detected, it will automatically switch to English translation",
-      "tip3": "When English input is detected, it will automatically switch to Chinese translation"
+      "tip3": "When English input is detected, it will automatically switch to Chinese translation",
+      "tip4": "Web search allows AI to access latest information for more accurate translations",
+      "tip5": "Enabling web search may increase API call costs"
     },
     "tabs": {
-      "ai": "AI Translation",
+      "ai": "AI Settings",
       "api": "API Configuration",
       "voice": "Voice Settings"
     },

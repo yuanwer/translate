@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { EnhancedTextInput } from './EnhancedTextInput'
 import { Textarea } from '@/components/ui/textarea'
+import { MarkdownRenderer } from '@/components/ui/markdown-renderer'
 import { Button } from '@/components/ui/button'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 
@@ -21,7 +22,7 @@ const TranslationPanel = ({
   outputValue,
   outputPlaceholder,
   outputLanguageName,
-  outputReadOnly = true,
+  outputReadOnly = true, // eslint-disable-line no-unused-vars
   
   // TTS相关
   onSpeakInput,
@@ -168,12 +169,15 @@ const TranslationPanel = ({
               )}
             </div>
           </div>
-          <Textarea
-            value={outputValue}
-            readOnly={outputReadOnly}
-            placeholder={outputPlaceholder}
-            className={`${minHeight} resize-none border-0 bg-transparent text-gray-800 placeholder:text-gray-400`}
-          />
+          {outputValue ? (
+            <MarkdownRenderer minHeight={minHeight} className="border-0 bg-transparent">
+              {outputValue}
+            </MarkdownRenderer>
+          ) : (
+            <div className={`${minHeight} flex items-center justify-center border-0 bg-transparent text-gray-400 text-sm`}>
+              {outputPlaceholder}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -18,7 +18,12 @@
     "outputLabel": "翻译结果",
     "translateButton": "翻译",
     "translating": "翻译中...",
-    "copyTranslation": "复制翻译结果"
+    "copyTranslation": "复制翻译结果",
+    "tableFormat": "表格整理",
+    "tableFormatTooltip": "将译文内容整理为表格格式",
+    "tableFormatting": "表格整理中...",
+    "tableFormatted": "表格整理完成",
+    "tableFormatError": "表格整理失败"
   },
   "ocr": {
     "ready": "OCR就绪",
@@ -89,8 +94,8 @@
     "smartSwitchDesc": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译",
     "configurationTitle": "AI翻译配置",
     "openaiLink": "OpenAI API Keys",
-    "securityNote": "注意：您的API密钥将安全保存在本地浏览器中，不会上传到任何服务器。",
-    "supportedServices": "支持OpenAI API服务。",
+    "securityNote": "注意：您的API密钥将安全保存在本地浏览器中，不会上传到任何服务器",
+    "supportedServices": "支持OpenAI API服务",
     "openaiDescription": "获取地址",
     "exportConfig": "导出配置",
     "importConfig": "导入配置",
@@ -137,6 +142,17 @@
       "accessDenied": "API访问被拒绝",
       "networkError": "网络连接失败",
       "apiError": "API错误"
+    },
+    "tableFormat": {
+      "apiKeyRequired": "API密钥未配置，请先配置API密钥",
+      "apiUrlRequired": "API地址未配置，请先配置API地址", 
+      "emptyText": "文本为空，无法进行表格整理",
+      "responseFormatError": "API返回格式异常",
+      "invalidApiKey": "API密钥无效",
+      "rateLimited": "请求过于频繁，请稍后重试",
+      "accessDenied": "API访问被拒绝",
+      "networkError": "网络连接失败",
+      "apiError": "表格整理错误"
     }
   },
   "tabs": {
@@ -209,13 +225,19 @@
     "ai": {
       "title": "AI翻译设置",
       "description": "配置AI翻译的行为和智能功能",
+      "smartSwitch": "智能语言切换",
+      "smartSwitchDesc": "输入中文自动切换为英文翻译，输入英文自动切换为中文翻译",
+      "webSearch": "联网对话",
+      "webSearchDesc": "为AI翻译开启联网功能，结合最新信息对原文进行翻译",
       "tips": "使用提示",
       "tip1": "智能语言切换可以根据输入内容自动选择合适的目标语言",
       "tip2": "当检测到中文输入时，会自动切换到英文翻译",
-      "tip3": "当检测到英文输入时，会自动切换到中文翻译"
+      "tip3": "当检测到英文输入时，会自动切换到中文翻译",
+      "tip4": "联网对话可以让AI获取最新信息进行更准确的翻译",
+      "tip5": "启用联网功能可能会增加API调用成本"
     },
     "tabs": {
-      "ai": "AI翻译",
+      "ai": "AI设置",
       "api": "API配置",
       "voice": "语音设置"
     },

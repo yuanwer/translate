@@ -5,6 +5,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card'
 import { useToast } from '@/hooks/useToast'
 import ConfigTabNavigation from './ConfigTabNavigation'
 import APIConfig from './APIConfig'
+import AIConfig from './AIConfig'
 import VoiceConfig from './VoiceConfig'
 
 const ServiceConfig = ({ onConfigChange, isModal = false }) => {
@@ -17,7 +18,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
     model: 'gpt-3.5-turbo',
     apiKey: '',
     customModel: '',
-    autoSwitchLang: true
+    autoSwitchLang: true,
+    enableWebSearch: false
   })
 
   const [showConfig, setShowConfig] = useState(false)
@@ -30,7 +32,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
       const newConfig = {
         ...parsed,
         customModel: parsed.customModel || '',
-        autoSwitchLang: parsed.autoSwitchLang !== undefined ? parsed.autoSwitchLang : true
+        autoSwitchLang: parsed.autoSwitchLang !== undefined ? parsed.autoSwitchLang : true,
+        enableWebSearch: parsed.enableWebSearch !== undefined ? parsed.enableWebSearch : false
       }
       setAiConfig(newConfig)
       // 立即将配置传递给父组件
@@ -104,7 +107,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
           model: configToImport.model || aiConfig.model,
           apiKey: configToImport.apiKey || '',
           customModel: configToImport.customModel || '',
-          autoSwitchLang: configToImport.autoSwitchLang !== undefined ? configToImport.autoSwitchLang : aiConfig.autoSwitchLang
+          autoSwitchLang: configToImport.autoSwitchLang !== undefined ? configToImport.autoSwitchLang : aiConfig.autoSwitchLang,
+          enableWebSearch: configToImport.enableWebSearch !== undefined ? configToImport.enableWebSearch : aiConfig.enableWebSearch
         }
 
         saveConfig(newConfig)
@@ -137,7 +141,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
         model: 'gpt-3.5-turbo',
         apiKey: '',
         customModel: '',
-        autoSwitchLang: true
+        autoSwitchLang: true,
+        enableWebSearch: false
       }
       saveConfig(defaultConfig)
       success(t('messages.resetConfigSuccess'))
@@ -148,6 +153,8 @@ const ServiceConfig = ({ onConfigChange, isModal = false }) => {
     switch (activeConfigTab) {
       case 'api':
         return <APIConfig config={aiConfig} onConfigChange={saveConfig} />
+      case 'ai':
+        return <AIConfig config={aiConfig} onConfigChange={saveConfig} />
       case 'voice':
         return <VoiceConfig />
       default:

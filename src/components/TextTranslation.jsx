@@ -33,6 +33,7 @@ const TextTranslation = ({ serviceConfig, languages }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [detectedLanguage, setDetectedLanguage] = useState('')
+  const [isTableFormatting, setIsTableFormatting] = useState(false)
 
   const autoSwitchLang = serviceConfig.autoSwitchLang !== false
 
@@ -133,6 +134,30 @@ const TextTranslation = ({ serviceConfig, languages }) => {
     handleSpeak(outputText, targetLang)
   }
 
+  // 处理表格整理
+  const handleTableFormat = async () => {
+    if (!outputText.trim()) return
+    
+    setIsTableFormatting(true)
+    setError('')
+    
+    try {
+      const result = await translateService.formatToTable(outputText, serviceConfig)
+      setOutputText(result.formattedText)
+    } catch (error) {
+      console.error('Table format error:', error)
+      let errorMessage = error.message
+      
+      if (error.message.includes(t('errors.tableFormat.apiKeyRequired'))) {
+        errorMessage = t('messages.apiKeyRequired')
+      }
+      
+      setError(errorMessage)
+    } finally {
+      setIsTableFormatting(false)
+    }
+  }
+
   // 获取语言名称
   const getLanguageName = (langCode) => {
     if (langCode === 'auto') {
@@ -179,6 +204,26 @@ const TextTranslation = ({ serviceConfig, languages }) => {
         isPaused={isPaused}
         canSpeak={canSpeak}
         ttsSupported={ttsSupported}
+        
+        extraOutputButtons={[
+          outputText && (
+            <Button
+              key="table-format"
+              variant="ghost"
+              size="sm"
+              onClick={handleTableFormat}
+              disabled={isTableFormatting || !outputText.trim()}
+              className="text-gray-500 hover:text-gray-700"
+              title={t('translation.tableFormatTooltip')}
+            >
+              {isTableFormatting ? (
+                <i className="fas fa-spinner fa-spin text-xs"></i>
+              ) : (
+                <i className="fas fa-table text-xs"></i>
+              )}
+            </Button>
+          )
+        ]}
       />
 
       {/* 翻译按钮 */}
