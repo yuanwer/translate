@@ -11,15 +11,7 @@ const SelectButton = React.forwardRef(({ onClick, disabled, isOpen, className = 
     type="button"
     onClick={onClick}
     disabled={disabled}
-    className={`
-      flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-left
-      ${disabled 
-        ? 'cursor-not-allowed opacity-50' 
-        : 'cursor-pointer hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
-      }
-      ${isOpen ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2' : ''}
-      transition-all duration-200
-    `.replace(/\s+/g, ' ').trim()}
+    className={`sm-select ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'} ${className}`.replace(/\s+/g, ' ').trim()}
     aria-haspopup="listbox"
     aria-expanded={isOpen}
     aria-labelledby="select-label"
@@ -31,7 +23,7 @@ const SelectButton = React.forwardRef(({ onClick, disabled, isOpen, className = 
 SelectButton.displayName = "SelectButton"
 
 const SelectList = React.forwardRef(({ children, className = "", ...props }, ref) => (
-  <div className="absolute z-50 mt-1 w-full rounded-md bg-white shadow-lg border border-gray-200 py-1 max-h-60 overflow-auto focus:outline-none">
+  <div className="absolute z-50 mt-1 w-full sm-dropdown py-1 max-h-60 overflow-auto focus:outline-none">
     <ul ref={ref} role="listbox" aria-labelledby="select-label" className={className} {...props}>
       {children}
     </ul>
@@ -164,12 +156,12 @@ const Select = React.forwardRef(({
                 role="option"
                 aria-selected={option.props.value === selectedValue}
                 className={`
-                  relative cursor-pointer select-none py-2 px-3 text-sm
+                  relative cursor-pointer select-none py-2 px-3 text-sm sm-dropdown__item
                   ${option.props.value === selectedValue 
-                    ? 'bg-blue-600 text-white' 
+                    ? '' 
                     : index === highlightedIndex 
-                      ? 'bg-blue-50 text-blue-900' 
-                      : 'text-gray-900 hover:bg-gray-50'
+                      ? 'sm-dropdown__item--highlight' 
+                      : ''
                   }
                   transition-colors duration-150
                 `.replace(/\s+/g, ' ').trim()}
@@ -179,7 +171,7 @@ const Select = React.forwardRef(({
                   {option.props.children}
                 </span>
                 {option.props.value === selectedValue && (
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-white">
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-3 sm-check">
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>

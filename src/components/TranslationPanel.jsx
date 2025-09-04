@@ -88,17 +88,17 @@ const TranslationPanel = ({
   }
 
   return (
-    <div className={className}>
+    <div className={`${className} ${minHeight}`}>
       {/* 左侧输入区域 */}
-      <div className="bg-white relative">
+      <div className="bg-white relative flex flex-col">
         <div className="p-4">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-2 h-8">
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-600 uppercase">
                 {inputLanguageName}
               </span>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 h-8">
               {extraInputButtons}
               {inputValue && !inputReadOnly && (
                 <Button
@@ -117,6 +117,8 @@ const TranslationPanel = ({
               )}
             </div>
           </div>
+        </div>
+        <div className="px-4 pb-4 flex-1 min-h-0">
           {inputReadOnly ? (
             <Textarea
               value={inputValue}
@@ -124,7 +126,7 @@ const TranslationPanel = ({
               readOnly={inputReadOnly}
               disabled={inputDisabled}
               placeholder={inputPlaceholder}
-              className={`${minHeight} resize-none border-0`}
+              className={`h-full resize-none border-0`}
             />
           ) : (
             <EnhancedTextInput
@@ -132,20 +134,20 @@ const TranslationPanel = ({
               onChange={onInputChange}
               placeholder={inputPlaceholder}
               disabled={inputDisabled}
-              className="border-0"
+              className="border-0 h-full"
             />
           )}
         </div>
       </div>
 
       {/* 右侧输出区域 */}
-      <div className="bg-white border-l border-gray-300 relative">
+      <div className="bg-white border-l border-gray-300 relative flex flex-col">
         <div className="p-4">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-2 h-8">
             <span className="text-xs text-gray-600 uppercase">
               {outputLanguageName}
             </span>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 h-8">
               {extraOutputButtons}
               {outputValue && (
                 <>
@@ -166,12 +168,14 @@ const TranslationPanel = ({
               )}
             </div>
           </div>
+        </div>
+        <div className="px-4 pb-4 flex-1 min-h-0">
           {outputValue ? (
-            <MarkdownRenderer minHeight={minHeight} className="border-0 bg-transparent">
+            <MarkdownRenderer minHeight={minHeight} className="border-0 bg-transparent h-full">
               {outputValue}
             </MarkdownRenderer>
           ) : (
-            <div className={`${minHeight} flex items-center justify-center border-0 bg-transparent text-gray-400 text-sm`}>
+            <div className={`h-full flex items-center justify-center border-0 bg-transparent text-gray-400 text-sm`}>
               {outputPlaceholder}
             </div>
           )}

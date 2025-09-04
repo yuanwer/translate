@@ -1,12 +1,12 @@
 import React from 'react'
 
 const StatusAlert = React.forwardRef(({ className, variant = "info", icon, children, ...props }, ref) => {
-  const variantStyles = {
-    error: "bg-red-50 border-l-4 border-red-400",
-    warning: "bg-yellow-50 border-l-4 border-yellow-400", 
-    success: "bg-green-50 border-l-4 border-green-400",
-    info: "bg-blue-50 border-l-4 border-blue-400",
-    loading: "bg-blue-50 border-l-4 border-blue-400"
+  const smVariantClasses = {
+    error: "sm-alert sm-alert--danger",
+    warning: "sm-alert sm-alert--warning", 
+    success: "sm-alert sm-alert--success",
+    info: "sm-alert sm-alert--info",
+    loading: "sm-alert sm-alert--info"
   }
 
   const iconStyles = {
@@ -26,18 +26,22 @@ const StatusAlert = React.forwardRef(({ className, variant = "info", icon, child
   }
 
   const iconClass = icon || iconStyles[variant]
-  const alertClass = variantStyles[variant]
+  const alertClass = smVariantClasses[variant]
   const textClass = textStyles[variant]
 
   return (
     <div
       ref={ref}
-      className={`${alertClass} p-3 ${className || ''}`}
+      className={`${alertClass} ${className || ''}`}
       {...props}
     >
-      <div className="flex items-center">
-        {iconClass && <i className={`${iconClass} mr-2`}></i>}
-        <span className={`${textClass} text-sm`}>
+      <div className="flex items-center gap-2">
+        {iconClass && (
+          <span className="inline-flex items-center justify-center w-5 h-5">
+            <i className={`${iconClass} text-[14px] leading-none`}></i>
+          </span>
+        )}
+        <span className={`${textClass} text-sm leading-5`}>
           {children}
         </span>
       </div>

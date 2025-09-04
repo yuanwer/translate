@@ -34,6 +34,8 @@ const Slider = ({
         )}
         
         <div className="relative flex-1">
+          {/** 计算进度百分比用于渐变填充 **/}
+          {(() => { const _ = null })()}
           <input
             type="range"
             min={min}
@@ -43,12 +45,12 @@ const Slider = ({
             onChange={handleChange}
             disabled={disabled}
             className={cn(
-              "range-slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer",
+              "range-slider w-full h-2 rounded-full appearance-none cursor-pointer",
               "border-none focus:border-none focus:shadow-none",
               disabled && "opacity-50 cursor-not-allowed"
             )}
             style={{
-              background: `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${((value - min) / (max - min)) * 100}%, #E5E7EB ${((value - min) / (max - min)) * 100}%, #E5E7EB 100%)`
+              background: `linear-gradient(to right, var(--sm-primary) 0%, var(--sm-primary) ${((value - min) / (max - min)) * 100}%, #E6E6E6 ${((value - min) / (max - min)) * 100}%, #E6E6E6 100%)`
             }}
             {...props}
           />

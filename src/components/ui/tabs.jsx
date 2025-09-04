@@ -33,18 +33,18 @@ const Tabs = ({ defaultValue, value, onValueChange, orientation = "horizontal", 
 const TabsList = ({ variant = "default", className = "", children, ...props }) => {
   const { orientation } = useContext(TabsContext)
   
-  let baseClasses = "inline-flex items-center justify-start"
+  let baseClasses = "inline-flex items-center justify-start sm-tabs"
   
   // Variant styles
   let variantClasses = ""
   if (variant === "default") {
-    variantClasses = "bg-gray-100 p-1 rounded-lg"
+    variantClasses = "bg-[#F2F3F5] p-1 rounded-lg"
   } else if (variant === "rounded") {
     variantClasses = "gap-2"
   } else if (variant === "underline") {
-    variantClasses = "gap-1 px-2 border-b border-gray-200"
+    variantClasses = "gap-1 px-2 border-b border-[#E6E6E6]"
   } else if (variant === "pills") {
-    variantClasses = "gap-1 p-1 bg-gray-50 rounded-lg"
+    variantClasses = "gap-1 p-1 bg-[#F2F3F5] rounded-lg"
   }
 
   // Orientation styles
@@ -85,7 +85,7 @@ const TabsTrigger = ({
   const { value: selectedValue, onValueChange } = useContext(TabsContext)
   const isActive = selectedValue === value
 
-  let baseClasses = "inline-flex items-center justify-center font-medium transition-all duration-200 cursor-pointer focus:outline-none"
+  let baseClasses = "inline-flex items-center justify-center font-medium transition-all duration-200 cursor-pointer focus:outline-none sm-tab"
   
   // Fixed size styles (统一默认尺寸)
   const sizeClasses = "text-sm px-4 py-2 gap-2 h-10"
@@ -97,19 +97,19 @@ const TabsTrigger = ({
 
   if (variant === "default") {
     variantClasses = "rounded-md"
-    activeClasses = isActive ? "bg-white text-blue-600 shadow-sm" : "text-gray-600"
-    hoverClasses = !isActive ? "hover:text-gray-800 hover:bg-gray-50" : ""
+    activeClasses = isActive ? "bg-white text-[#4A90E2] sm-shadow-1" : "text-gray-600"
+    hoverClasses = !isActive ? "hover:text-gray-800 hover:bg-[#F7F7F7]" : ""
   } else if (variant === "rounded") {
-    variantClasses = "rounded-full"
-    activeClasses = isActive ? "bg-blue-600 text-white shadow-sm" : "bg-gray-100 text-gray-600"
-    hoverClasses = !isActive ? "hover:bg-gray-200 hover:text-gray-800" : ""
+    variantClasses = "rounded-full sm-tab--rounded"
+    activeClasses = isActive ? "text-white sm-shadow-1" : "text-gray-600"
+    hoverClasses = !isActive ? "hover:bg-[#E9EBEE] hover:text-gray-800" : ""
   } else if (variant === "underline") {
-    variantClasses = "relative rounded-t-md"
-    activeClasses = isActive ? "text-blue-600" : "text-gray-600"
-    hoverClasses = "hover:bg-gray-50 hover:text-gray-800"
+    variantClasses = "relative rounded-t-md sm-tab--underline"
+    activeClasses = isActive ? "text-[#4A90E2]" : "text-gray-600"
+    hoverClasses = "hover:bg-[#F7F7F7] hover:text-gray-800"
   } else if (variant === "pills") {
     variantClasses = "rounded-md"
-    activeClasses = isActive ? "bg-blue-100 text-blue-700 shadow-sm" : "text-gray-600"
+    activeClasses = isActive ? "bg-[#E6F0FB] text-[#326CB0] sm-shadow-1" : "text-gray-600"
     hoverClasses = !isActive ? "hover:text-gray-800 hover:bg-white" : ""
   }
 

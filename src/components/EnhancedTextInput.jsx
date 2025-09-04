@@ -11,14 +11,14 @@ export function EnhancedTextInput({
   const textareaRef = useRef(null)
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <Textarea
         ref={textareaRef}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
-        className={`min-h-[300px] resize-none ${className}`}
+        className={`min-h-[300px] h-full resize-none ${className}`}
       />
     </div>
   )

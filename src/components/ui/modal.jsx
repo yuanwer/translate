@@ -35,13 +35,13 @@ export function Modal({ isOpen, onClose, title, children }) {
         }
       }}
     >
-      <div className="relative w-full max-w-2xl max-h-[90vh] bg-white rounded-lg shadow-xl overflow-hidden">
+      <div className="relative w-full max-w-2xl max-h-[90vh] sm-modal sm-appear overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 sm-modal__header">
           <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+            className="text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#F7F7F7] transition-colors cursor-pointer"
             aria-label="关闭"
           >
             ×
