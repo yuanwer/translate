@@ -130,6 +130,15 @@ const APIConfig = ({ config, onConfigChange }) => {
       </div>
 
       <div className="space-y-2">
+        <Label>{t('settings.visionModel')}</Label>
+        <Input
+          value={config.visionModel || ''}
+          onChange={(e) => handleFieldChange('visionModel', e.target.value)}
+          placeholder={t('settings.visionModelPlaceholder')}
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label>{t('settings.apiKey')}</Label>
         <Input
           type="password"

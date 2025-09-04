@@ -87,6 +87,8 @@
     "customModel": "Custom Model...",
     "customModelPlaceholder": "Enter custom model ID, e.g.: gpt-4o-2024-08-06",
     "modelPlaceholder": "Model name, e.g.: gpt-3.5-turbo",
+    "visionModel": "Vision Model",
+    "visionModelPlaceholder": "Model for image understanding, e.g.: gpt-4o, gpt-4.1-mini",
     "apiKey": "API Key",
     "apiKeyPlaceholder": "Enter API key",
     "testConnection": "Test Connection",

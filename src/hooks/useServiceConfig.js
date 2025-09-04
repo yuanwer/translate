@@ -5,6 +5,7 @@ const DEFAULT_CONFIG = {
   url: 'https://api.openai.com/v1/chat/completions',
   model: 'gpt-3.5-turbo',
   apiKey: '',
+  visionModel: '',
   customModel: '',
   autoSwitchLang: true,
   enableWebSearch: false,
@@ -24,6 +25,7 @@ export function useServiceConfig(onConfigChange) {
       const newConfig = {
         ...DEFAULT_CONFIG,
         ...parsed,
+        visionModel: parsed.visionModel || '',
         customModel: parsed.customModel || '',
         autoSwitchLang: parsed.autoSwitchLang !== undefined ? parsed.autoSwitchLang : DEFAULT_CONFIG.autoSwitchLang,
         enableWebSearch: parsed.enableWebSearch !== undefined ? parsed.enableWebSearch : DEFAULT_CONFIG.enableWebSearch,

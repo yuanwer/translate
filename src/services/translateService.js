@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import { translate as aiTranslate, formatToTable as aiFormatToTable } from './providers/aiChatProvider'
+import { translate as aiTranslate, formatToTable as aiFormatToTable, extractTextFromImage as aiExtractTextFromImage } from './providers/aiChatProvider'
 import { convertToChromeLanguageCode, getLanguageName, SUPPORTED_LANGUAGES } from '../lib/language'
 
 export class TranslateService {
@@ -17,6 +17,10 @@ export class TranslateService {
 
   getSupportedLanguages() {
     return this.aiService.getSupportedLanguages()
+  }
+
+  async extractTextFromImage(image, config = {}) {
+    return await this.aiService.extractTextFromImage(image, config)
   }
 }
 
@@ -121,6 +125,24 @@ class AITranslateService {
     return await aiFormatToTable(text, {
       url,
       model,
+      apiKey,
+      serviceName
+    })
+  }
+
+  async extractTextFromImage(image, config) {
+    const {
+      url = this.defaultConfig.url,
+      model = this.defaultConfig.model,
+      visionModel = '',
+      apiKey,
+      serviceName = this.defaultConfig.serviceName
+    } = config
+
+    return await aiExtractTextFromImage(image, {
+      url,
+      model,
+      visionModel,
       apiKey,
       serviceName
     })

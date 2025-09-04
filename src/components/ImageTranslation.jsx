@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next'
 import { ImageUpload } from './ImageUpload'
 import LanguageSelector from './LanguageSelector'
 import TranslationPanel from './TranslationPanel'
-import OCRCorrectButton from './OCRCorrectButton'
 import { StatusAlert } from '@/components/ui/status-alert'
 import { Button } from '@/components/ui/button'
 import { useImageTranslation } from '@/hooks/useImageTranslation'
@@ -87,15 +86,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
           outputPlaceholder={isTranslating ? t('translation.translating', '翻译中...') : t('translation.outputPlaceholder', '翻译结果')}
           outputLanguageName={getLanguageName(targetLang, languages)}
           
-          extraInputButtons={[
-            <OCRCorrectButton
-              key="ocr-correct"
-              recognizedText={recognizedText}
-              onTextCorrected={(text, corrections) => handleTextCorrected(text, corrections)}
-              serviceConfig={serviceConfig}
-              disabled={isTranslating}
-            />
-          ]}
+          extraInputButtons={[]}
         />
       )}
 

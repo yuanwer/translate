@@ -186,4 +186,90 @@ ${text}`
   }
 }
 
+// 将图片发送给视觉模型，提取其中的可读文字，返回纯文本
+export async function extractTextFromImage(image, config) {
+  const {
+    url,
+    model,
+    visionModel,
+    apiKey,
+    serviceName
+  } = config
+
+  if (!apiKey) {
+    throw new Error(i18n.t('messages.apiKeyRequired'))
+  }
+
+  if (!url) {
+    throw new Error(i18n.t('messages.testRequired'))
+  }
+
+  const ensureDataUrl = (img) => new Promise((resolve, reject) => {
+    try {
+      if (typeof img === 'string' && img.startsWith('data:')) {
+        resolve(img)
+        return
+      }
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = (e) => reject(new Error('Failed to read image'))
+      reader.readAsDataURL(img)
+    } catch (err) {
+      reject(err)
+    }
+  })
+
+  try {
+    const dataUrl = await ensureDataUrl(image)
+    const usedModel = visionModel || model
+
+    const prompt = '请从这张图片中提取可读文字，按原文顺序输出纯文本。仅返回提取的文字，不要任何额外说明。'
+
+    const requestBody = {
+      model: usedModel,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: prompt },
+            { type: 'image_url', image_url: { url: dataUrl } }
+          ]
+        }
+      ],
+      temperature: 0,
+      max_tokens: 2000
+    }
+
+    const response = await axios.post(
+      url,
+      requestBody,
+      {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
+    const content = response.data?.choices?.[0]?.message?.content?.trim?.()
+    if (!content) {
+      throw new Error(i18n.t('ocr.noTextFound'))
+    }
+
+    return { text: content, service: serviceName?.toLowerCase?.() || 'unknown' }
+  } catch (error) {
+    if (error.response?.status === 401) {
+      throw new Error(i18n.t('errors.translate.invalidApiKey'))
+    } else if (error.response?.status === 429) {
+      throw new Error(i18n.t('errors.translate.rateLimited'))
+    } else if (error.response?.status === 403) {
+      throw new Error(i18n.t('errors.translate.accessDenied'))
+    } else if (error.code === 'NETWORK_ERROR' || (error.message || '').includes('Network Error')) {
+      throw new Error(i18n.t('errors.translate.networkError'))
+    } else {
+      throw new Error(`${serviceName}${i18n.t('errors.translate.apiError')}: ${error.response?.data?.error?.message || error.message}`)
+    }
+  }
+}
+
 

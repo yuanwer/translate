@@ -87,6 +87,8 @@
     "customModel": "自定义模型...",
     "customModelPlaceholder": "输入自定义模型ID，如: gpt-4o-2024-08-06",
     "modelPlaceholder": "模型名称，如: gpt-3.5-turbo",
+    "visionModel": "视觉模型",
+    "visionModelPlaceholder": "用于图片理解的模型，如: gpt-4o, gpt-4.1-mini",
     "apiKey": "API密钥",
     "apiKeyPlaceholder": "输入API密钥",
     "testConnection": "测试连接",

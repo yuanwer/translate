@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { translateService } from '../services/translateService'
-import { ocrService } from '../services/ocrService'
 import { useLanguageDetection } from './useLanguageDetection'
 
 export function useImageTranslation(serviceConfig) {
@@ -27,32 +26,19 @@ export function useImageTranslation(serviceConfig) {
     setError('')
     setRecognizedText('')
     setTranslatedText('')
-    setOcrProgress(t('ocr.initializing'))
+    setOcrProgress(t('ocr.processing'))
 
     try {
-      const result = await ocrService.recognizeText(imageFile, {
-        language: 'chi_sim+eng',
-        onProgress: (progress) => {
-          if (progress.status === 'loading frugally') {
-            setOcrProgress(t('ocr.loadingModel'))
-          } else if (progress.status === 'initializing tesseract') {
-            setOcrProgress(t('ocr.initializingEngine'))
-          } else if (progress.status === 'initializing api') {
-            setOcrProgress(t('ocr.preparingAPI'))
-          } else if (progress.status === 'recognizing text') {
-            const percent = Math.round(progress.progress * 100)
-            setOcrProgress(t('ocr.recognizing', { percent }))
-          }
-        }
-      })
+      const result = await translateService.extractTextFromImage(imageFile, serviceConfig)
 
-      if (result.text && result.text.trim()) {
-        setRecognizedText(result.text)
+      const extractedText = result?.text || ''
+      if (extractedText.trim()) {
+        setRecognizedText(extractedText)
         setOcrProgress(t('ocr.completed'))
         setHasSelectedImage(true)
 
         if (autoSwitchLang && sourceLang === 'auto') {
-          const newTargetLang = getSmartTargetLanguage(result.text, targetLang, sourceLang, autoSwitchLang)
+          const newTargetLang = getSmartTargetLanguage(extractedText, targetLang, sourceLang, autoSwitchLang)
           if (newTargetLang !== targetLang) {
             setTargetLang(newTargetLang)
           }
@@ -61,8 +47,12 @@ export function useImageTranslation(serviceConfig) {
         setError(t('ocr.noTextFound'))
       }
     } catch (error) {
-      console.error('OCR Error:', error)
-      setError(error.message)
+      console.error('Vision Extract Error:', error)
+      let errorMessage = error.message
+      if (error.message.includes(t('errors.translate.apiKeyRequired'))) {
+        errorMessage = t('messages.apiKeyRequired')
+      }
+      setError(errorMessage)
     } finally {
       setIsOCRProcessing(false)
       setTimeout(() => setOcrProgress(''), 3000)

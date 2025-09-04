@@ -18,21 +18,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 自动检测源语言类型，支持16种主流语言互译
 - 智能语言切换：中英文自动切换功能
 
-### 📸 OCR图片识别
-- 基于Tesseract.js的客户端文字识别
-- 支持中英文混合识别，多种图片格式（JPG、PNG、WEBP）
-- CDN降级机制确保稳定访问（支持UNPKG、七牛云等多个CDN源）
-- 应用启动时的OCR预热机制，提升用户体验
+### 📸 视觉模型图片文本抽取
+- 基于支持图片对话的多模态模型（如 gpt-4o-mini）
+- 上传图片后直接调用视觉模型，返回图片中的文字内容
 
 ### 🔊 TTS语音合成
 - 基于浏览器原生Web Speech API的语音合成
 - 智能语言检测和语音播放
 - 支持输入文本和翻译结果的语音朗读
 
-### 🔧 OCR文字修正
-- 使用AI技术修正OCR识别错误
-- 支持多种AI服务进行文字校对
-- 提供修正前后的对比显示
+### 🔧 图片文字修正（已移除）
+- 旧的 OCR 修正功能已移除
 
 ### 🎨 现代化界面
 - 响应式设计，适配各种设备
@@ -47,9 +43,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Tailwind CSS 4** - 原子化CSS框架，集成@tailwindcss/vite插件
 
 ### 核心服务层
-- **translateService** (`src/services/translateService.js`) - AI翻译服务，支持多种OpenAI兼容API
-- **ocrService** (`src/services/ocrService.js`) - OCR文字识别服务，包含预热和CDN降级机制
-- **ocrCorrectService** (`src/services/ocrCorrectService.js`) - OCR文字修正服务，使用AI修正识别错误
+- **translateService** (`src/services/translateService.js`) - AI翻译与视觉图片文本抽取
+- **providers/aiChatProvider** (`src/services/providers/aiChatProvider.js`) - 对话与图片对话调用实现
 - **ttsService** (`src/services/ttsService.js`) - TTS语音合成服务
 
 ### 状态管理
@@ -79,7 +74,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 关键依赖
 
 ### 核心功能依赖
-- **tesseract.js** - 客户端OCR文字识别引擎
 - **axios** - HTTP客户端，用于AI API调用
 - **@fortawesome/fontawesome-free** - 图标库
 - **react-markdown** + **remark-gfm** - Markdown渲染支持
@@ -88,10 +82,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **react-i18next** - React国际化集成
 - **i18next-browser-languagedetector** - 浏览器语言检测
 
-### OCR数据包
-- **@tesseract.js-data/eng** - 英文OCR识别数据
-- **@tesseract.js-data/chi_sim** - 简体中文OCR识别数据
-- **@tesseract.js-data/chi_tra** - 繁体中文OCR识别数据
+### OCR数据包（已移除）
+- 旧的 tesseract.js 数据包依赖已移除
 
 ### 开发工具
 - **@vitejs/plugin-react** - Vite的React插件
@@ -99,10 +91,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 特殊机制说明
 
-### OCR预热机制
-- 应用启动时自动预热OCR引擎（`App.jsx:234`）
-- 静默下载识别模型，提升首次使用体验
-- 支持多CDN降级策略，确保模型下载成功
+### 视觉图片文本抽取
+- 通过 Chat Completions 的图片对话，将图片 (image_url) 与文本 prompt 同时发送
+- 注意 image_url 需要对象形式 { url: '...' }
 
 ### 智能语言切换
 - 自动检测输入文本的中文字符比例（`App.jsx:51`）

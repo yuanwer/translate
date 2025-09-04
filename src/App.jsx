@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { translateService } from './services/translateService'
-import { ocrService } from './services/ocrService'
 import ServiceConfig from './components/ServiceConfig'
 import TextTranslation from './components/TextTranslation'
 import ImageTranslation from './components/ImageTranslation'
@@ -18,7 +17,6 @@ function App() {
   const [serviceConfig, setServiceConfig] = useState({})
   const [showConfigModal, setShowConfigModal] = useState(false)
   const [activeTab, setActiveTab] = useState('text')
-  const [_OcrPreWarmStatus, setOcrPreWarmStatus] = useState({ isPreWarming: false, isReady: false, hasError: false })
 
   const languages = translateService.getSupportedLanguages()
 
@@ -70,30 +68,9 @@ function App() {
     }
 
 
-    const startOCRPreWarming = async () => {
-      // 延迟500ms启动预热，让界面先渲染完成
-      setTimeout(async () => {
-        setOcrPreWarmStatus({ isPreWarming: true, isReady: false, hasError: false })
-        
-        // 开始静默预热
-        await ocrService.preWarm('chi_sim+eng')
-        
-        // 更新状态
-        const status = ocrService.getPreWarmStatus()
-        setOcrPreWarmStatus(status)
-        
-        if (status.isReady) {
-          console.log('OCR预热完成，用户可以无感知快速识别图片')
-        }
-      }, 500)
-    }
-
     loadSavedConfig()
-    startOCRPreWarming()
 
-    return () => {
-      ocrService.terminate()
-    }
+    return () => {}
   }, [])
 
 

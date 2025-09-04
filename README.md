@@ -1,6 +1,6 @@
 # 🌍 AI智能翻译工具
 
-一个功能强大的现代化翻译应用，集成AI智能翻译、OCR图片识别和智能语言切换功能。
+一个功能强大的现代化翻译应用，集成AI智能翻译、视觉模型图片文本抽取和智能语言切换功能。
 
 [![React](https://img.shields.io/badge/React-19-blue)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-7-green)](https://vitejs.dev/)
@@ -15,12 +15,10 @@
 - 智能语言切换：中文内容自动切换到英文翻译，英文内容自动切换到中文翻译
 - 实时翻译结果显示，支持复制和语音朗读
 
-### 📸 OCR图片识别
-- 基于Tesseract.js的客户端文字识别引擎
-- 支持中英文混合识别，多种图片格式（JPG、PNG、WEBP）
-- 拖拽上传图片功能，无需服务器处理
-- 应用启动时OCR预热机制，提升首次使用体验
-- CDN降级机制：UNPKG、七牛云等多源确保稳定访问
+### 📸 视觉模型图片文本抽取
+- 基于支持图片对话的多模态模型（如 gpt-4o-mini）
+- 上传图片后直接调用视觉模型，返回图片中的文字内容
+- 支持 data:URL 或公网 URL 的图片传入（推荐公网 URL）
 
 ### 🔊 TTS语音合成
 - 基于浏览器原生Web Speech API的语音合成功能
@@ -79,11 +77,11 @@ npm run dev
 3. 点击"翻译"按钮获取结果
 4. 使用右侧的复制和语音按钮处理翻译结果
 
-### 图片文字识别
+### 图片文字识别（视觉模型）
 1. 切换到"图片翻译"标签页
 2. 点击"上传图片"按钮或直接拖拽图片到界面
-3. 等待OCR识别完成（首次使用可能需要下载模型）
-4. 识别的文字会自动显示，可进一步翻译
+3. 等待视觉模型抽取完成
+4. 抽取的文字会自动显示，可进一步翻译
 
 ### 语音朗读功能
 1. 翻译完成后，点击文本框右下角的语音按钮 🔊
@@ -150,7 +148,7 @@ translate/
 │   │   └── ...                    # 其他业务组件
 │   ├── services/              # 核心服务层
 │   │   ├── translateService.js   # AI翻译服务
-│   │   ├── ocrService.js         # OCR识别服务
+│   │   ├── providers/aiChatProvider.js # AI 对话与图片对话调用
 │   │   └── ttsService.js         # TTS语音合成服务
 │   ├── contexts/              # React Context
 │   │   └── ToastContext.jsx      # 全局消息提示上下文
@@ -199,7 +197,6 @@ npm run lint
 - **FontAwesome** - 图标库
 
 ### 核心依赖
-- **Tesseract.js** - 客户端OCR文字识别引擎
 - **Axios** - HTTP客户端，用于AI API调用
 - **i18next** + **react-i18next** - 完整的国际化解决方案
 - **@fortawesome/fontawesome-free** - 图标库
@@ -223,12 +220,9 @@ A: 请在设置中配置您的AI服务API密钥。目前支持OpenAI和兼容服
 **Q: 支持哪些AI服务？**  
 A: 支持OpenAI官方API，以及任何兼容OpenAI格式的第三方服务。
 
-### OCR识别问题
-**Q: 图片识别速度慢？**  
-A: 首次使用需要下载识别模型，后续使用会更快。应用启动时会自动预热OCR引擎。
-
-**Q: 识别准确度不高？**  
-A: 建议上传清晰、对比度高的图片，避免模糊或倾斜的文字。
+### 图片抽取问题
+**Q: 400 错误？**  
+A: 确保 `image_url` 采用对象形式：`{"url": "..."}`，并选择支持图片对话的视觉模型（如 `gpt-4o-mini`）。
 
 ### TTS语音问题
 **Q: 语音朗读功能无法使用？**  
@@ -241,8 +235,8 @@ A: 语音选择取决于操作系统和浏览器。Windows用户可安装语音�
 A: 某些浏览器要求用户交互才能播放语音。确保在用户操作后触发语音功能。
 
 ### 网络连接问题
-**Q: OCR模型下载失败？**  
-A: 应用内置CDN降级机制（UNPKG、七牛云等），会自动尝试多个CDN源，确保模型能够成功下载。
+**Q: data:URL 无法解析？**  
+A: 部分服务商不支持 data:URL，建议使用可公网访问的图片 URL。
 
 ### 浏览器兼容性
 **Q: 哪些浏览器支持完整功能？**  
@@ -272,7 +266,6 @@ A: 推荐使用Chrome 88+、Firefox 85+、Safari 14+、Edge 88+。OCR功能需�
 
 - [React](https://reactjs.org/) - 用于构建用户界面
 - [Vite](https://vitejs.dev/) - 现代化的前端构建工具
-- [Tesseract.js](https://tesseract.projectnaptha.com/) - 强大的OCR识别库
 - [Tailwind CSS](https://tailwindcss.com/) - 实用优先的CSS框架
 
 ---
