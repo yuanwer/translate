@@ -87,7 +87,6 @@ const TextTranslation = ({ serviceConfig, languages }) => {
             <Button
               key="table-format"
               variant="ghost"
-              size="sm"
               onClick={handleTableFormat}
               disabled={isTableFormatting || !outputText.trim()}
               className="text-gray-500 hover:text-gray-700"

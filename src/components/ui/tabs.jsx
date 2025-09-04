@@ -76,7 +76,6 @@ const TabsList = ({ variant = "default", className = "", children, ...props }) =
 const TabsTrigger = ({ 
   value, 
   variant = "default",
-  size = "default",
   icon,
   disabled = false,
   className = "", 
@@ -88,15 +87,8 @@ const TabsTrigger = ({
 
   let baseClasses = "inline-flex items-center justify-center font-medium transition-all duration-200 cursor-pointer focus:outline-none"
   
-  // Size styles
-  let sizeClasses = ""
-  if (size === "sm") {
-    sizeClasses = "text-sm px-3 py-1.5 gap-1.5"
-  } else if (size === "lg") {
-    sizeClasses = "text-base px-6 py-3 gap-2"
-  } else {
-    sizeClasses = "text-sm px-4 py-2 gap-2"
-  }
+  // Fixed size styles (统一默认尺寸)
+  const sizeClasses = "text-sm px-4 py-2 gap-2 h-10"
 
   // Variant styles
   let variantClasses = ""

@@ -36,7 +36,6 @@ const LanguageSelector = ({
         <div className="flex items-center justify-center px-4">
           <Button 
             variant="ghost" 
-            size="icon"
             onClick={onSwapLanguages}
             disabled={sourceLang === 'auto'}
             className="w-10 h-10 rounded-full disabled:opacity-50 text-gray-600 hover:bg-gray-100"

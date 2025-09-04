@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectItem } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
+import { Switch } from '@/components/ui/switch'
 
 const TTSSettings = () => {
   const { t } = useTranslation()
@@ -58,7 +59,6 @@ const TTSSettings = () => {
         <Label className="text-sm font-medium">{t('tts.settings')}</Label>
         <Button
           variant="ghost"
-          size="sm"
           onClick={resetConfig}
           className="text-xs text-gray-500 hover:text-gray-700"
         >
@@ -125,21 +125,10 @@ const TTSSettings = () => {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label className="text-sm">{t('tts.autoDetect')}</Label>
-          <label className="flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              checked={config.autoDetectLang}
-              onChange={(e) => handleConfigChange('autoDetectLang', e.target.checked)}
-              className="sr-only"
-            />
-            <div className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-              config.autoDetectLang ? 'bg-blue-600' : 'bg-gray-300'
-            }`}>
-              <div className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
-                config.autoDetectLang ? 'translate-x-5' : 'translate-x-1'
-              }`} />
-            </div>
-          </label>
+          <Switch
+            checked={config.autoDetectLang}
+            onCheckedChange={(next) => handleConfigChange('autoDetectLang', next)}
+          />
         </div>
         <p className="text-xs text-gray-500">
           {t('tts.autoDetectDescription')}
@@ -152,7 +141,6 @@ const TTSSettings = () => {
           onClick={handleTestVoice}
           disabled={!isReady || !canSpeak}
           variant="outline"
-          size="sm"
           className="w-full"
         >
           <i className="fas fa-volume-up mr-2"></i>

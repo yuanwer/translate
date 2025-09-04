@@ -61,7 +61,6 @@ const TranslationPanel = ({
     return (
       <Button
         variant="ghost"
-        size="sm"
         onClick={() => onSpeak?.(text)}
         disabled={!canSpeak}
         className={`text-xs ${
@@ -104,7 +103,6 @@ const TranslationPanel = ({
               {inputValue && !inputReadOnly && (
                 <Button
                   variant="ghost"
-                  size="sm"
                   onClick={handleCopyInput}
                   className="text-gray-500 hover:text-gray-700"
                   title={t('common.copy')}
@@ -153,7 +151,6 @@ const TranslationPanel = ({
                 <>
                   <Button
                     variant="ghost"
-                    size="sm"
                     onClick={handleCopyOutput}
                     className="text-gray-500 hover:text-gray-700"
                     title={t('common.copy')}

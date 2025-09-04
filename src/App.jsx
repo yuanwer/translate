@@ -112,7 +112,6 @@ function App() {
               <LanguageSwitcher />
               <Button
                 variant="ghost"
-                size="icon"
                 onClick={() => setShowConfigModal(true)}
                 className="w-10 h-10 text-gray-600 hover:bg-gray-100"
                 title={t('settings.title')}

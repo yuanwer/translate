@@ -1,7 +1,7 @@
 import * as React from "react"
 
-const Button = React.forwardRef(({ className = "", variant = "default", size = "default", ...props }, ref) => {
-  let baseClasses = "inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer disabled:cursor-not-allowed"
+const Button = React.forwardRef(({ className = "", variant = "default", ...props }, ref) => {
+  let baseClasses = "inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer disabled:cursor-not-allowed h-10 px-4 py-2 text-sm"
   
   let variantClasses = ""
   if (variant === "default") {
@@ -16,18 +16,7 @@ const Button = React.forwardRef(({ className = "", variant = "default", size = "
     variantClasses = "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
   }
   
-  let sizeClasses = ""
-  if (size === "sm") {
-    sizeClasses = "text-sm px-3 py-2 h-9"
-  } else if (size === "lg") {
-    sizeClasses = "text-base px-8 py-3 h-11"
-  } else if (size === "icon") {
-    sizeClasses = "h-10 w-10 p-0"
-  } else {
-    sizeClasses = "text-sm px-4 py-2 h-10"
-  }
-
-  const finalClasses = `${baseClasses} ${variantClasses} ${sizeClasses} ${className}`.trim()
+  const finalClasses = `${baseClasses} ${variantClasses} ${className}`.trim()
 
   return (
     <button

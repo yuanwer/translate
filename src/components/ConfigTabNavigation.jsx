@@ -31,7 +31,6 @@ const ConfigTabNavigation = ({ activeTab, onTabChange }) => {
               key={tab.id}
               value={tab.id}
               icon={tab.icon}
-              size="sm"
             >
               {tab.label}
             </TabsTrigger>

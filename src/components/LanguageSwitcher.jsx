@@ -20,7 +20,6 @@ const LanguageSwitcher = () => {
     <div className="flex items-center gap-2">
       <Button
         variant="outline"
-        size="sm"
         onClick={() => handleLanguageChange(i18n.language === 'zh' ? 'en' : 'zh')}
         className="flex items-center gap-2 px-3 py-1.5 h-8"
         title={t('language.switch')}

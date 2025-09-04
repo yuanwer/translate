@@ -79,7 +79,6 @@ export function OCRCorrectButton({
     <>
       <Button
         variant="ghost"
-        size="sm"
         onClick={handleCorrection}
         disabled={disabled || isCorrecting || !recognizedText?.trim()}
         className={buttonConfig.className}

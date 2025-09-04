@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Switch } from '@/components/ui/switch'
 
 const AIConfig = ({ config, onConfigChange }) => {
   const { t } = useTranslation()
@@ -38,16 +39,11 @@ const AIConfig = ({ config, onConfigChange }) => {
             </p>
           </div>
           <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="autoSwitchLang"
+            <Switch
               checked={config.autoSwitchLang}
-              onChange={(e) => handleAutoSwitchChange(e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              onCheckedChange={handleAutoSwitchChange}
+              aria-label="智能语言切换"
             />
-            <label htmlFor="autoSwitchLang" className="ml-2 sr-only">
-              智能语言切换
-            </label>
           </div>
         </div>
       </div>
@@ -64,16 +60,11 @@ const AIConfig = ({ config, onConfigChange }) => {
             </p>
           </div>
           <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="enableWebSearch"
+            <Switch
               checked={config.enableWebSearch}
-              onChange={(e) => handleWebSearchChange(e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              onCheckedChange={handleWebSearchChange}
+              aria-label="联网对话"
             />
-            <label htmlFor="enableWebSearch" className="ml-2 sr-only">
-              联网对话
-            </label>
           </div>
         </div>
       </div>
@@ -90,16 +81,11 @@ const AIConfig = ({ config, onConfigChange }) => {
             </p>
           </div>
           <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="autoTranslate"
+            <Switch
               checked={config.autoTranslate !== false}
-              onChange={(e) => handleAutoTranslateChange(e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              onCheckedChange={handleAutoTranslateChange}
+              aria-label="自动翻译"
             />
-            <label htmlFor="autoTranslate" className="ml-2 sr-only">
-              自动翻译
-            </label>
           </div>
         </div>
       </div>
