@@ -1,5 +1,6 @@
-import axios from 'axios'
 import i18n from '../i18n'
+import { translate as aiTranslate, formatToTable as aiFormatToTable } from './providers/aiChatProvider'
+import { convertToChromeLanguageCode, getLanguageName, SUPPORTED_LANGUAGES } from '../lib/language'
 
 export class TranslateService {
   constructor() {
@@ -31,120 +32,26 @@ class AITranslateService {
   }
 
   async translate(text, sourceLang, targetLang, config) {
-    const { 
-      url = this.defaultConfig.url, 
-      model = this.defaultConfig.model, 
-      apiKey, 
+    const {
+      url = this.defaultConfig.url,
+      model = this.defaultConfig.model,
+      apiKey,
       serviceName = this.defaultConfig.serviceName,
       enableWebSearch = false
     } = config
-    
+
     // Chrome AI特殊处理
     if (serviceName === 'Chrome Built-in AI' || url === 'chrome://ai-translate') {
       return await this.translateWithChromeAI(text, sourceLang, targetLang)
     }
-    
-    if (!apiKey) {
-      throw new Error(i18n.t('errors.translate.apiKeyRequired'))
-    }
 
-    if (!url) {
-      throw new Error(i18n.t('errors.translate.apiUrlRequired'))
-    }
-
-    try {
-      const sourceLangName = this.getLanguageName(sourceLang)
-      const targetLangName = this.getLanguageName(targetLang)
-      
-      let prompt
-      const webSearchTip = enableWebSearch ? '请结合最新信息和实时数据进行翻译，确保翻译内容的准确性和时效性。' : ''
-      
-      if (sourceLang === 'auto') {
-        prompt = `请将以下文本翻译成${targetLangName}。${webSearchTip}请按以下格式返回结果：
-
-检测语言: [检测到的源语言代码，如zh、en、ja等]
-翻译结果: [翻译后的文本]
-
-原文：
-${text}`
-      } else {
-        prompt = `请将以下${sourceLangName}文本翻译成${targetLangName}。${webSearchTip}请按以下格式返回结果：
-
-检测语言: ${sourceLang}
-翻译结果: [翻译后的文本]
-
-原文：
-${text}`
-      }
-
-      const requestBody = {
-        model,
-        messages: [
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        temperature: 0.3,
-        max_tokens: 2000
-      }
-
-      // 如果启用联网搜索，添加 enable_search 参数
-      if (enableWebSearch) {
-        requestBody.enable_search = true
-      }
-
-      const response = await axios.post(
-        url,
-        requestBody,
-        {
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-
-      if (!response.data?.choices?.[0]?.message?.content) {
-        throw new Error(i18n.t('errors.translate.responseFormatError'))
-      }
-
-      const content = response.data.choices[0].message.content.trim()
-      
-      // 解析返回结果
-      let translatedText = content
-      let detectedLanguage = sourceLang
-      
-      // 尝试解析格式化的回复
-      const detectMatch = content.match(/检测语言:\s*([a-zA-Z-]+)/)
-      const translateMatch = content.match(/翻译结果:\s*([\s\S]+)/)
-      
-      if (detectMatch && translateMatch) {
-        detectedLanguage = detectMatch[1].toLowerCase()
-        translatedText = translateMatch[1].trim()
-      } else {
-        // 如果AI没有按格式返回，则使用整个内容作为翻译结果
-        translatedText = content
-      }
-
-      return {
-        translatedText,
-        detectedSourceLanguage: detectedLanguage,
-        service: serviceName.toLowerCase()
-      }
-    } catch (error) {
-      if (error.response?.status === 401) {
-        throw new Error(i18n.t('errors.translate.invalidApiKey'))
-      } else if (error.response?.status === 429) {
-        throw new Error(i18n.t('errors.translate.rateLimited'))
-      } else if (error.response?.status === 403) {
-        throw new Error(i18n.t('errors.translate.accessDenied'))
-      } else if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
-        throw new Error(i18n.t('errors.translate.networkError'))
-      } else {
-        throw new Error(`${serviceName}${i18n.t('errors.translate.apiError')}: ${error.response?.data?.error?.message || error.message}`)
-      }
-    }
+    return await aiTranslate(text, sourceLang, targetLang, {
+      url,
+      model,
+      apiKey,
+      serviceName,
+      enableWebSearch
+    })
   }
 
   async translateWithChromeAI(text, sourceLang, targetLang) {
@@ -155,8 +62,8 @@ ${text}`
       }
 
       // 语言代码转换 (Chrome AI使用ISO 639-1标准)
-      const chromeSourceLang = this.convertToChromeLanguageCode(sourceLang)
-      const chromeTargetLang = this.convertToChromeLanguageCode(targetLang)
+      const chromeSourceLang = convertToChromeLanguageCode(sourceLang)
+      const chromeTargetLang = convertToChromeLanguageCode(targetLang)
 
       // 检查语言对是否支持
       const canTranslate = await window.ai.translator.canTranslate({
@@ -199,150 +106,28 @@ ${text}`
     }
   }
 
-  convertToChromeLanguageCode(code) {
-    // 将应用的语言代码转换为Chrome AI支持的语言代码
-    const conversionMap = {
-      'auto': 'auto', // Chrome AI可能会自动检测
-      'zh-CN': 'zh',
-      'zh-TW': 'zh-Hant',
-      'en': 'en',
-      'ja': 'ja',
-      'ko': 'ko',
-      'fr': 'fr',
-      'de': 'de',
-      'es': 'es',
-      'ru': 'ru',
-      'ar': 'ar',
-      'hi': 'hi',
-      'pt': 'pt',
-      'it': 'it',
-      'th': 'th',
-      'vi': 'vi'
-    }
-    return conversionMap[code] || code.split('-')[0] // 如果没找到映射，使用语言代码的主要部分
-  }
-
   getLanguageName(code) {
-    const langMap = {
-      'zh': '中文',
-      'zh-CN': '简体中文',
-      'zh-TW': '繁体中文',
-      'en': '英文',
-      'ja': '日文',
-      'ko': '韩文',
-      'fr': '法文',
-      'de': '德文',
-      'es': '西班牙文',
-      'ru': '俄文',
-      'ar': '阿拉伯文',
-      'hi': '印地文',
-      'pt': '葡萄牙文',
-      'it': '意大利文',
-      'th': '泰文',
-      'vi': '越南文'
-    }
-    return langMap[code] || code
+    return getLanguageName(code)
   }
 
   async formatToTable(text, config) {
-    const { 
-      url = this.defaultConfig.url, 
-      model = this.defaultConfig.model, 
-      apiKey, 
-      serviceName = this.defaultConfig.serviceName 
+    const {
+      url = this.defaultConfig.url,
+      model = this.defaultConfig.model,
+      apiKey,
+      serviceName = this.defaultConfig.serviceName
     } = config
-    
-    if (!apiKey) {
-      throw new Error(i18n.t('errors.tableFormat.apiKeyRequired'))
-    }
 
-    if (!url) {
-      throw new Error(i18n.t('errors.tableFormat.apiUrlRequired'))
-    }
-
-    if (!text || !text.trim()) {
-      throw new Error(i18n.t('errors.tableFormat.emptyText'))
-    }
-
-    try {
-      const prompt = `请将以下文本内容整理为表格格式。根据文本内容的特点，智能识别并提取关键信息，生成结构化的Markdown表格。
-
-要求：
-1. 分析文本内容，识别可以表格化的信息（如数据对比、属性列表、时间序列、分类信息等）
-2. 提取关键字段作为表格列标题
-3. 将相关信息按行组织
-4. 使用标准的Markdown表格格式输出
-5. 如果文本不适合表格化，请说明原因并提供其他结构化建议
-
-请直接输出整理后的Markdown表格，无需其他说明文字：
-
-${text}`
-
-      const response = await axios.post(
-        url,
-        {
-          model,
-          messages: [
-            {
-              role: 'user',
-              content: prompt
-            }
-          ],
-          temperature: 0.3,
-          max_tokens: 2000
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-
-      if (!response.data?.choices?.[0]?.message?.content) {
-        throw new Error(i18n.t('errors.tableFormat.responseFormatError'))
-      }
-
-      const content = response.data.choices[0].message.content.trim()
-      
-      return {
-        formattedText: content,
-        service: serviceName.toLowerCase()
-      }
-    } catch (error) {
-      if (error.response?.status === 401) {
-        throw new Error(i18n.t('errors.tableFormat.invalidApiKey'))
-      } else if (error.response?.status === 429) {
-        throw new Error(i18n.t('errors.tableFormat.rateLimited'))
-      } else if (error.response?.status === 403) {
-        throw new Error(i18n.t('errors.tableFormat.accessDenied'))
-      } else if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
-        throw new Error(i18n.t('errors.tableFormat.networkError'))
-      } else {
-        throw new Error(`${serviceName}${i18n.t('errors.tableFormat.apiError')}: ${error.response?.data?.error?.message || error.message}`)
-      }
-    }
+    return await aiFormatToTable(text, {
+      url,
+      model,
+      apiKey,
+      serviceName
+    })
   }
 
   getSupportedLanguages() {
-    return [
-      { code: 'auto', name: '自动检测' },
-      { code: 'zh-CN', name: '简体中文' },
-      { code: 'zh-TW', name: '繁体中文' },
-      { code: 'en', name: 'English' },
-      { code: 'ja', name: '日本语' },
-      { code: 'ko', name: '한국어' },
-      { code: 'fr', name: 'Français' },
-      { code: 'de', name: 'Deutsch' },
-      { code: 'es', name: 'Español' },
-      { code: 'ru', name: 'Русский' },
-      { code: 'ar', name: 'العربية' },
-      { code: 'hi', name: 'हिन्दी' },
-      { code: 'pt', name: 'Português' },
-      { code: 'it', name: 'Italiano' },
-      { code: 'th', name: 'ไทย' },
-      { code: 'vi', name: 'Tiếng Việt' }
-    ]
+    return SUPPORTED_LANGUAGES
   }
 }
 

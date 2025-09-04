@@ -1,6 +1,44 @@
 import * as React from "react"
 import { useState, useRef, useEffect } from "react"
 
+const SelectRoot = ({ children, className = "", ...props }) => (
+  <div className={`relative ${className}`} {...props}>{children}</div>
+)
+
+const SelectButton = React.forwardRef(({ onClick, disabled, isOpen, className = "", children, ...props }, ref) => (
+  <button
+    ref={ref}
+    type="button"
+    onClick={onClick}
+    disabled={disabled}
+    className={`
+      flex h-12 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-left
+      ${disabled 
+        ? 'cursor-not-allowed opacity-50' 
+        : 'cursor-pointer hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+      }
+      ${isOpen ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2' : ''}
+      transition-all duration-200
+    `.replace(/\s+/g, ' ').trim()}
+    aria-haspopup="listbox"
+    aria-expanded={isOpen}
+    aria-labelledby="select-label"
+    {...props}
+  >
+    {children}
+  </button>
+))
+SelectButton.displayName = "SelectButton"
+
+const SelectList = React.forwardRef(({ children, className = "", ...props }, ref) => (
+  <div className="absolute z-50 mt-1 w-full rounded-md bg-white shadow-lg border border-gray-200 py-1 max-h-60 overflow-auto focus:outline-none">
+    <ul ref={ref} role="listbox" aria-labelledby="select-label" className={className} {...props}>
+      {children}
+    </ul>
+  </div>
+))
+SelectList.displayName = "SelectList"
+
 const Select = React.forwardRef(({ 
   className = "", 
   value, 
@@ -95,29 +133,8 @@ const Select = React.forwardRef(({
   }
 
   return (
-    <div 
-      ref={containerRef}
-      className={`relative ${className}`}
-      {...props}
-    >
-      <button
-        ref={ref}
-        type="button"
-        onClick={toggleOpen}
-        disabled={disabled}
-        className={`
-          flex h-12 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-left
-          ${disabled 
-            ? 'cursor-not-allowed opacity-50' 
-            : 'cursor-pointer hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
-          }
-          ${isOpen ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2' : ''}
-          transition-all duration-200
-        `.replace(/\s+/g, ' ').trim()}
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-        aria-labelledby="select-label"
-      >
+    <SelectRoot ref={containerRef} className={className} {...props}>
+      <SelectButton ref={ref} onClick={toggleOpen} disabled={disabled} isOpen={isOpen}>
         <span className={`block truncate ${!selectedOption ? 'text-gray-500' : 'text-gray-900'}`}>
           {selectedOption ? selectedOption.props.children : placeholder}
         </span>
@@ -129,7 +146,7 @@ const Select = React.forwardRef(({
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
-      </button>
+      </SelectButton>
 
       {isOpen && (
         <>
@@ -140,46 +157,40 @@ const Select = React.forwardRef(({
               setHighlightedIndex(-1)
             }}
           />
-          <div className="absolute z-50 mt-1 w-full rounded-md bg-white shadow-lg border border-gray-200 py-1 max-h-60 overflow-auto focus:outline-none">
-            <ul
-              ref={listRef}
-              role="listbox"
-              aria-labelledby="select-label"
-            >
-              {options.map((option, index) => (
-                <li
-                  key={option.props.value}
-                  role="option"
-                  aria-selected={option.props.value === selectedValue}
-                  className={`
-                    relative cursor-pointer select-none py-2 px-3 text-sm
-                    ${option.props.value === selectedValue 
-                      ? 'bg-blue-600 text-white' 
-                      : index === highlightedIndex 
-                        ? 'bg-blue-50 text-blue-900' 
-                        : 'text-gray-900 hover:bg-gray-50'
-                    }
-                    transition-colors duration-150
-                  `.replace(/\s+/g, ' ').trim()}
-                  onClick={() => handleSelect(option.props.value)}
-                >
-                  <span className="block truncate font-normal">
-                    {option.props.children}
+          <SelectList ref={listRef}>
+            {options.map((option, index) => (
+              <li
+                key={option.props.value}
+                role="option"
+                aria-selected={option.props.value === selectedValue}
+                className={`
+                  relative cursor-pointer select-none py-2 px-3 text-sm
+                  ${option.props.value === selectedValue 
+                    ? 'bg-blue-600 text-white' 
+                    : index === highlightedIndex 
+                      ? 'bg-blue-50 text-blue-900' 
+                      : 'text-gray-900 hover:bg-gray-50'
+                  }
+                  transition-colors duration-150
+                `.replace(/\s+/g, ' ').trim()}
+                onClick={() => handleSelect(option.props.value)}
+              >
+                <span className="block truncate font-normal">
+                  {option.props.children}
+                </span>
+                {option.props.value === selectedValue && (
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-white">
+                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
                   </span>
-                  {option.props.value === selectedValue && (
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-white">
-                      <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
+                )}
+              </li>
+            ))}
+          </SelectList>
         </>
       )}
-    </div>
+    </SelectRoot>
   )
 })
 Select.displayName = "Select"
@@ -218,4 +229,7 @@ export {
   SelectTrigger,
   SelectContent,
   SelectValue,
+  SelectRoot,
+  SelectButton,
+  SelectList,
 }

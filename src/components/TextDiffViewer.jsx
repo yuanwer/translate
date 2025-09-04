@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
+import DiffText from './DiffText'
 import { Modal } from '@/components/ui/modal'
 
 export function TextDiffViewer({ 
@@ -39,60 +40,7 @@ export function TextDiffViewer({
     return t('ocrCorrect.noCorrectionsNeeded')
   }
 
-  // 渲染带有高亮差异的文本
-  const renderTextWithHighlights = (text, isOriginal = true) => {
-    if (!corrections || corrections.length === 0) {
-      return text
-    }
-
-    const segments = []
-    let lastIndex = 0
-
-    corrections.forEach((correction, index) => {
-      const { original, corrected } = correction
-      const targetText = isOriginal ? original : corrected
-      const searchIndex = text.indexOf(targetText, lastIndex)
-      
-      if (searchIndex !== -1) {
-        // 添加差异前的普通文本
-        if (searchIndex > lastIndex) {
-          segments.push(
-            <span key={`text-${index}`}>
-              {text.substring(lastIndex, searchIndex)}
-            </span>
-          )
-        }
-        
-        // 添加高亮的差异文本
-        segments.push(
-          <span
-            key={`diff-${index}`}
-            className={`px-1 rounded ${
-              isOriginal 
-                ? 'bg-red-100 text-red-800 line-through' 
-                : 'bg-green-100 text-green-800'
-            }`}
-            title={isOriginal ? t('ocrCorrect.originalText') : t('ocrCorrect.correctedText')}
-          >
-            {targetText}
-          </span>
-        )
-        
-        lastIndex = searchIndex + targetText.length
-      }
-    })
-
-    // 添加剩余的普通文本
-    if (lastIndex < text.length) {
-      segments.push(
-        <span key="text-end">
-          {text.substring(lastIndex)}
-        </span>
-      )
-    }
-
-    return segments.length > 0 ? segments : text
-  }
+  // 文本高亮独立组件
 
   if (!isOpen) return null
 
@@ -152,9 +100,12 @@ export function TextDiffViewer({
                   </h3>
                 </div>
                 <div className="p-4">
-                  <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
-                    {renderTextWithHighlights(originalText, true)}
-                  </div>
+                  <DiffText 
+                    text={originalText}
+                    corrections={corrections}
+                    isOriginal={true}
+                    title={t('ocrCorrect.originalText')}
+                  />
                 </div>
               </div>
 
@@ -167,9 +118,12 @@ export function TextDiffViewer({
                   </h3>
                 </div>
                 <div className="p-4">
-                  <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
-                    {renderTextWithHighlights(correctedText, false)}
-                  </div>
+                  <DiffText 
+                    text={correctedText}
+                    corrections={corrections}
+                    isOriginal={false}
+                    title={t('ocrCorrect.correctedText')}
+                  />
                 </div>
               </div>
             </div>

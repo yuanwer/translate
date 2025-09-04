@@ -1,5 +1,6 @@
 // 文本转语音服务
 import i18n from '../i18n'
+import { mapToVoiceLocale, detectTextLanguageSimple } from '../lib/ttsLanguage'
 export class TTSService {
   constructor() {
     this.synthesis = window.speechSynthesis
@@ -57,27 +58,7 @@ export class TTSService {
       return null
     }
     
-    // 语言代码映射
-    const langMap = {
-      'zh': 'zh-CN',
-      'zh-CN': 'zh-CN',
-      'zh-TW': 'zh-TW',
-      'en': 'en-US',
-      'ja': 'ja-JP',
-      'ko': 'ko-KR',
-      'fr': 'fr-FR',
-      'de': 'de-DE',
-      'es': 'es-ES',
-      'ru': 'ru-RU',
-      'ar': 'ar-SA',
-      'hi': 'hi-IN',
-      'pt': 'pt-BR',
-      'it': 'it-IT',
-      'th': 'th-TH',
-      'vi': 'vi-VN'
-    }
-    
-    const targetLang = langMap[langCode] || langCode
+    const targetLang = mapToVoiceLocale(langCode)
     
     // 查找精确匹配的语音
     let voice = this.voices.find(voice => voice.lang === targetLang)
@@ -101,44 +82,7 @@ export class TTSService {
   
   // 检测文本语言
   detectTextLanguage(text) {
-    if (!text || text.trim().length === 0) {
-      return 'en'
-    }
-    
-    // 中文字符检测
-    const chineseRegex = /[\u4e00-\u9fff]/g
-    const chineseMatches = text.match(chineseRegex) || []
-    const chineseRatio = chineseMatches.length / text.replace(/\s/g, '').length
-    
-    if (chineseRatio > 0.3) {
-      // 进一步判断是简体还是繁体中文
-      const traditionalChars = /[繁體傳統]/g
-      if (traditionalChars.test(text)) {
-        return 'zh-TW'
-      }
-      return 'zh-CN'
-    }
-    
-    // 日文检测
-    const japaneseRegex = /[\u3040-\u309f\u30a0-\u30ff]/g
-    if (japaneseRegex.test(text)) {
-      return 'ja'
-    }
-    
-    // 韩文检测
-    const koreanRegex = /[\uac00-\ud7af]/g
-    if (koreanRegex.test(text)) {
-      return 'ko'
-    }
-    
-    // 阿拉伯文检测
-    const arabicRegex = /[\u0600-\u06ff]/g
-    if (arabicRegex.test(text)) {
-      return 'ar'
-    }
-    
-    // 默认返回英文
-    return 'en'
+    return detectTextLanguageSimple(text)
   }
   
   // 朗读文本
