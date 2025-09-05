@@ -78,6 +78,11 @@ export function ImageTranslation({ serviceConfig, languages }) {
         <TranslationPanel
           inputValue={recognizedText}
           onInputChange={(e) => setRecognizedText(e.target.value)}
+          onSubmit={handleTranslate}
+          onClear={() => setRecognizedText('')}
+          onSwap={swapLanguages}
+          autoFocus={false}
+          showCharCount={true}
           inputPlaceholder={t('ocr.recognizedText')}
           inputLanguageName={getLanguageName(sourceLang, languages)}
           inputReadOnly={false}

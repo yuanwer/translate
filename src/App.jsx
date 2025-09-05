@@ -73,6 +73,21 @@ function App() {
     return () => {}
   }, [])
 
+  // 全局快捷键：Alt+1 切文字翻译，Alt+2 切图片翻译
+  useEffect(() => {
+    const handleGlobalHotkeys = (e) => {
+      if (e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
+        if (e.key === '1') {
+          setActiveTab('text')
+        } else if (e.key === '2') {
+          setActiveTab('image')
+        }
+      }
+    }
+    window.addEventListener('keydown', handleGlobalHotkeys)
+    return () => window.removeEventListener('keydown', handleGlobalHotkeys)
+  }, [])
+
 
   return (
     <div className="min-h-screen bg-white">

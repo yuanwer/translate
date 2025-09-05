@@ -39,7 +39,7 @@ const LanguageSelector = ({
             onClick={onSwapLanguages}
             disabled={sourceLang === 'auto'}
             className="w-10 h-10 rounded-full disabled:opacity-50 text-gray-600 hover:bg-gray-100"
-            title={t('language.swap')}
+            title={sourceLang === 'auto' ? t('language.swapDisabled', '检测语言下无法交换') : t('language.swap')}
           >
             <i className="fas fa-exchange-alt"></i>
           </Button>

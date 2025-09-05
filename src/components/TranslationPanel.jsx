@@ -17,6 +17,12 @@ const TranslationPanel = ({
   inputLanguageName,
   inputReadOnly = false,
   inputDisabled = false,
+  // 输入增强参数
+  onSubmit,
+  onClear,
+  onSwap,
+  autoFocus = false,
+  showCharCount = true,
   
   // 输出侧配置  
   outputValue,
@@ -52,6 +58,31 @@ const TranslationPanel = ({
   const handleCopyOutput = () => {
     if (outputValue) {
       copyToClipboard(outputValue)
+    }
+  }
+
+  const createSyntheticEvent = (nextValue) => ({ target: { value: nextValue } })
+
+  const handlePasteInput = async () => {
+    if (inputReadOnly || inputDisabled) return
+    try {
+      const text = await navigator.clipboard.readText()
+      if (typeof onInputChange === 'function') {
+        onInputChange(createSyntheticEvent((inputValue || '') + text))
+      }
+    } catch (err) {
+      // 读取失败时忽略，可能非安全上下文或未授权
+      // 可选：未来集成 toast 提示
+    }
+  }
+
+  const handleClearInput = () => {
+    if (inputReadOnly || inputDisabled) return
+    if (typeof onClear === 'function') {
+      onClear()
+    }
+    if (typeof onInputChange === 'function') {
+      onInputChange(createSyntheticEvent(''))
     }
   }
 
@@ -100,6 +131,30 @@ const TranslationPanel = ({
             </div>
             <div className="flex items-center gap-1 h-8">
               {extraInputButtons}
+              {!inputReadOnly && (
+                <>
+                  <Button
+                    variant="ghost"
+                    onClick={handlePasteInput}
+                    disabled={inputDisabled}
+                    className="text-gray-500 hover:text-gray-700"
+                    title={t('common.paste', '粘贴')}
+                  >
+                    <i className="fas fa-clipboard text-xs"></i>
+                  </Button>
+                  {inputValue && (
+                    <Button
+                      variant="ghost"
+                      onClick={handleClearInput}
+                      disabled={inputDisabled}
+                      className="text-gray-500 hover:text-gray-700"
+                      title={t('common.clear', '清空')}
+                    >
+                      <i className="fas fa-eraser text-xs"></i>
+                    </Button>
+                  )}
+                </>
+              )}
               {inputValue && !inputReadOnly && (
                 <Button
                   variant="ghost"
@@ -132,6 +187,11 @@ const TranslationPanel = ({
             <EnhancedTextInput
               value={inputValue}
               onChange={onInputChange}
+              onSubmit={onSubmit}
+              onClear={handleClearInput}
+              onSwap={onSwap}
+              autoFocus={autoFocus}
+              showCharCount={showCharCount}
               placeholder={inputPlaceholder}
               disabled={inputDisabled}
               className="border-0 h-full"

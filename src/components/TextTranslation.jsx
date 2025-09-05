@@ -67,6 +67,11 @@ const TextTranslation = ({ serviceConfig, languages }) => {
       <TranslationPanel
         inputValue={inputText}
         onInputChange={(e) => setInputText(e.target.value)}
+        onSubmit={() => handleTranslate(false)}
+        onClear={() => setInputText('')}
+        onSwap={swapLanguages}
+        autoFocus={true}
+        showCharCount={true}
         inputPlaceholder={t('translation.inputPlaceholder', '输入文本')}
         inputLanguageName={getLanguageName(sourceLang)}
         inputDisabled={isLoading}
