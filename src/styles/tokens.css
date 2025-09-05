@@ -1,0 +1,40 @@
+:root {
+  --sm-primary: #3B92ED;
+  --sm-primary-600: #2F7ED1;
+  --sm-primary-700: #2568AE;
+
+  --sm-text: #222222;
+  --sm-muted: #5f6368;
+
+  --sm-bg: #F7F7F7;
+  --sm-surface: #FFFFFF;
+  --sm-border: #E6E6E6;
+
+  --sm-success: #2EB872;
+  --sm-warning: #F0B429;
+  --sm-danger: #E24A4A;
+  --sm-info: var(--sm-primary);
+
+  --sm-radius-xs: 6px;
+  --sm-radius-sm: 8px;
+  --sm-radius-md: 10px;
+  --sm-radius-lg: 12px;
+
+  --sm-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 10px rgba(0, 0, 0, 0.06);
+  --sm-shadow-2: 0 2px 6px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(0, 0, 0, 0.08);
+
+  --sm-ring: 0 0 0 3px rgba(59, 146, 237, 0.35);
+  --sm-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Toast 专用变量（Smartisan 风格） */
+  --sm-toast-bg: #FAF8EB;
+  --sm-toast-border: rgba(0, 0, 0, 0.06);
+  --sm-toast-text: #2b2b2b;
+  --sm-toast-blur: 0px;
+  --sm-toast-shadow: var(--sm-shadow-1);
+
+  /* 弹窗防抖动样式 - 计算滚动条宽度 */
+  --scrollbar-width: 0px;
+}
+
+

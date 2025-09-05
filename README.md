@@ -9,38 +9,46 @@ A modern, powerful translation app featuring AI text translation, vision-based t
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-blue)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## ✨ Features
+## 🖼️ Preview
+
+![App Screenshot](screenshot/app-1920x1080-125.png)
+
+## 🌟 Why it's different
+
+- Focused, distraction-free UI, optimized for fast typing and reading
+- Smart language switching: Chinese ↔ English auto target selection
+- Vision-powered text extraction from images, then one-click translate
+- Built-in TTS to listen to input and results, no plugins required
+- Private by default: settings stored locally; bring-your-own API key
+
+## ✨ Core features
 
 ### 🤖 AI Translation
-- Supports multiple AI translation services (OpenAI and any service compatible with the OpenAI API format)
-- Auto-detects source language and translates between major languages
-- Smart language switching: Chinese → English, English → Chinese automatically
-- Real-time translation display with copy and TTS support
+- Multi-service support (OpenAI-compatible)
+- Auto language detection
+- Automatic Chinese/English target switching
+- Live result with copy/TTS
 
 ### 📸 Vision OCR/Text Extraction
-- Powered by multimodal models that support image understanding (e.g. gpt-4o-mini)
-- Upload an image and get extracted text directly from the model
-- Supports data:URL or public URL for images (public URL recommended)
+- Upload an image to extract text via vision model
+- Works with data URL or public URL
 
 ### 🔊 Text-to-Speech (TTS)
-- Uses browser-native Web Speech API
-- Reads both input and translated text
-- Auto-selects suitable voice based on detected language
-- Adjustable rate, pitch, and volume
-- Multiple voices available (varies by OS and browser)
+- Browser-native TTS
+- Read input and result
+- Auto voice selection; adjustable rate/pitch/volume
 
 ### 🎨 Modern UI
-- Built with React 19 + Tailwind CSS 4
-- Responsive design for desktop and mobile
-- Clean, Google Translate–style interface
-- Smooth animations and interactions
-- UI language switch (via i18next)
+- Clean, responsive layout
+- Smooth interactions
+- UI language switch
 
 ### 🔧 Smart Settings
-- Store configuration locally for privacy and control
-- Customizable API endpoints for various compatible services
-- Smart language switch toggle
-- Import/Export settings for backup and migration
+- Local-only settings storage
+- Custom API endpoint
+- Import/Export configs
+
+Note: Technical details have been moved to `CLAUDE.md`.
 
 ## 🚀 Getting Started
 

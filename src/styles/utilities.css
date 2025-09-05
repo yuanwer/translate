@@ -1,0 +1,54 @@
+.sm-text { color: var(--sm-text); }
+.sm-muted { color: var(--sm-muted); }
+.sm-bg { background-color: var(--sm-bg); }
+.sm-surface { background-color: var(--sm-surface); }
+.sm-border { border-color: var(--sm-border); }
+.sm-shadow-1 { box-shadow: var(--sm-shadow-1); }
+.sm-shadow-2 { box-shadow: var(--sm-shadow-2); }
+
+.sm-focus-ring:focus-visible { box-shadow: var(--sm-ring); outline: none; }
+.sm-pressable { transition: transform 0.08s var(--sm-ease), box-shadow 0.2s var(--sm-ease), background-color 0.2s var(--sm-ease), border-color 0.2s var(--sm-ease), color 0.2s var(--sm-ease); will-change: transform; }
+.sm-pressable:active { transform: translateY(0) scale(0.985); }
+
+/* 滚动条样式 */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #dadce0; border-radius: 3px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #bdc1c6; }
+
+/* 隐藏滚动条 */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* 弹窗时避免页面抖动 */
+body.modal-open { overflow: hidden; padding-right: var(--scrollbar-width); }
+
+/* 鼠标样式 */
+.cursor-pointer { cursor: pointer; }
+.cursor-not-allowed { cursor: not-allowed; }
+.cursor-default { cursor: default; }
+
+/* 语言标签激活状态动画 */
+.language-tab-active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background-color: var(--sm-primary); animation: slideIn 0.2s ease-out; }
+@keyframes slideIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* 输入聚焦与悬浮（组件内已有样式为主） */
+.google-translate-hover:hover { background-color: #F9FAFB; }
+.google-translate-input:focus { box-shadow: 0 0 0 3px rgba(59, 146, 237, 0.35); }
+.google-translate-blue { color: var(--sm-primary); }
+.google-translate-border { border-color: #dadce0; }
+.google-translate-shadow { box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15); }
+
+/* Range 滑动条 */
+.range-slider { background: transparent; border: none; outline: none; }
+.range-slider:focus { border: none; outline: none; box-shadow: none; }
+.range-slider::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--sm-primary); border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); cursor: pointer; transition: background-color 0.2s var(--sm-ease), transform 0.08s var(--sm-ease); }
+.range-slider::-webkit-slider-thumb:hover { background: var(--sm-primary-600); }
+.range-slider::-webkit-slider-thumb:active { background: var(--sm-primary-700); transform: scale(0.96); }
+.range-slider::-moz-range-thumb { appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--sm-primary); border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); cursor: pointer; transition: background-color 0.2s var(--sm-ease), transform 0.08s var(--sm-ease); }
+.range-slider::-moz-range-thumb:hover { background: var(--sm-primary-600); }
+.range-slider::-moz-range-thumb:active { background: var(--sm-primary-700); transform: scale(0.96); }
+.range-slider:disabled::-webkit-slider-thumb { background: #9CA3AF; cursor: not-allowed; }
+.range-slider:disabled::-moz-range-thumb { background: #9CA3AF; cursor: not-allowed; }
+
+
