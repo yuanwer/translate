@@ -18,51 +18,44 @@ const Toast = React.forwardRef(({
   }, [duration, onClose])
 
   let variantClasses = ""
-  let iconClass = ""
   
   switch (variant) {
     case "success":
       variantClasses = "sm-toast sm-toast--success"
-      iconClass = "fas fa-check-circle text-green-500"
       break
     case "error":
       variantClasses = "sm-toast sm-toast--danger"
-      iconClass = "fas fa-exclamation-circle text-red-500"
       break
     case "warning":
       variantClasses = "sm-toast sm-toast--warning"
-      iconClass = "fas fa-exclamation-triangle text-yellow-500"
       break
     case "info":
       variantClasses = "sm-toast sm-toast--info"
-      iconClass = "fas fa-info-circle text-blue-500"
       break
     default:
-      variantClasses = "sm-toast"
-      iconClass = "fas fa-info-circle text-gray-500"
+      variantClasses = "sm-toast sm-toast--default"
   }
 
   return (
     <div
       ref={ref}
       className={`
-        relative w-full max-w-sm mx-auto mb-4 p-4
-        animate-in slide-in-from-top-2 fade-in duration-300 sm-appear
+        relative w-full max-w-sm mx-auto mb-3 px-7 py-2.5
+        animate-in fade-in duration-200 sm-appear
         ${variantClasses} ${className}
       `.trim()}
       {...props}
     >
-      <div className="flex items-start gap-3">
-        <i className={`${iconClass} text-sm mt-0.5 flex-shrink-0`}></i>
-        <div className="flex-1 text-sm leading-relaxed">
+      <div className="relative w-full flex items-center justify-center">
+        <div className="sm-toast__content text-center text-[13px] leading-6">
           {children}
         </div>
         <button
           onClick={onClose}
-          className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+          className="sm-toast__close absolute right-2 top-1/2 -translate-y-1/2 transition-colors"
           aria-label="关闭"
         >
-          <i className="fas fa-times text-xs"></i>
+          <i className="fas fa-times text-[10px]"></i>
         </button>
       </div>
     </div>

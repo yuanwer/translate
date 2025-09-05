@@ -59,7 +59,7 @@ const LanguageTabs = ({
               className={`
                 relative px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 cursor-pointer rounded-t-md
                 ${isActive 
-                  ? 'text-blue-600 language-tab-active' 
+                  ? 'text-[--sm-primary] language-tab-active' 
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
                 }
               `}
@@ -75,7 +75,7 @@ const LanguageTabs = ({
           className={`
             relative px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 cursor-pointer rounded-t-md flex items-center gap-1
             ${(!isSelectedInCommon && selectedLanguage !== 'auto') 
-              ? 'text-blue-600 language-tab-active' 
+              ? 'text-[--sm-primary] language-tab-active' 
               : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
             }
           `}
@@ -106,7 +106,7 @@ const LanguageTabs = ({
                   className={`
                     w-full text-left px-4 py-3 rounded-md text-sm transition-all duration-150 cursor-pointer
                     ${isSelected 
-                      ? 'bg-blue-50 text-blue-600 border-2 border-blue-200' 
+                      ? 'bg-[#E6F0FB] text-[--sm-primary] border-2 border-[#BBD7F8]' 
                       : 'text-gray-700 hover:bg-gray-50 border-2 border-transparent'
                     }
                     flex items-center justify-between
@@ -114,7 +114,7 @@ const LanguageTabs = ({
                 >
                   <span>{lang.name}</span>
                   {isSelected && (
-                    <i className="fas fa-check text-blue-600"></i>
+                    <i className="fas fa-check text-[--sm-primary]"></i>
                   )}
                 </button>
               )

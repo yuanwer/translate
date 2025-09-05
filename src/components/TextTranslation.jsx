@@ -117,7 +117,7 @@ const TextTranslation = ({ serviceConfig, languages }) => {
         <Button 
           onClick={() => handleTranslate(false)}
           disabled={!inputText.trim() || isLoading}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
+          className="sm-btn sm-btn--primary px-8 py-3 rounded-full"
         >
           {isLoading ? (
             <><i className="fas fa-spinner fa-spin mr-2"></i>{t('translation.translating', '翻译中...')}</>

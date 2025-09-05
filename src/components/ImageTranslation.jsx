@@ -96,7 +96,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
           <Button 
             onClick={handleTranslate}
             disabled={!recognizedText.trim() || isTranslating}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
+            className="sm-btn sm-btn--primary px-8 py-3 rounded-full"
           >
             {isTranslating ? (
               <><i className="fas fa-spinner fa-spin mr-2"></i>{t('translation.translating', '翻译中...')}</>

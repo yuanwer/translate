@@ -13,16 +13,16 @@ const StatusAlert = React.forwardRef(({ className, variant = "info", icon, child
     error: "fas fa-exclamation-triangle text-red-600",
     warning: "fas fa-exclamation-triangle text-yellow-600",
     success: "fas fa-check-circle text-green-600",
-    info: "fas fa-info-circle text-blue-600",
-    loading: "fas fa-spinner fa-spin text-blue-600"
+    info: "fas fa-info-circle",
+    loading: "fas fa-spinner fa-spin"
   }
 
   const textStyles = {
     error: "text-red-800",
     warning: "text-yellow-800", 
     success: "text-green-800",
-    info: "text-blue-800",
-    loading: "text-blue-800"
+    info: "",
+    loading: ""
   }
 
   const iconClass = icon || iconStyles[variant]

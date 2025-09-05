@@ -60,7 +60,7 @@ const LanguageSelector = ({
       {/* 检测到的语言提示 */}
       {detectedLanguage && sourceLang === 'auto' && (
         <div className="px-4 pb-2">
-          <span className="text-xs text-blue-600">
+          <span className="text-xs" style={{ color: 'var(--sm-primary)' }}>
             {t('language.detected')}: {languages.find(lang => lang.code === detectedLanguage)?.name || detectedLanguage}
           </span>
         </div>

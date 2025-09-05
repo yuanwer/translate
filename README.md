@@ -1,273 +1,273 @@
-# 🌍 AI智能翻译工具
+# 🌍 AI Translation Tool
 
-一个功能强大的现代化翻译应用，集成AI智能翻译、视觉模型图片文本抽取和智能语言切换功能。
+English | [简体中文 (Chinese)](README.zh-CN.md)
+
+A modern, powerful translation app featuring AI text translation, vision-based text extraction from images, and intelligent language switching.
 
 [![React](https://img.shields.io/badge/React-19-blue)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-7-green)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-blue)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## ✨ 功能特性
+## ✨ Features
 
-### 🤖 AI智能翻译
-- 支持多种AI翻译服务（OpenAI、Claude等兼容OpenAI API格式的服务）
-- 自动检测源语言类型，支持16种主流语言互译
-- 智能语言切换：中文内容自动切换到英文翻译，英文内容自动切换到中文翻译
-- 实时翻译结果显示，支持复制和语音朗读
+### 🤖 AI Translation
+- Supports multiple AI translation services (OpenAI and any service compatible with the OpenAI API format)
+- Auto-detects source language and translates between major languages
+- Smart language switching: Chinese → English, English → Chinese automatically
+- Real-time translation display with copy and TTS support
 
-### 📸 视觉模型图片文本抽取
-- 基于支持图片对话的多模态模型（如 gpt-4o-mini）
-- 上传图片后直接调用视觉模型，返回图片中的文字内容
-- 支持 data:URL 或公网 URL 的图片传入（推荐公网 URL）
+### 📸 Vision OCR/Text Extraction
+- Powered by multimodal models that support image understanding (e.g. gpt-4o-mini)
+- Upload an image and get extracted text directly from the model
+- Supports data:URL or public URL for images (public URL recommended)
 
-### 🔊 TTS语音合成
-- 基于浏览器原生Web Speech API的语音合成功能
-- 支持输入文本和翻译结果的智能语音朗读
-- 自动语言检测，选择合适的语音引擎
-- 可调节语速、音调、音量等语音参数
-- 支持多种语音选择（取决于系统和浏览器）
+### 🔊 Text-to-Speech (TTS)
+- Uses browser-native Web Speech API
+- Reads both input and translated text
+- Auto-selects suitable voice based on detected language
+- Adjustable rate, pitch, and volume
+- Multiple voices available (varies by OS and browser)
 
-### 🎨 现代化界面
-- 基于React 19 + Tailwind CSS 4构建
-- 响应式设计，完美适配桌面和移动设备
-- Google翻译风格的直观界面设计
-- 优雅的动画和交互效果
-- 支持中英文界面切换（基于i18next）
+### 🎨 Modern UI
+- Built with React 19 + Tailwind CSS 4
+- Responsive design for desktop and mobile
+- Clean, Google Translate–style interface
+- Smooth animations and interactions
+- UI language switch (via i18next)
 
-### 🔧 智能配置
-- 本地存储配置信息，数据安全可控
-- 自定义API服务配置，支持各种兼容服务
-- 智能语言切换开关，个性化翻译体验
-- 配置导入导出功能，方便备份和迁移
+### 🔧 Smart Settings
+- Store configuration locally for privacy and control
+- Customizable API endpoints for various compatible services
+- Smart language switch toggle
+- Import/Export settings for backup and migration
 
-## 🚀 快速开始
+## 🚀 Getting Started
 
-### 环境要求
+### Requirements
 - Node.js >= 18.0.0
 - npm >= 8.0.0
 
-### 安装依赖
+### Installation
 ```bash
-# 克隆项目
+# Clone
 git clone https://github.com/your-username/translate.git
 cd translate
 
-# 安装依赖
+# Install deps
 npm install
 ```
 
-### 配置API密钥
-1. 启动应用后，点击右上角的设置按钮 ⚙️
-2. 选择翻译服务（如OpenAI）
-3. 输入您的API密钥
-4. 配置API地址（可选，支持自定义端点）
-5. 保存配置
+### Configure API Keys
+1. Start the app and click the Settings button (⚙️) in the top-right
+2. Choose a translation service (e.g. OpenAI)
+3. Enter your API key
+4. Optionally set a custom API base URL
+5. Save
 
-### 启动开发服务器
+### Start Dev Server
 ```bash
 npm run dev
 ```
-应用将在 http://localhost:5173 启动
+App will run at http://localhost:5173
 
-## 📋 使用指南
+## 📋 Usage
 
-### 文本翻译
-1. 在左侧文本框输入要翻译的文本
-2. 选择源语言和目标语言（支持自动检测）
-3. 点击"翻译"按钮获取结果
-4. 使用右侧的复制和语音按钮处理翻译结果
+### Text Translation
+1. Enter text in the left input box
+2. Choose source and target languages (auto-detect supported)
+3. Click "Translate"
+4. Use copy and TTS controls on the right
 
-### 图片文字识别（视觉模型）
-1. 切换到"图片翻译"标签页
-2. 点击"上传图片"按钮或直接拖拽图片到界面
-3. 等待视觉模型抽取完成
-4. 抽取的文字会自动显示，可进一步翻译
+### Image Text Extraction (Vision)
+1. Switch to the "Image Translation" tab
+2. Click "Upload Image" or drag-and-drop an image
+3. Wait for the vision model to extract text
+4. Optionally translate the extracted text
 
-### 语音朗读功能
-1. 翻译完成后，点击文本框右下角的语音按钮 🔊
-2. 支持朗读输入文本和翻译结果
-3. 可在设置中调节语速、音调、音量等参数
-4. 点击相同按钮可停止当前朗读
+### TTS
+1. After translation, click the speaker icon 🔊 in the textbox
+2. Reads both input and output text
+3. Adjust rate/pitch/volume in Settings
+4. Click again to stop
 
-### 智能语言切换
-- 在设置中启用智能语言切换功能
-- 系统会自动判断输入文本的语言类型
-- 中文内容自动切换到英文翻译模式
-- 英文内容自动切换到中文翻译模式
-- 其他语言保持用户选择的设置
+### Smart Language Switching
+- Enable in Settings
+- Language is auto-detected
+- Chinese input switches to English target
+- English input switches to Chinese target
+- Other languages respect your current selection
 
-### 配置管理
-1. 点击右上角的设置按钮 ⚙️ 打开配置面板
-2. 配置AI翻译服务的API密钥和端点
-3. 调整TTS语音参数和智能切换设置
-4. 可导出配置备份或导入已有配置
+### Configuration
+1. Click ⚙️ to open the settings panel
+2. Configure API key and endpoint
+3. Adjust TTS and smart switch options
+4. Import/Export settings as needed
 
-## 🌐 支持的语言
+## 🌐 Supported Languages
 
-| 语言 | 代码 | 语言 | 代码 |
-|------|------|------|------|
-| 简体中文 | zh-CN | English | en |
-| 繁体中文 | zh-TW | 日本語 | ja |
-| 한국어 | ko | Français | fr |
-| Deutsch | de | Español | es |
-| Русский | ru | العربية | ar |
-| हिन्दी | hi | Português | pt |
-| Italiano | it | ไทย | th |
-| Tiếng Việt | vi | 自动检测 | auto |
+| Language | Code | Language | Code |
+|----------|------|----------|------|
+| 简体中文 | zh-CN | English  | en   |
+| 繁体中文 | zh-TW | 日本語    | ja   |
+| 한국어   | ko    | Français | fr   |
+| Deutsch  | de    | Español  | es   |
+| Русский  | ru    | العربية  | ar   |
+| हिन्दी    | hi    | Português| pt   |
+| Italiano | it    | ไทย      | th   |
+| Tiếng Việt | vi  | Auto     | auto |
 
-## 🤖 支持的AI服务
+## 🤖 Supported AI Services
 
 ### OpenAI
-- 模型：gpt-3.5-turbo, gpt-4, gpt-4-turbo
-- 需要API密钥
-- 支持自定义API端点
+- Models: gpt-3.5-turbo, gpt-4, gpt-4-turbo (vision models like gpt-4o-mini for images)
+- Requires API key
+- Custom API endpoint supported
 
-### 其他兼容服务
-- 任何兼容OpenAI API格式的服务
-- 支持自定义模型名称
-- 灵活的端点配置
+### Other Compatible Services
+- Any provider compatible with the OpenAI API format
+- Custom model names supported
+- Flexible endpoint configuration
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 translate/
-├── public/                     # 静态资源
+├── public/                     # Static assets
 ├── src/
-│   ├── components/             # React组件
-│   │   ├── ui/                # UI基础组件库
-│   │   │   ├── button.jsx     # 按钮组件
-│   │   │   ├── input.jsx      # 输入框组件
-│   │   │   ├── modal.jsx      # 模态框组件
-│   │   │   ├── toast.jsx      # 消息提示组件
-│   │   │   └── ...            # 其他UI组件
-│   │   ├── ImageTranslation.jsx   # 图片翻译组件
-│   │   ├── EnhancedTextInput.jsx  # 增强文本输入组件
-│   │   ├── LanguageSwitcher.jsx   # 语言切换器
-│   │   ├── ServiceConfig.jsx      # 服务配置组件
-│   │   ├── TTSSettings.jsx        # TTS语音设置组件
-│   │   └── ...                    # 其他业务组件
-│   ├── services/              # 核心服务层
-│   │   ├── translateService.js   # AI翻译服务
-│   │   ├── providers/aiChatProvider.js # AI 对话与图片对话调用
-│   │   └── ttsService.js         # TTS语音合成服务
-│   ├── contexts/              # React Context
-│   │   └── ToastContext.jsx      # 全局消息提示上下文
-│   ├── hooks/                 # 自定义Hooks
-│   │   ├── useToast.js           # 消息提示Hook
-│   │   └── useTTS.js             # TTS语音Hook
-│   ├── i18n/                  # 国际化配置
-│   │   ├── index.js              # i18n主配置
-│   │   └── locales/              # 语言包
-│   │       ├── zh.json           # 中文语言包
-│   │       └── en.json           # 英文语言包
-│   ├── App.jsx                # 主应用组件
-│   ├── main.jsx              # 应用入口
-│   └── index.css             # 全局样式
-├── vite.config.js            # Vite配置文件
-├── eslint.config.js          # ESLint配置文件
-├── package.json              # 项目依赖和脚本
-├── CLAUDE.md                 # Claude Code开发指南
-└── README.md                 # 项目说明文档
+│   ├── assets/                 # Images and icons
+│   ├── components/             # React components
+│   │   ├── ui/                 # UI primitives
+│   │   │   ├── button.jsx
+│   │   │   ├── input.jsx
+│   │   │   ├── modal.jsx
+│   │   │   ├── toast.jsx
+│   │   │   ├── card.jsx
+│   │   │   └── ...
+│   │   ├── ImageTranslation.jsx
+│   │   ├── EnhancedTextInput.jsx
+│   │   ├── TextTranslation.jsx
+│   │   ├── TranslationPanel.jsx
+│   │   ├── LanguageSwitcher.jsx
+│   │   ├── ServiceConfig.jsx
+│   │   ├── TTSSettings.jsx
+│   │   └── ...
+│   ├── services/               # Core services
+│   │   ├── ocrService.js
+│   │   ├── ocrCorrectService.js
+│   │   ├── translateService.js
+│   │   └── ttsService.js
+│   ├── contexts/
+│   │   ├── toastContext.js
+│   │   └── ToastContext.jsx
+│   ├── hooks/
+│   │   ├── useToast.js
+│   │   ├── useTTS.js
+│   │   ├── useCopyToClipboard.js
+│   │   └── useLanguageDetection.js
+│   ├── i18n/
+│   │   ├── index.js
+│   │   └── locales/
+│   │       ├── zh.json
+│   │       └── en.json
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── vite.config.js
+├── eslint.config.js
+├── package.json
+├── CLAUDE.md
+└── README.md
 ```
 
-## 🛠️ 开发脚本
+## 🛠️ Scripts
 
 ```bash
-# 启动开发服务器
+# Dev
 npm run dev
 
-# 构建生产版本
+# Build
 npm run build
 
-# 预览构建结果
+# Preview build
 npm run preview
 
-# 代码格式检查
+# Lint
 npm run lint
 ```
 
-## 🔧 技术栈
+## 🔧 Tech Stack
 
-### 前端框架
-- **React 19** - 最新的React版本，支持并发特性
-- **Vite 7** - 极速的构建工具和开发服务器
+### Frontend
+- React 19
+- Vite 7
 
-### UI框架
-- **Tailwind CSS 4** - 原子化CSS框架
-- **FontAwesome** - 图标库
+### UI
+- Tailwind CSS 4
+- FontAwesome
 
-### 核心依赖
-- **Axios** - HTTP客户端，用于AI API调用
-- **i18next** + **react-i18next** - 完整的国际化解决方案
-- **@fortawesome/fontawesome-free** - 图标库
+### Core Dependencies
+- Axios
+- i18next + react-i18next
+- @fortawesome/fontawesome-free
 
-### 状态管理与工具
-- **React Context** - ToastContext全局消息提示
-- **Custom Hooks** - useToast、useTTS等业务逻辑封装
-- **Web Speech API** - 浏览器原生TTS语音合成
+### Tools
+- ESLint
+- @vitejs/plugin-react
+- @tailwindcss/vite
 
-### 开发工具
-- **ESLint** - 代码质量检查和规范
-- **@vitejs/plugin-react** - Vite的React插件，支持Fast Refresh
-- **@tailwindcss/vite** - Tailwind CSS的Vite集成插件
+## ❓ FAQ
 
-## ❓ 常见问题
+### API Configuration
+**Q: App says an API key is required.**  
+A: Configure your AI service API key in Settings. OpenAI and compatible services are supported.
 
-### API配置问题
-**Q: 翻译提示"需要配置API密钥"？**  
-A: 请在设置中配置您的AI服务API密钥。目前支持OpenAI和兼容服务。
+**Q: Which AI services are supported?**  
+A: OpenAI official API and any provider compatible with the OpenAI format.
 
-**Q: 支持哪些AI服务？**  
-A: 支持OpenAI官方API，以及任何兼容OpenAI格式的第三方服务。
+### Vision/OCR
+**Q: Receiving HTTP 400?**  
+A: Ensure `image_url` uses an object shape like `{"url": "..."}` and choose a vision-capable model (e.g. `gpt-4o-mini`).
 
-### 图片抽取问题
-**Q: 400 错误？**  
-A: 确保 `image_url` 采用对象形式：`{"url": "..."}`，并选择支持图片对话的视觉模型（如 `gpt-4o-mini`）。
+### TTS
+**Q: TTS does not play?**  
+A: Make sure your browser supports the Web Speech API. Chrome, Edge, and Safari are recommended.
 
-### TTS语音问题
-**Q: 语音朗读功能无法使用？**  
-A: 确保浏览器支持Web Speech API。推荐使用Chrome、Edge、Safari等现代浏览器。
+**Q: No suitable voice found?**  
+A: Available voices depend on OS and browser. Windows may require installing voice packs.
 
-**Q: 找不到合适的语音？**  
-A: 语音选择取决于操作系统和浏览器。Windows用户可安装语音包，macOS和移动设备通常内置多种语音。
+**Q: TTS stops unexpectedly?**  
+A: Some browsers require a user gesture to start audio. Trigger playback after user interaction.
 
-**Q: 语音朗读被中断？**  
-A: 某些浏览器要求用户交互才能播放语音。确保在用户操作后触发语音功能。
+### Connectivity
+**Q: data:URL not working?**  
+A: Some providers do not support data:URL. Prefer a publicly accessible image URL.
 
-### 网络连接问题
-**Q: data:URL 无法解析？**  
-A: 部分服务商不支持 data:URL，建议使用可公网访问的图片 URL。
+### Browser Support
+Modern browsers recommended: Chrome 88+, Firefox 85+, Safari 14+, Edge 88+. OCR requires WebAssembly; TTS requires Web Speech API.
 
-### 浏览器兼容性
-**Q: 哪些浏览器支持完整功能？**  
-A: 推荐使用Chrome 88+、Firefox 85+、Safari 14+、Edge 88+。OCR功能需要WebAssembly支持，TTS需要Web Speech API支持。
+## 📄 License
 
-## 📄 许可证
+This project is licensed under the [MIT License](LICENSE).
 
-本项目采用 [MIT License](LICENSE) 许可证。
+## 🤝 Contributing
 
-## 🤝 贡献指南
+Issues and PRs are welcome!
 
-欢迎提交Issue和Pull Request！
+### Workflow
+1. Fork this repo
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### 开发流程
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送分支 (`git push origin feature/AmazingFeature`)
-5. 创建Pull Request
+### Code Style
+- Use ESLint
+- Follow React Hooks best practices
+- Keep code clean and readable
 
-### 代码规范
-- 使用ESLint进行代码检查
-- 遵循React Hooks最佳实践
-- 保持代码简洁易读
+## 🙏 Acknowledgements
 
-## 🙏 致谢
-
-- [React](https://reactjs.org/) - 用于构建用户界面
-- [Vite](https://vitejs.dev/) - 现代化的前端构建工具
-- [Tailwind CSS](https://tailwindcss.com/) - 实用优先的CSS框架
-
----
-
-如果这个项目对您有帮助，请考虑给它一个 ⭐ Star！
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)

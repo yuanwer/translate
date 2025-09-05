@@ -128,8 +128,8 @@ export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onEr
             className={`
               relative border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200
               ${dragActive 
-                ? 'border-blue-400 bg-blue-50' 
-                : 'border-gray-300 hover:border-blue-400 bg-white'
+                ? 'border-[#BBD7F8] bg-[#E6F0FB]' 
+                : 'border-gray-300 hover:border-[#BBD7F8] bg-white'
               }
               ${isProcessing ? 'opacity-50 pointer-events-none' : ''}
             `}
@@ -167,17 +167,17 @@ export const ImageUpload = forwardRef(function ImageUpload({ onImageUpload, onEr
             {isProcessing && (
               <div className="absolute inset-0 flex items-center justify-center bg-white/90 rounded-lg">
                 <div className="text-center">
-                  <i className="fas fa-spinner fa-spin text-2xl text-blue-500 mb-2"></i>
+                  <i className="fas fa-spinner fa-spin text-2xl text-[--sm-primary] mb-2"></i>
                   <p className="text-sm text-gray-600">{t('ocr.processingImage')}</p>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="mt-6 bg-[#E6F0FB] border border-[#BBD7F8] rounded-lg p-4">
             <div className="flex items-center">
-              <i className="fas fa-info-circle text-blue-600 mr-3"></i>
-              <span className="text-sm text-blue-800">
+              <i className="fas fa-info-circle text-[--sm-primary] mr-3"></i>
+              <span className="text-sm" style={{ color: '#1f3b64' }}>
                 {t('ocr.recognitionTip')}
               </span>
             </div>

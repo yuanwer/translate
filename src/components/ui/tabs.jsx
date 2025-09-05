@@ -97,7 +97,7 @@ const TabsTrigger = ({
 
   if (variant === "default") {
     variantClasses = "rounded-md"
-    activeClasses = isActive ? "bg-white text-[#4A90E2] sm-shadow-1" : "text-gray-600"
+    activeClasses = isActive ? "bg-white text-[#3B92ED] sm-shadow-1" : "text-gray-600"
     hoverClasses = !isActive ? "hover:text-gray-800 hover:bg-[#F7F7F7]" : ""
   } else if (variant === "rounded") {
     variantClasses = "rounded-full sm-tab--rounded"
@@ -105,11 +105,11 @@ const TabsTrigger = ({
     hoverClasses = !isActive ? "hover:bg-[#E9EBEE] hover:text-gray-800" : ""
   } else if (variant === "underline") {
     variantClasses = "relative rounded-t-md sm-tab--underline"
-    activeClasses = isActive ? "text-[#4A90E2]" : "text-gray-600"
+    activeClasses = isActive ? "text-[#3B92ED]" : "text-gray-600"
     hoverClasses = "hover:bg-[#F7F7F7] hover:text-gray-800"
   } else if (variant === "pills") {
     variantClasses = "rounded-md"
-    activeClasses = isActive ? "bg-[#E6F0FB] text-[#326CB0] sm-shadow-1" : "text-gray-600"
+    activeClasses = isActive ? "bg-[#E6F0FB] text-[#2568AE] sm-shadow-1" : "text-gray-600"
     hoverClasses = !isActive ? "hover:text-gray-800 hover:bg-white" : ""
   }
 

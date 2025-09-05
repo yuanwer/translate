@@ -65,7 +65,7 @@ const TranslationPanel = ({
         disabled={!canSpeak}
         className={`text-xs ${
           isSpeaking || isPaused
-            ? 'text-blue-600 hover:text-blue-700' 
+            ? 'text-[--sm-primary] hover:opacity-90' 
             : 'text-gray-500 hover:text-gray-700'
         }`}
         title={

@@ -4,7 +4,7 @@ import { ToastContext } from './toastContext'
 
 let toastId = 0
 
-export const ToastProvider = ({ children, position = "top-right" }) => {
+export const ToastProvider = ({ children, position = "bottom-center" }) => {
   const [toasts, setToasts] = useState([])
 
   const removeToast = useCallback((id) => {

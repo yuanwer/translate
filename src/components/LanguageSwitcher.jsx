@@ -7,7 +7,7 @@ const LanguageSwitcher = () => {
 
   const languages = [
     { code: 'zh', name: '中文', flag: 'fas fa-globe-asia', color: 'text-red-500' },
-    { code: 'en', name: 'English', flag: 'fas fa-globe-americas', color: 'text-blue-500' }
+    { code: 'en', name: 'English', flag: 'fas fa-globe-americas', color: 'text-[--sm-primary]' }
   ]
 
   const handleLanguageChange = (languageCode) => {
