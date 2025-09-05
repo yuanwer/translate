@@ -2,11 +2,21 @@ import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { translateService } from '../services/translateService'
 import { useLanguageDetection } from './useLanguageDetection'
+import { useSpeakHandlers } from './useSpeakHandlers'
+import { useTableFormat } from './useTableFormat'
 
 export function useImageTranslation(serviceConfig) {
   const { t } = useTranslation()
   const imageUploadRef = useRef(null)
   const { getSmartTargetLanguage, updateLanguageFromDetection } = useLanguageDetection()
+  const {
+    handleSpeak,
+    isSpeaking,
+    isPaused,
+    canSpeak,
+    ttsSupported,
+    detectTextLanguage
+  } = useSpeakHandlers()
 
   const [recognizedText, setRecognizedText] = useState('')
   const [translatedText, setTranslatedText] = useState('')
@@ -18,6 +28,7 @@ export function useImageTranslation(serviceConfig) {
   const [error, setError] = useState('')
   const [detectedLanguage, setDetectedLanguage] = useState('')
   const [hasSelectedImage, setHasSelectedImage] = useState(false)
+  const { isTableFormatting, formatToTable } = useTableFormat(serviceConfig)
 
   const autoSwitchLang = serviceConfig.autoSwitchLang !== false
 
@@ -129,9 +140,6 @@ export function useImageTranslation(serviceConfig) {
     setTranslatedText('')
     setError('')
     setDetectedLanguage('')
-    setTimeout(() => {
-      imageUploadRef.current?.triggerFileSelect()
-    }, 100)
   }
 
   const handleTextCorrected = (correctedText) => {
@@ -144,6 +152,36 @@ export function useImageTranslation(serviceConfig) {
       return t('language.detectLanguage', '检测语言')
     }
     return languages.find(lang => lang.code === langCode)?.name || langCode
+  }
+
+  // TTS 相关由通用 hook 提供的 handleSpeak 实现
+
+  const handleSpeakInput = () => {
+    const lang = sourceLang === 'auto' ? detectedLanguage || sourceLang : sourceLang
+    handleSpeak(recognizedText, lang)
+  }
+
+  const handleSpeakOutput = () => {
+    handleSpeak(translatedText, targetLang)
+  }
+
+  // 表格化格式
+  const handleTableFormat = async () => {
+    if (!translatedText.trim()) return
+    setError('')
+    try {
+      const result = await formatToTable(translatedText)
+      if (result?.formattedText) {
+        setTranslatedText(result.formattedText)
+      }
+    } catch (error) {
+      console.error('Table format error:', error)
+      let errorMessage = error.message
+      if (error.message.includes(t('errors.tableFormat.apiKeyRequired'))) {
+        errorMessage = t('messages.apiKeyRequired')
+      }
+      setError(errorMessage)
+    }
   }
 
   return {
@@ -168,7 +206,17 @@ export function useImageTranslation(serviceConfig) {
     swapLanguages,
     resetImageSelection,
     handleTextCorrected,
-    getLanguageName
+    getLanguageName,
+    // tts
+    handleSpeakInput,
+    handleSpeakOutput,
+    isSpeaking,
+    isPaused,
+    canSpeak,
+    ttsSupported,
+    // table format
+    isTableFormatting,
+    handleTableFormat
   }
 }
 

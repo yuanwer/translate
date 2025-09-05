@@ -2,19 +2,19 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { translateService } from '../services/translateService'
 import { useLanguageDetection } from './useLanguageDetection'
-import { useTTS } from './useTTS'
+import { useSpeakHandlers } from './useSpeakHandlers'
+import { useTableFormat } from './useTableFormat'
 
 export function useTextTranslation(serviceConfig) {
   const { t } = useTranslation()
   const {
-    speak,
-    stop,
+    handleSpeak,
     isSpeaking,
     isPaused,
     canSpeak,
-    isSupported: ttsSupported,
+    ttsSupported,
     detectTextLanguage
-  } = useTTS()
+  } = useSpeakHandlers()
   const { getSmartTargetLanguage, updateLanguageFromDetection } = useLanguageDetection()
 
   const [inputText, setInputText] = useState('')
@@ -24,7 +24,7 @@ export function useTextTranslation(serviceConfig) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [detectedLanguage, setDetectedLanguage] = useState('')
-  const [isTableFormatting, setIsTableFormatting] = useState(false)
+  const { isTableFormatting, formatToTable } = useTableFormat(serviceConfig)
 
   const autoSwitchLang = serviceConfig.autoSwitchLang !== false
   const autoTranslate = serviceConfig.autoTranslate !== false
@@ -123,26 +123,7 @@ export function useTextTranslation(serviceConfig) {
     }
   }
 
-  const handleSpeak = async (text, language = null) => {
-    if (!text || !text.trim()) return
-
-    try {
-      if (isSpeaking || isPaused) {
-        stop()
-        return
-      }
-
-      let speakLang = language
-      if (!speakLang) {
-        speakLang = detectTextLanguage(text)
-      }
-
-      await speak(text, { language: speakLang })
-    } catch (error) {
-      console.error('TTS错误:', error)
-      setError(`${t('tts.speakError')}: ${error.message}`)
-    }
-  }
+  // 朗读逻辑使用通用 hook 的 handleSpeak
 
   const handleSpeakInput = () => {
     const lang = sourceLang === 'auto' ? detectedLanguage || sourceLang : sourceLang
@@ -155,24 +136,19 @@ export function useTextTranslation(serviceConfig) {
 
   const handleTableFormat = async () => {
     if (!outputText.trim()) return
-
-    setIsTableFormatting(true)
     setError('')
-
     try {
-      const result = await translateService.formatToTable(outputText, serviceConfig)
-      setOutputText(result.formattedText)
+      const result = await formatToTable(outputText)
+      if (result?.formattedText) {
+        setOutputText(result.formattedText)
+      }
     } catch (error) {
       console.error('Table format error:', error)
       let errorMessage = error.message
-
       if (error.message.includes(t('errors.tableFormat.apiKeyRequired'))) {
         errorMessage = t('messages.apiKeyRequired')
       }
-
       setError(errorMessage)
-    } finally {
-      setIsTableFormatting(false)
     }
   }
 

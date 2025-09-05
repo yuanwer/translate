@@ -16,6 +16,7 @@ export function ImageTranslation({ serviceConfig, languages }) {
     targetLang,
     isOCRProcessing,
     isTranslating,
+    isTableFormatting,
     ocrProgress,
     error,
     detectedLanguage,
@@ -27,10 +28,18 @@ export function ImageTranslation({ serviceConfig, languages }) {
     handleImageUpload,
     handleOCRError,
     handleTranslate,
+    handleTableFormat,
     swapLanguages,
     resetImageSelection,
     handleTextCorrected,
-    getLanguageName
+    getLanguageName,
+    // tts
+    handleSpeakInput,
+    handleSpeakOutput,
+    isSpeaking,
+    isPaused,
+    canSpeak,
+    ttsSupported
   } = useImageTranslation(serviceConfig)
 
   return (
@@ -86,12 +95,22 @@ export function ImageTranslation({ serviceConfig, languages }) {
           inputPlaceholder={t('ocr.recognizedText')}
           inputLanguageName={getLanguageName(sourceLang, languages)}
           inputReadOnly={false}
+          inputDisabled={isOCRProcessing || isTranslating}
           
           outputValue={translatedText}
           outputPlaceholder={isTranslating ? t('translation.translating', '翻译中...') : t('translation.outputPlaceholder', '翻译结果')}
           outputLanguageName={getLanguageName(targetLang, languages)}
           
+          onSpeakInput={handleSpeakInput}
+          onSpeakOutput={handleSpeakOutput}
+          isSpeaking={isSpeaking}
+          isPaused={isPaused}
+          canSpeak={canSpeak}
+          ttsSupported={ttsSupported}
+          
           extraInputButtons={[]}
+          onTableFormat={handleTableFormat}
+          isTableFormatting={isTableFormatting}
         />
       )}
 

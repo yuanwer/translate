@@ -86,25 +86,8 @@ const TextTranslation = ({ serviceConfig, languages }) => {
         isPaused={isPaused}
         canSpeak={canSpeak}
         ttsSupported={ttsSupported}
-        
-        extraOutputButtons={[
-          outputText && (
-            <Button
-              key="table-format"
-              variant="ghost"
-              onClick={handleTableFormat}
-              disabled={isTableFormatting || !outputText.trim()}
-              className="text-gray-500 hover:text-gray-700"
-              title={t('translation.tableFormatTooltip')}
-            >
-              {isTableFormatting ? (
-                <i className="fas fa-spinner fa-spin text-xs"></i>
-              ) : (
-                <i className="fas fa-table text-xs"></i>
-              )}
-            </Button>
-          )
-        ]}
+        onTableFormat={handleTableFormat}
+        isTableFormatting={isTableFormatting}
       />
 
       {/* 翻译按钮 */}

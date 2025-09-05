@@ -41,6 +41,8 @@ const TranslationPanel = ({
   // 其他功能按钮
   extraInputButtons = [],
   extraOutputButtons = [],
+  onTableFormat,
+  isTableFormatting = false,
   
   // 样式
   className = "grid lg:grid-cols-2 gap-0 border border-gray-300 rounded-lg overflow-hidden",
@@ -209,6 +211,21 @@ const TranslationPanel = ({
             </span>
             <div className="flex items-center gap-1 h-8">
               {extraOutputButtons}
+              {onTableFormat && outputValue && (
+                <Button
+                  variant="ghost"
+                  onClick={onTableFormat}
+                  disabled={isTableFormatting || !outputValue.trim()}
+                  className="text-gray-500 hover:text-gray-700"
+                  title={t('translation.tableFormatTooltip')}
+                >
+                  {isTableFormatting ? (
+                    <i className="fas fa-spinner fa-spin text-xs"></i>
+                  ) : (
+                    <i className="fas fa-table text-xs"></i>
+                  )}
+                </Button>
+              )}
               {outputValue && (
                 <>
                   <Button
