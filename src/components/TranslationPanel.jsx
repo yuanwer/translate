@@ -113,7 +113,7 @@ const TranslationPanel = ({
               {renderTTSButton(
                 inputValue, 
                 onSpeakInput, 
-                t('tts.speak', '朗读输入文本')
+                t('tts.speakInput', '朗读输入文本')
               )}
             </div>
           </div>
@@ -162,7 +162,7 @@ const TranslationPanel = ({
                   {renderTTSButton(
                     outputValue, 
                     onSpeakOutput, 
-                    t('tts.speak', '朗读翻译结果')
+                    t('tts.speakOutput', '朗读翻译结果')
                   )}
                 </>
               )}

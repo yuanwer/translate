@@ -9,7 +9,9 @@
     "swap": "交换语言",
     "detected": "检测为",
     "switch": "切换语言",
-    "detectLanguage": "检测语言"
+    "detectLanguage": "检测语言",
+    "selectLanguage": "选择语言",
+    "noOtherLanguages": "暂无其他语言"
   },
   "translation": {
     "inputPlaceholder": "输入要翻译的文本...",
@@ -171,9 +173,11 @@
   "common": {
     "copySuccess": "复制成功",
     "copyFailed": "复制失败",
+    "copy": "复制",
     "reset": "重置",
     "characters": "字符",
-    "close": "关闭"
+    "close": "关闭",
+    "more": "更多"
   },
   "tts": {
     "speak": "朗读",
@@ -216,7 +220,9 @@
       "rateLimited": "请求过于频繁，请稍后重试",
       "accessDenied": "API访问被拒绝，请检查您的权限配置",
       "networkError": "网络连接失败，请检查API地址和网络连接",
-      "apiError": "翻译错误"
+      "apiError": "翻译错误",
+      "chromeAiNotAvailable": "Chrome 内置 AI 不可用",
+      "languagePairNotSupported": "该语言对暂不支持"
     },
     "ocr": {
       "initFailed": "OCR初始化失败",

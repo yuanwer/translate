@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Modal } from './ui/modal'
 
 const LanguageTabs = ({ 
@@ -8,6 +9,7 @@ const LanguageTabs = ({
   isSource = false,
   className = "" 
 }) => {
+  const { t } = useTranslation()
   const [showLanguageModal, setShowLanguageModal] = useState(false)
 
   // 根据isSource参数决定显示的常用语言
@@ -69,7 +71,7 @@ const LanguageTabs = ({
           )
         })}
         
-        {/* "更多"按钮 */}
+        {/* 更多按钮 */}
         <button
           onClick={handleMoreClick}
           className={`
@@ -81,8 +83,8 @@ const LanguageTabs = ({
           `}
         >
           {(!isSelectedInCommon && selectedLanguage !== 'auto') 
-            ? (languages.find(lang => lang.code === selectedLanguage)?.name || '更多')
-            : '更多'
+            ? (languages.find(lang => lang.code === selectedLanguage)?.name || t('common.more'))
+            : t('common.more')
           }
           <i className="fas fa-chevron-down text-xs"></i>
         </button>
@@ -92,7 +94,7 @@ const LanguageTabs = ({
       <Modal
         isOpen={showLanguageModal}
         onClose={() => setShowLanguageModal(false)}
-        title="选择语言"
+        title={t('language.selectLanguage')}
       >
         <div className="p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
@@ -123,7 +125,7 @@ const LanguageTabs = ({
           
           {otherLanguages.length === 0 && (
             <div className="text-center py-8 text-gray-500">
-              暂无其他语言
+              {t('language.noOtherLanguages')}
             </div>
           )}
         </div>

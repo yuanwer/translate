@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useTranslation } from 'react-i18next'
 
 const Toast = React.forwardRef(({ 
   className = "", 
@@ -8,6 +9,7 @@ const Toast = React.forwardRef(({
   duration = 3000,
   ...props 
 }, ref) => {
+  const { t } = useTranslation()
   React.useEffect(() => {
     if (duration > 0) {
       const timer = setTimeout(() => {
@@ -53,7 +55,7 @@ const Toast = React.forwardRef(({
         <button
           onClick={onClose}
           className="sm-toast__close absolute right-2 top-1/2 -translate-y-1/2 transition-colors"
-          aria-label="关闭"
+          aria-label={t('common.close')}
         >
           <i className="fas fa-times text-[10px]"></i>
         </button>

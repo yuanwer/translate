@@ -9,7 +9,9 @@
     "swap": "Swap Languages",
     "detected": "Detected as",
     "switch": "Switch Language",
-    "detectLanguage": "Detect Language"
+    "detectLanguage": "Detect Language",
+    "selectLanguage": "Select Language",
+    "noOtherLanguages": "No other languages"
   },
   "translation": {
     "inputPlaceholder": "Enter text to translate...",
@@ -134,30 +136,6 @@
     "resetConfigConfirm": "Are you sure you want to reset all configurations to default values? This action cannot be undone.",
     "resetConfigSuccess": "Configuration has been reset to default values"
   },
-  "errors": {
-    "ocrCorrect": {
-      "apiKeyRequired": "API key is not configured, please configure API key first",
-      "apiUrlRequired": "API URL is not configured, please configure API URL first",
-      "emptyText": "Text is empty, cannot perform correction",
-      "responseFormatError": "Abnormal API response format",
-      "invalidApiKey": "Invalid API key",
-      "rateLimited": "Too many requests, please try again later",
-      "accessDenied": "API access denied",
-      "networkError": "Network connection failed",
-      "apiError": "API error"
-    },
-    "tableFormat": {
-      "apiKeyRequired": "API key is not configured, please configure API key first",
-      "apiUrlRequired": "API URL is not configured, please configure API URL first",
-      "emptyText": "Text is empty, cannot format as table",
-      "responseFormatError": "Abnormal API response format",
-      "invalidApiKey": "Invalid API key",
-      "rateLimited": "Too many requests, please try again later",
-      "accessDenied": "API access denied",
-      "networkError": "Network connection failed",
-      "apiError": "Table formatting error"
-    }
-  },
   "tabs": {
     "text": "Text",
     "image": "Image"
@@ -171,9 +149,11 @@
   "common": {
     "copySuccess": "Copied successfully",
     "copyFailed": "Copy failed",
+    "copy": "Copy",
     "reset": "Reset",
     "characters": "characters",
-    "close": "Close"
+    "close": "Close",
+    "more": "More"
   },
   "tts": {
     "speak": "Speak",
@@ -196,6 +176,28 @@
     "initializing": "Voice functionality is initializing..."
   },
   "errors": {
+    "ocrCorrect": {
+      "apiKeyRequired": "API key is not configured, please configure API key first",
+      "apiUrlRequired": "API URL is not configured, please configure API URL first",
+      "emptyText": "Text is empty, cannot perform correction",
+      "responseFormatError": "Abnormal API response format",
+      "invalidApiKey": "Invalid API key",
+      "rateLimited": "Too many requests, please try again later",
+      "accessDenied": "API access denied",
+      "networkError": "Network connection failed",
+      "apiError": "API error"
+    },
+    "tableFormat": {
+      "apiKeyRequired": "API key is not configured, please configure API key first",
+      "apiUrlRequired": "API URL is not configured, please configure API URL first",
+      "emptyText": "Text is empty, cannot format as table",
+      "responseFormatError": "Abnormal API response format",
+      "invalidApiKey": "Invalid API key",
+      "rateLimited": "Too many requests, please try again later",
+      "accessDenied": "API access denied",
+      "networkError": "Network connection failed",
+      "apiError": "Table formatting error"
+    },
     "tts": {
       "notSupported": "Browser doesn't support speech synthesis",
       "emptyText": "Speech text cannot be empty",
@@ -216,7 +218,9 @@
       "rateLimited": "Too many requests, please try again later",
       "accessDenied": "API access denied, please check your permission configuration",
       "networkError": "Network connection failed, please check API address and network connection",
-      "apiError": "Translation error"
+      "apiError": "Translation error",
+      "chromeAiNotAvailable": "Chrome Built-in AI is not available",
+      "languagePairNotSupported": "This language pair is not supported"
     },
     "ocr": {
       "initFailed": "OCR initialization failed",

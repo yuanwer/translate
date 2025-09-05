@@ -140,7 +140,7 @@ export function useTextTranslation(serviceConfig) {
       await speak(text, { language: speakLang })
     } catch (error) {
       console.error('TTS错误:', error)
-      setError(`朗读失败: ${error.message}`)
+      setError(`${t('tts.speakError')}: ${error.message}`)
     }
   }
 
